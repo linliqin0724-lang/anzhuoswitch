@@ -17,6 +17,8 @@
             --silver: #b8b8c0;
             --silver-light: #d0d0d6;
             --silver-dark: #8a8a94;
+            --border-subtle: #2a2a34;
+            --border-hover: #444458;
             --metal-shelf: #3a3a42;
             --metal-shelf-light: #4a4a54;
             --metal-shelf-dark: #2a2a32;
@@ -24,15 +26,33 @@
             --red-tag: #d94a4a;
             --blue-tag: #4a80c8;
             --green-tag: #3da86a;
-            --gold-accent: #c8a860;
             --card-width: 130px;
-            --card-height: 182px;
-            --transition-float: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --transition-color: 0.5s ease;
             --font-display: 'Georgia', 'Times New Roman', 'Songti SC', 'Noto Serif SC', serif;
             --font-body: 'Inter', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            --tab-font-size: 15px;
+            --base-font-size: 14px;
+            --transition-float: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-color: 0.5s ease;
         }
-
+        body.light-mode {
+            --bg: #f5f5f7;
+            --surface: #ffffff;
+            --surface-light: #f0f0f3;
+            --surface-lighter: #e8e8ed;
+            --text-primary: #1a1a22;
+            --text-secondary: #4a4a56;
+            --text-muted: #7a7a88;
+            --white: #1a1a1e;
+            --silver: #5a5a68;
+            --silver-light: #3a3a48;
+            --silver-dark: #7a7a88;
+            --border-subtle: #d8d8de;
+            --border-hover: #b0b0ba;
+            --metal-shelf: #c8c8d0;
+            --metal-shelf-light: #d8d8de;
+            --metal-shelf-dark: #b0b0b8;
+            --metal-top: #d0d0d6;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -42,15 +62,16 @@
             background-color: var(--bg);
             color: var(--text-primary);
             font-family: var(--font-body);
+            font-size: var(--base-font-size);
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             user-select: none;
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.4s, color 0.4s;
         }
 
-        /* ============ 顶部个人主页 ============ */
         .profile-header {
             display: flex;
             align-items: center;
@@ -98,7 +119,7 @@
             right: 0;
             background: rgba(0, 0, 0, 0.7);
             color: #ccc;
-            font-size: 8px;
+            font-size: 9px;
             text-align: center;
             padding: 3px 0;
             opacity: 0;
@@ -112,7 +133,9 @@
         .profile-info {
             display: flex;
             flex-direction: column;
-            gap: 1px;
+            gap: 2px;
+            flex: 1;
+            min-width: 0;
         }
         .profile-id {
             font-family: var(--font-display);
@@ -127,13 +150,13 @@
             color: var(--silver-light);
         }
         .profile-subtitle {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
             letter-spacing: 0.08em;
             text-transform: uppercase;
         }
         .profile-friend-code {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--silver-dark);
             letter-spacing: 0.05em;
             margin-top: 2px;
@@ -141,20 +164,39 @@
             transition: color 0.3s;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
         .profile-friend-code:hover {
             color: var(--silver-light);
         }
         .profile-friend-code .copy-icon {
-            font-size: 9px;
-            opacity: 0.6;
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        .theme-toggle {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--silver-dark);
+            background: var(--surface-light);
+            color: var(--silver);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            margin-left: auto;
+        }
+        .theme-toggle:hover {
+            border-color: var(--silver-light);
+            color: var(--white);
         }
         @media (max-width: 640px) {
             .profile-header {
                 padding: 16px 12px 10px;
-                gap: 12px;
-                flex-wrap: wrap;
+                gap: 10px;
             }
             .profile-avatar {
                 width: 46px;
@@ -164,9 +206,13 @@
             .profile-id {
                 font-size: 18px;
             }
+            .theme-toggle {
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
+            }
         }
 
-        /* ============ Tab 导航 ============ */
         .tab-nav {
             display: flex;
             gap: 2px;
@@ -175,14 +221,14 @@
             padding: 0 36px;
             position: relative;
             z-index: 10;
-            border-bottom: 1px solid #2a2a34;
+            border-bottom: 1px solid var(--border-subtle);
         }
         .tab-btn {
-            padding: 12px 24px;
+            padding: 13px 22px;
             background: transparent;
             border: none;
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: var(--tab-font-size);
             letter-spacing: 0.06em;
             cursor: pointer;
             font-family: var(--font-body);
@@ -194,11 +240,11 @@
         }
         .tab-btn:hover {
             color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(128, 128, 140, 0.06);
         }
         .tab-btn.active {
             color: var(--white);
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(128, 128, 140, 0.08);
         }
         .tab-btn.active::after {
             content: '';
@@ -214,8 +260,8 @@
             display: inline-block;
             background: var(--surface-lighter);
             color: var(--silver);
-            font-size: 10px;
-            padding: 2px 8px;
+            font-size: 11px;
+            padding: 3px 10px;
             border-radius: 10px;
             margin-left: 6px;
             letter-spacing: 0.04em;
@@ -225,23 +271,19 @@
         @media (max-width: 640px) {
             .tab-nav {
                 padding: 0 8px;
-                gap: 0;
                 overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
             }
             .tab-btn {
-                padding: 10px 12px;
-                font-size: 12px;
-                letter-spacing: 0.04em;
+                padding: 10px 13px;
+                font-size: 13px;
             }
             .tab-badge {
-                font-size: 9px;
-                padding: 1px 6px;
-                margin-left: 2px;
+                font-size: 10px;
+                padding: 2px 7px;
+                margin-left: 3px;
             }
         }
 
-        /* ============ 内容区域 ============ */
         .tab-content {
             display: none;
             max-width: 1100px;
@@ -259,13 +301,12 @@
             }
         }
 
-        /* ============ 书架区域（Tab1 游戏） ============ */
         .shelf-section {
-            margin-bottom: 40px;
+            margin-bottom: 36px;
             position: relative;
         }
         .shelf-section-label {
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
@@ -276,19 +317,19 @@
             align-items: center;
             gap: 8px;
         }
-        .shelf-section-label .type-dot {
-            width: 8px;
-            height: 8px;
+        .type-dot {
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
             display: inline-block;
         }
         .type-dot.physical {
             background: var(--silver);
-            box-shadow: 0 0 6px rgba(200, 200, 210, 0.5);
+            box-shadow: 0 0 6px rgba(180, 180, 190, 0.5);
         }
         .type-dot.digital {
             background: var(--silver-dark);
-            box-shadow: 0 0 6px rgba(140, 140, 150, 0.4);
+            box-shadow: 0 0 6px rgba(130, 130, 145, 0.4);
         }
         .type-dot.steam {
             background: #4a8ec8;
@@ -326,10 +367,9 @@
         @media (max-width: 640px) {
             .shelf-row {
                 gap: 10px;
-                justify-content: flex-start;
             }
             .shelf-section {
-                margin-bottom: 24px;
+                margin-bottom: 22px;
             }
             .shelf-board {
                 height: 10px;
@@ -337,7 +377,6 @@
             }
         }
 
-        /* ============ 游戏卡带卡片 ============ */
         .game-card {
             width: var(--card-width);
             flex-shrink: 0;
@@ -354,8 +393,8 @@
             aspect-ratio: 1 / 1.4;
             border-radius: 3px 3px 2px 2px;
             overflow: hidden;
-            background: #1a1a1e;
-            box-shadow: 2px 2px 0px #0a0a0c, 4px 4px 8px rgba(0, 0, 0, 0.5), 1px 0 0 rgba(255, 255, 255, 0.02) inset;
+            background: var(--surface-light);
+            box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4), 4px 4px 8px rgba(0, 0, 0, 0.5), 1px 0 0 rgba(255, 255, 255, 0.02) inset;
             transition: all var(--transition-float);
         }
         .game-card-inner::before {
@@ -366,27 +405,24 @@
             bottom: 0;
             width: 4px;
             z-index: 5;
-            transition: width 0.3s ease, opacity 0.3s ease;
+            transition: width 0.3s ease;
         }
         .game-card-inner.tag-red::before {
             background: var(--red-tag);
-            box-shadow: 1px 0 6px rgba(217, 74, 74, 0.35);
         }
         .game-card-inner.tag-blue::before {
             background: var(--blue-tag);
-            box-shadow: 1px 0 6px rgba(74, 128, 200, 0.35);
         }
         .game-card-inner.tag-green::before {
             background: var(--green-tag);
-            box-shadow: 1px 0 6px rgba(61, 168, 106, 0.35);
         }
         .game-card-type-badge {
             position: absolute;
             top: 6px;
             right: 6px;
-            font-size: 9px;
+            font-size: 10px;
             letter-spacing: 0.05em;
-            padding: 2px 7px;
+            padding: 2px 8px;
             border-radius: 2px;
             z-index: 6;
             font-weight: 500;
@@ -402,13 +438,11 @@
             background: rgba(40, 40, 50, 0.85);
             color: #a0a0b0;
             border: 1px solid #3a3a48;
-            font-style: italic;
         }
         .type-badge-steam {
             background: rgba(30, 50, 70, 0.85);
             color: #8ab8e0;
             border: 1px solid #3a6080;
-            font-style: italic;
         }
         .game-card-cover {
             width: 100%;
@@ -417,26 +451,21 @@
             display: block;
             filter: grayscale(100%) contrast(0.9) brightness(0.8);
             transition: filter var(--transition-color), transform 0.4s ease;
-            background: #1a1a1e;
+            background: var(--surface-light);
         }
         .game-card-cover.placeholder-cover {
             filter: grayscale(100%) contrast(0.85) brightness(0.7);
             object-fit: contain;
             padding: 16px 8px;
-            background: #1e1e24;
         }
         .game-card:hover {
             transform: translateY(-16px) rotateX(-2deg);
             z-index: 20;
         }
         .game-card:hover .game-card-inner {
-            box-shadow: 2px 8px 16px rgba(0, 0, 0, 0.6), 6px 10px 20px rgba(0, 0, 0, 0.5), 1px 0 0 rgba(255, 255, 255, 0.04) inset;
+            box-shadow: 2px 8px 16px rgba(0, 0, 0, 0.6), 6px 10px 20px rgba(0, 0, 0, 0.5);
         }
         .game-card:hover .game-card-cover {
-            filter: grayscale(0%) contrast(1) brightness(1);
-            transform: scale(1.03);
-        }
-        .game-card:hover .game-card-cover.placeholder-cover {
             filter: grayscale(0%) contrast(1) brightness(1);
             transform: scale(1.03);
         }
@@ -444,7 +473,7 @@
             opacity: 0.5;
         }
         .game-card:active {
-            transform: translateY(-6px) rotateX(-1deg);
+            transform: translateY(-6px);
             transition: transform 0.1s ease;
         }
         .game-card::after {
@@ -469,7 +498,7 @@
         }
         .game-card-title-tag {
             text-align: center;
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-muted);
             margin-top: 7px;
             letter-spacing: 0.03em;
@@ -490,95 +519,99 @@
                 width: 3px;
             }
             .game-card-title-tag {
-                font-size: 9px;
+                font-size: 10px;
                 margin-top: 5px;
             }
             .game-card:hover {
-                transform: translateY(-10px) rotateX(-1deg);
+                transform: translateY(-10px);
             }
             .game-card-type-badge {
-                font-size: 7px;
+                font-size: 8px;
                 padding: 1px 5px;
-                top: 4px;
-                right: 4px;
             }
         }
 
-        /* ============ 设备卡片（Tab2） ============ */
-        .device-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-            padding: 8px 2px;
+        /* 设备列表样式 */
+        .device-section {
+            margin-bottom: 28px;
         }
-        .device-card {
-            width: var(--card-width);
-            flex-shrink: 0;
-            cursor: pointer;
-            position: relative;
-            transition: transform var(--transition-float), box-shadow var(--transition-float);
-            z-index: 3;
-        }
-        .device-card-inner {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1.25;
-            border-radius: 6px;
-            overflow: hidden;
-            background: var(--surface-light);
-            box-shadow: 2px 2px 0px #0a0a0c, 4px 4px 10px rgba(0, 0, 0, 0.5);
-            transition: all var(--transition-float);
-            border: 1px solid #2a2a36;
-        }
-        .device-card-cover {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            filter: grayscale(100%) contrast(0.9) brightness(0.8);
-            transition: filter var(--transition-color), transform 0.4s ease;
-            background: #1e1e26;
-        }
-        .device-card:hover {
-            transform: translateY(-12px);
-            z-index: 20;
-        }
-        .device-card:hover .device-card-inner {
-            box-shadow: 2px 8px 18px rgba(0, 0, 0, 0.6), 6px 10px 22px rgba(0, 0, 0, 0.5);
-            border-color: #444458;
-        }
-        .device-card:hover .device-card-cover {
-            filter: grayscale(0%) contrast(1) brightness(1);
-            transform: scale(1.04);
-        }
-        .device-card-title-tag {
-            text-align: center;
-            font-size: 10px;
+        .device-section-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             color: var(--text-muted);
-            margin-top: 7px;
-            letter-spacing: 0.03em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: var(--card-width);
-            transition: color 0.3s;
+            margin-bottom: 8px;
+            padding-left: 4px;
+            font-weight: 500;
         }
-        .device-card:hover .device-card-title-tag {
-            color: var(--text-secondary);
+        .device-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .device-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 13px 18px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.25s;
+            cursor: pointer;
+            flex-wrap: wrap;
+        }
+        .device-item:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-light);
+        }
+        .device-item-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            background: var(--surface-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .device-item-info {
+            flex: 1;
+            min-width: 100px;
+        }
+        .device-item-title {
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.03em;
+            font-size: 15px;
+        }
+        .device-item-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+        .device-item-price {
+            font-family: var(--font-display);
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 0.03em;
+            flex-shrink: 0;
         }
         @media (max-width: 640px) {
-            .device-grid {
-                gap: 10px;
+            .device-item {
+                padding: 10px 12px;
+                gap: 8px;
             }
-            .device-card {
-                width: 100px;
+            .device-item-title {
+                font-size: 13px;
             }
-            .device-card-inner {
-                aspect-ratio: 1 / 1.2;
+            .device-item-price {
+                font-size: 15px;
             }
         }
 
-        /* ============ 银行卡设计（总览Tab） ============ */
         .bank-card-full {
             background: linear-gradient(145deg, #d8d8e0 0%, #c0c0ca 15%, #e0e0e6 30%, #b8b8c4 50%, #d0d0d8 70%, #c8c8d2 100%);
             border-radius: 14px;
@@ -601,53 +634,25 @@
             background: rgba(255, 255, 255, 0.08);
             pointer-events: none;
         }
-        .bank-card-full::after {
-            content: '';
-            position: absolute;
-            bottom: -20%;
-            left: -5%;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.04);
-            pointer-events: none;
-        }
         .bank-card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             position: relative;
             z-index: 1;
-            flex-wrap: wrap;
-            gap: 8px;
         }
         .bank-card-logo {
             font-family: var(--font-display);
-            font-size: 13px;
+            font-size: 14px;
             letter-spacing: 0.12em;
             font-weight: 700;
             color: #3a3a44;
             text-transform: uppercase;
         }
-        .bank-card-chip {
-            width: 38px;
-            height: 28px;
-            background: linear-gradient(135deg, #e8e8ec, #a8a8b4);
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-        .bank-card-chip::after {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            border: 1.5px solid #888894;
-            border-radius: 2px;
-        }
         .bank-card-friend-code {
             font-family: 'Courier New', 'SF Mono', monospace;
-            font-size: 14px;
+            font-size: 15px;
             letter-spacing: 0.08em;
             color: #3a3a44;
             position: relative;
@@ -665,13 +670,13 @@
         }
         .bank-card-friend-code .friend-label {
             font-family: var(--font-body);
-            font-size: 9px;
+            font-size: 10px;
             letter-spacing: 0.08em;
             color: #5a5a66;
             text-transform: uppercase;
         }
         .bank-card-friend-code .copy-hint {
-            font-size: 9px;
+            font-size: 10px;
             color: #6a6a78;
             opacity: 0;
             transition: opacity 0.3s;
@@ -692,20 +697,20 @@
             gap: 1px;
         }
         .bank-card-detail-label {
-            font-size: 9px;
+            font-size: 10px;
             letter-spacing: 0.08em;
             color: #5a5a66;
             text-transform: uppercase;
         }
         .bank-card-detail-value {
             font-family: var(--font-display);
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
             color: #1a1a24;
             letter-spacing: 0.03em;
         }
         .bank-card-detail-value.large {
-            font-size: 28px;
+            font-size: 30px;
         }
         @media (max-width: 640px) {
             .bank-card-full {
@@ -714,24 +719,23 @@
                 margin-bottom: 20px;
             }
             .bank-card-friend-code {
-                font-size: 12px;
+                font-size: 13px;
             }
             .bank-card-detail-value {
-                font-size: 18px;
+                font-size: 19px;
             }
             .bank-card-detail-value.large {
-                font-size: 22px;
+                font-size: 24px;
             }
             .bank-card-details {
                 gap: 16px;
             }
         }
 
-        /* ============ 总览列表 ============ */
         .overview-list {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 7px;
             margin-top: 8px;
         }
         .overview-item {
@@ -740,25 +744,25 @@
             gap: 14px;
             background: var(--surface);
             border-radius: 8px;
-            padding: 12px 16px;
-            border: 1px solid #2a2a36;
+            padding: 13px 18px;
+            border: 1px solid var(--border-subtle);
             transition: all 0.25s;
             cursor: pointer;
             flex-wrap: wrap;
         }
         .overview-item:hover {
-            border-color: #444458;
+            border-color: var(--border-hover);
             background: var(--surface-light);
         }
         .overview-item-icon {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 6px;
             background: var(--surface-lighter);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 17px;
             flex-shrink: 0;
         }
         .overview-item-info {
@@ -769,27 +773,27 @@
             font-weight: 600;
             color: var(--white);
             letter-spacing: 0.03em;
-            font-size: 14px;
+            font-size: 15px;
         }
         .overview-item-date {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
             letter-spacing: 0.04em;
         }
         .overview-item-price {
             font-family: var(--font-display);
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
             color: var(--white);
             letter-spacing: 0.03em;
             flex-shrink: 0;
         }
         .overview-item-type {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-muted);
             letter-spacing: 0.05em;
             flex-shrink: 0;
-            padding: 3px 8px;
+            padding: 3px 9px;
             background: var(--surface-lighter);
             border-radius: 3px;
         }
@@ -806,13 +810,12 @@
             }
         }
 
-        /* ============ 回血列表（Tab4） ============ */
         .recoup-summary {
             background: var(--surface);
             border-radius: 10px;
             padding: 20px 24px;
             margin-bottom: 24px;
-            border: 1px solid #2a2a36;
+            border: 1px solid var(--border-subtle);
             display: flex;
             gap: 28px;
             flex-wrap: wrap;
@@ -824,14 +827,14 @@
             gap: 2px;
         }
         .recoup-summary-label {
-            font-size: 10px;
+            font-size: 11px;
             letter-spacing: 0.08em;
             color: var(--text-muted);
             text-transform: uppercase;
         }
         .recoup-summary-value {
             font-family: var(--font-display);
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
             color: var(--white);
             letter-spacing: 0.03em;
@@ -854,24 +857,24 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            border: 1px solid #2a2a36;
+            border: 1px solid var(--border-subtle);
             transition: all 0.25s;
             cursor: pointer;
             flex-wrap: wrap;
         }
         .recoup-item:hover {
-            border-color: #444458;
+            border-color: var(--border-hover);
             background: var(--surface-light);
         }
         .recoup-item-icon {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 6px;
             background: var(--surface-lighter);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 19px;
             flex-shrink: 0;
         }
         .recoup-item-info {
@@ -882,12 +885,11 @@
             font-weight: 600;
             color: var(--white);
             letter-spacing: 0.03em;
-            font-size: 14px;
+            font-size: 15px;
         }
         .recoup-item-date {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
-            letter-spacing: 0.04em;
         }
         .recoup-item-prices {
             display: flex;
@@ -896,16 +898,16 @@
             flex-wrap: wrap;
         }
         .recoup-price-buy {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
         }
         .recoup-price-sell {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--white);
         }
         .recoup-pnl {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             letter-spacing: 0.03em;
             padding: 4px 10px;
@@ -931,18 +933,81 @@
                 gap: 16px;
             }
             .recoup-summary-value {
-                font-size: 20px;
+                font-size: 21px;
             }
             .recoup-item {
                 padding: 10px 12px;
                 gap: 8px;
             }
-            .recoup-item-title {
-                font-size: 13px;
-            }
         }
 
-        /* ============ 弹窗 ============ */
+        /* 自定义确认弹窗 */
+        .confirm-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .confirm-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .confirm-dialog {
+            background: var(--surface);
+            border-radius: 10px;
+            padding: 24px 28px 20px;
+            max-width: 380px;
+            width: 88vw;
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+        }
+        .confirm-dialog p {
+            font-size: 16px;
+            color: var(--white);
+            margin-bottom: 20px;
+            letter-spacing: 0.03em;
+            line-height: 1.5;
+        }
+        .confirm-dialog .confirm-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .confirm-btn {
+            flex: 1;
+            padding: 11px 0;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            font-family: var(--font-body);
+            transition: all 0.2s;
+        }
+        .confirm-btn-yes {
+            background: #d94a4a;
+            color: #fff;
+        }
+        .confirm-btn-yes:hover {
+            background: #c0392b;
+        }
+        .confirm-btn-no {
+            background: var(--surface-lighter);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+        .confirm-btn-no:hover {
+            background: var(--surface-light);
+            color: var(--white);
+        }
+
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -972,7 +1037,7 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             transform: translateY(20px);
             transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            border: 1px solid #2a2a34;
+            border: 1px solid var(--border-subtle);
         }
         .modal-overlay.active .modal-detail {
             transform: translateY(0);
@@ -1022,7 +1087,7 @@
         }
         .modal-game-title {
             font-family: var(--font-display);
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
             letter-spacing: 0.04em;
             color: var(--white);
@@ -1030,7 +1095,7 @@
         }
         .modal-version-badge {
             display: inline-block;
-            font-size: 10px;
+            font-size: 11px;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             padding: 3px 9px;
@@ -1038,15 +1103,15 @@
             margin-bottom: 14px;
             font-weight: 600;
         }
-        .modal-version-badge.badge-red {
+        .badge-red {
             background: rgba(217, 74, 74, 0.2);
             color: #e88;
         }
-        .modal-version-badge.badge-blue {
+        .badge-blue {
             background: rgba(74, 128, 200, 0.2);
             color: #8ab;
         }
-        .modal-version-badge.badge-green {
+        .badge-green {
             background: rgba(61, 168, 106, 0.2);
             color: #6c8;
         }
@@ -1062,13 +1127,13 @@
             gap: 1px;
         }
         .modal-info-label {
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.07em;
             color: var(--text-muted);
         }
         .modal-info-value {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 600;
             color: var(--white);
             font-family: var(--font-display);
@@ -1083,7 +1148,7 @@
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
         }
         .daily-value-card .daily-label {
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: #555;
@@ -1092,18 +1157,16 @@
         }
         .daily-value-card .daily-number {
             font-family: var(--font-display);
-            font-size: 38px;
+            font-size: 40px;
             font-weight: 700;
-            letter-spacing: 0.02em;
             line-height: 1;
-            color: #000;
         }
         .daily-value-card .daily-unit {
-            font-size: 13px;
+            font-size: 14px;
             color: #555;
         }
         .daily-value-card .daily-verdict {
-            font-size: 11px;
+            font-size: 12px;
             color: #666;
             margin-top: 2px;
         }
@@ -1116,11 +1179,11 @@
         .btn-delete,
         .btn-sell {
             flex: 1;
-            padding: 10px 0;
+            padding: 11px 0;
             border-radius: 5px;
             border: 1px solid #444;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
             letter-spacing: 0.05em;
             font-weight: 500;
             transition: all 0.2s;
@@ -1156,7 +1219,6 @@
             .modal-detail {
                 width: 95vw;
                 max-height: 85vh;
-                border-radius: 6px;
             }
             .modal-body {
                 padding: 14px 16px 18px;
@@ -1165,11 +1227,10 @@
                 font-size: 22px;
             }
             .daily-value-card .daily-number {
-                font-size: 30px;
+                font-size: 32px;
             }
         }
 
-        /* ============ 表单弹窗 ============ */
         .form-overlay {
             position: fixed;
             inset: 0;
@@ -1182,7 +1243,6 @@
             pointer-events: none;
             transition: opacity 0.35s ease;
             backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
         }
         .form-overlay.active {
             opacity: 1;
@@ -1197,7 +1257,7 @@
             overflow-y: auto;
             padding: 24px 20px 20px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-            border: 1px solid #2a2a34;
+            border: 1px solid var(--border-subtle);
             transform: translateY(20px);
             transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -1206,7 +1266,7 @@
         }
         .form-panel h3 {
             font-family: var(--font-display);
-            font-size: 20px;
+            font-size: 21px;
             letter-spacing: 0.04em;
             margin-bottom: 16px;
             color: var(--white);
@@ -1217,7 +1277,7 @@
         }
         .form-group label {
             display: block;
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.07em;
             color: var(--text-muted);
@@ -1227,14 +1287,13 @@
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 9px 12px;
+            padding: 10px 12px;
             background: #1a1a20;
             border: 1px solid #333;
             border-radius: 4px;
             color: #fff;
-            font-size: 14px;
+            font-size: 15px;
             font-family: var(--font-body);
-            letter-spacing: 0.02em;
             transition: border-color 0.2s;
             outline: none;
         }
@@ -1244,7 +1303,7 @@
         }
         .form-group input[type="file"] {
             padding: 7px;
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
         }
         .form-group input[type="file"]::file-selector-button {
@@ -1255,8 +1314,7 @@
             border-radius: 4px;
             cursor: pointer;
             margin-right: 8px;
-            font-size: 11px;
-            letter-spacing: 0.04em;
+            font-size: 12px;
         }
         .image-preview-mini {
             width: 100%;
@@ -1272,12 +1330,12 @@
         }
         .btn-submit {
             width: 100%;
-            padding: 11px;
+            padding: 12px;
             background: var(--white);
             color: #000;
             border: none;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             letter-spacing: 0.05em;
             cursor: pointer;
@@ -1290,12 +1348,12 @@
         }
         .btn-cancel {
             width: 100%;
-            padding: 9px;
+            padding: 10px;
             background: transparent;
             color: #999;
             border: 1px solid #444;
             border-radius: 5px;
-            font-size: 12px;
+            font-size: 13px;
             letter-spacing: 0.05em;
             cursor: pointer;
             margin-top: 6px;
@@ -1311,11 +1369,10 @@
                 padding: 18px 14px 16px;
             }
             .form-panel h3 {
-                font-size: 17px;
+                font-size: 18px;
             }
         }
 
-        /* ============ 浮动按钮 ============ */
         .fab-add {
             position: fixed;
             bottom: 32px;
@@ -1344,7 +1401,6 @@
         }
         .fab-add:active {
             transform: scale(0.93);
-            transition: transform 0.1s ease;
         }
         @media (max-width: 640px) {
             .fab-add {
@@ -1356,7 +1412,6 @@
             }
         }
 
-        /* ============ Toast ============ */
         .toast {
             position: fixed;
             bottom: 90px;
@@ -1364,11 +1419,11 @@
             transform: translateX(-50%) translateY(20px);
             background: #2a2a32;
             color: #ddd;
-            padding: 9px 20px;
+            padding: 10px 22px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             letter-spacing: 0.04em;
-            z-index: 300;
+            z-index: 350;
             opacity: 0;
             pointer-events: none;
             transition: all 0.3s ease;
@@ -1379,8 +1434,6 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
-
-        /* 滚动条 */
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -1391,13 +1444,10 @@
             background: #333;
             border-radius: 10px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
         .empty-hint {
             text-align: center;
             color: var(--text-muted);
-            font-size: 13px;
+            font-size: 14px;
             letter-spacing: 0.05em;
             padding: 40px 20px;
             opacity: 0.5;
@@ -1405,8 +1455,6 @@
     </style>
 </head>
 <body>
-
-    <!-- 顶部个人主页 -->
     <header class="profile-header">
         <div class="profile-avatar" id="avatarContainer" title="点击更换头像">
             <span class="avatar-placeholder">🎮</span>
@@ -1416,13 +1464,12 @@
             <div class="profile-id" id="profileId" title="点击编辑昵称">收藏家</div>
             <div class="profile-subtitle">GAME CARD COLLECTION</div>
             <div class="profile-friend-code" id="profileFriendCode" title="点击复制好友编号">
-                <span>SW-0000-0000-0000</span>
-                <span class="copy-icon">📋</span>
+                <span>SW-0000-0000-0000</span><span class="copy-icon">📋</span>
             </div>
         </div>
+        <button class="theme-toggle" id="themeToggle" title="切换黑白模式">🌓</button>
     </header>
 
-    <!-- Tab导航 -->
     <nav class="tab-nav">
         <button class="tab-btn active" data-tab="tab-overview">📊 总览</button>
         <button class="tab-btn" data-tab="tab-games">📚 游戏<span class="tab-badge" id="badgeGames">0</span></button>
@@ -1430,93 +1477,61 @@
         <button class="tab-btn" data-tab="tab-recoup">💰 回血<span class="tab-badge" id="badgeRecoup">0</span></button>
     </nav>
 
-    <!-- Tab0: 总览 -->
     <div class="tab-content active" id="tab-overview">
         <div class="bank-card-full" id="bankCardFull">
-            <div class="bank-card-header">
-                <span class="bank-card-logo">Collection Vault</span>
-                <div class="bank-card-chip"></div>
-            </div>
+            <div class="bank-card-header"><span class="bank-card-logo">Collection Vault</span></div>
             <div class="bank-card-friend-code" id="bankFriendCode" title="点击复制好友编号">
                 <span class="friend-label">好友编号</span>
                 <span id="friendCodeDisplay">SW-0000-0000-0000</span>
                 <span class="copy-hint">点击复制</span>
             </div>
             <div class="bank-card-details">
-                <div class="bank-card-detail-item">
-                    <span class="bank-card-detail-label">总资产价值</span>
-                    <span class="bank-card-detail-value large" id="bankTotalValue">¥0</span>
-                </div>
-                <div class="bank-card-detail-item">
-                    <span class="bank-card-detail-label">游戏数量</span>
-                    <span class="bank-card-detail-value" id="bankGameCount">0</span>
-                </div>
-                <div class="bank-card-detail-item">
-                    <span class="bank-card-detail-label">设备数量</span>
-                    <span class="bank-card-detail-value" id="bankDeviceCount">0</span>
-                </div>
-                <div class="bank-card-detail-item">
-                    <span class="bank-card-detail-label">整体日均成本</span>
-                    <span class="bank-card-detail-value" id="bankAvgDaily">¥0</span>
-                </div>
+                <div class="bank-card-detail-item"><span class="bank-card-detail-label">总资产价值</span><span class="bank-card-detail-value large" id="bankTotalValue">¥0</span></div>
+                <div class="bank-card-detail-item"><span class="bank-card-detail-label">游戏数量</span><span class="bank-card-detail-value" id="bankGameCount">0</span></div>
+                <div class="bank-card-detail-item"><span class="bank-card-detail-label">设备数量</span><span class="bank-card-detail-value" id="bankDeviceCount">0</span></div>
+                <div class="bank-card-detail-item"><span class="bank-card-detail-label">整体日均成本</span><span class="bank-card-detail-value" id="bankAvgDaily">¥0</span></div>
             </div>
         </div>
         <div class="overview-list" id="overviewList"></div>
         <div class="empty-hint" id="overviewEmpty" style="display:none;">暂无任何收藏<br>去游戏或设备页面添加吧</div>
     </div>
 
-    <!-- Tab1: 游戏 -->
     <div class="tab-content" id="tab-games">
-        <div class="shelf-section" id="shelfPhysical">
-            <div class="shelf-section-label"><span class="type-dot physical"></span>实体版卡带</div>
-            <div class="shelf-row" id="shelfRowPhysical"></div>
-            <div class="shelf-board"></div>
-        </div>
-        <div class="shelf-section" id="shelfDigital">
-            <div class="shelf-section-label"><span class="type-dot digital"></span>数字版游戏</div>
-            <div class="shelf-row" id="shelfRowDigital"></div>
-            <div class="shelf-board"></div>
-        </div>
-        <div class="shelf-section" id="shelfSteam">
-            <div class="shelf-section-label"><span class="type-dot steam"></span>Steam 游戏</div>
-            <div class="shelf-row" id="shelfRowSteam"></div>
-            <div class="shelf-board"></div>
-        </div>
+        <div class="shelf-section" id="shelfPhysical"><div class="shelf-section-label"><span class="type-dot physical"></span>实体版卡带</div><div class="shelf-row" id="shelfRowPhysical"></div><div class="shelf-board"></div></div>
+        <div class="shelf-section" id="shelfDigital"><div class="shelf-section-label"><span class="type-dot digital"></span>数字版游戏</div><div class="shelf-row" id="shelfRowDigital"></div><div class="shelf-board"></div></div>
+        <div class="shelf-section" id="shelfSteam"><div class="shelf-section-label"><span class="type-dot steam"></span>Steam 游戏</div><div class="shelf-row" id="shelfRowSteam"></div><div class="shelf-board"></div></div>
         <div class="empty-hint" id="gamesEmpty" style="display:none;">游戏库空空如也<br>点击右下角 + 添加你的第一张游戏</div>
     </div>
 
-    <!-- Tab2: 设备 -->
     <div class="tab-content" id="tab-devices">
-        <div class="device-grid" id="deviceGrid"></div>
+        <div class="device-section" id="deviceSectionConsole"><div class="device-section-label">🎮 主机</div><div class="device-list" id="deviceListConsole"></div></div>
+        <div class="device-section" id="deviceSectionAccessory"><div class="device-section-label">🔧 配件</div><div class="device-list" id="deviceListAccessory"></div></div>
         <div class="empty-hint" id="deviceEmpty" style="display:none;">暂无设备记录<br>点击右下角 + 添加主机或配件</div>
     </div>
 
-    <!-- Tab3: 回血 -->
     <div class="tab-content" id="tab-recoup">
         <div class="recoup-summary" id="recoupSummary">
-            <div class="recoup-summary-item">
-                <span class="recoup-summary-label">卖出总金额</span>
-                <span class="recoup-summary-value" id="recoupTotalSold">¥0</span>
-            </div>
-            <div class="recoup-summary-item">
-                <span class="recoup-summary-label">总成本</span>
-                <span class="recoup-summary-value" id="recoupTotalCost">¥0</span>
-            </div>
-            <div class="recoup-summary-item">
-                <span class="recoup-summary-label">总盈亏</span>
-                <span class="recoup-summary-value" id="recoupTotalPnL">¥0</span>
-            </div>
-            <div class="recoup-summary-item">
-                <span class="recoup-summary-label">交易笔数</span>
-                <span class="recoup-summary-value" id="recoupCount">0</span>
-            </div>
+            <div class="recoup-summary-item"><span class="recoup-summary-label">卖出总金额</span><span class="recoup-summary-value" id="recoupTotalSold">¥0</span></div>
+            <div class="recoup-summary-item"><span class="recoup-summary-label">总成本</span><span class="recoup-summary-value" id="recoupTotalCost">¥0</span></div>
+            <div class="recoup-summary-item"><span class="recoup-summary-label">总盈亏</span><span class="recoup-summary-value" id="recoupTotalPnL">¥0</span></div>
+            <div class="recoup-summary-item"><span class="recoup-summary-label">交易笔数</span><span class="recoup-summary-value" id="recoupCount">0</span></div>
         </div>
         <div class="recoup-list" id="recoupList"></div>
-        <div class="empty-hint" id="recoupEmpty" style="display:none;">暂无回血记录<br>卖出卡带后在此记录，自动计算盈亏</div>
+        <div class="empty-hint" id="recoupEmpty" style="display:none;">暂无回血记录</div>
     </div>
 
-    <!-- 浮动添加按钮 -->
     <button class="fab-add" id="fabAdd" title="添加" aria-label="添加">+</button>
+
+    <!-- 自定义确认弹窗 -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-dialog">
+            <p id="confirmMsg">确定要执行此操作吗？</p>
+            <div class="confirm-buttons">
+                <button class="confirm-btn confirm-btn-no" id="confirmNo">取消</button>
+                <button class="confirm-btn confirm-btn-yes" id="confirmYes">确认删除</button>
+            </div>
+        </div>
+    </div>
 
     <!-- 详情弹窗 -->
     <div class="modal-overlay" id="modalOverlay">
@@ -1524,7 +1539,7 @@
             <button class="modal-close" id="modalClose">✕</button>
             <div class="modal-cover-wrap" id="modalCoverWrap">
                 <img src="" alt="" id="modalCoverImg" style="display:none;">
-                <img src="" alt="" class="modal-cover-placeholder" id="modalCoverPlaceholder" style="display:none;">
+                <img src="" alt="" id="modalCoverPlaceholder" style="display:none;">
             </div>
             <div class="modal-body">
                 <h2 class="modal-game-title" id="modalTitle"></h2>
@@ -1536,10 +1551,8 @@
                     <div class="modal-info-item"><span class="modal-info-label">版本/类型</span><span class="modal-info-value" id="modalVersion"></span></div>
                 </div>
                 <div class="daily-value-card">
-                    <div class="daily-label">日均持有价值</div>
-                    <div class="daily-number" id="modalDailyValue">¥0</div>
-                    <div class="daily-unit">/ 天</div>
-                    <div class="daily-verdict" id="modalVerdict"></div>
+                    <div class="daily-label">日均持有价值</div><div class="daily-number" id="modalDailyValue">¥0</div>
+                    <div class="daily-unit">/ 天</div><div class="daily-verdict" id="modalVerdict"></div>
                 </div>
                 <div class="modal-actions" id="modalActionsGame">
                     <button class="btn-edit" id="btnEditGame">编辑</button>
@@ -1558,148 +1571,93 @@
     <div class="form-overlay" id="formOverlay">
         <div class="form-panel" id="formPanel">
             <h3 id="formTitle">添加新游戏</h3>
-            <div class="form-group">
-                <label>标题</label>
-                <input type="text" id="inputTitle" placeholder="输入名称" maxlength="40">
-            </div>
-            <div class="form-group" id="formGroupType">
-                <label>类型</label>
-                <select id="inputType">
-                    <option value="physical">📦 实体版</option>
-                    <option value="digital">☁️ 数字版</option>
-                    <option value="steam">💻 Steam</option>
-                </select>
-            </div>
-            <div class="form-group" id="formGroupDeviceType" style="display:none;">
-                <label>设备类型</label>
-                <select id="inputDeviceType">
-                    <option value="switch">Switch 主机</option>
-                    <option value="switch-lite">Switch Lite</option>
-                    <option value="switch-oled">Switch OLED</option>
-                    <option value="pro-controller">Pro 手柄</option>
-                    <option value="joycon">Joy-Con</option>
-                    <option value="other">其他配件</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>购买价格 (¥)</label>
-                <input type="number" id="inputPrice" placeholder="例如：350" min="0" step="0.01">
-            </div>
-            <div class="form-group">
-                <label>购买日期</label>
-                <input type="date" id="inputDate">
-            </div>
-            <div class="form-group" id="formGroupVersion">
-                <label>版本色标</label>
-                <select id="inputVersion">
-                    <option value="red">🔴 红色 — 限量版/典藏版</option>
-                    <option value="blue" selected>🔵 蓝色 — 标准版</option>
-                    <option value="green">🟢 绿色 — 特别版/年度版</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>封面图片（可选）</label>
-                <input type="file" id="inputImage" accept="image/*" capture="environment">
-                <img class="image-preview-mini" id="imagePreview" alt="预览">
-            </div>
+            <div class="form-group"><label>标题</label><input type="text" id="inputTitle" placeholder="输入名称" maxlength="40"></div>
+            <div class="form-group" id="formGroupType"><label>类型</label><select id="inputType"><option value="physical">📦 实体版</option><option value="digital">☁️ 数字版</option><option value="steam">💻 Steam</option></select></div>
+            <div class="form-group" id="formGroupDeviceType" style="display:none;"><label>设备类型</label><select id="inputDeviceType"><option value="switch">Switch 主机</option><option value="switch-lite">Switch Lite</option><option value="switch-oled">Switch OLED</option><option value="pro-controller">Pro 手柄</option><option value="joycon">Joy-Con</option><option value="other">其他配件</option></select></div>
+            <div class="form-group"><label>购买价格 (¥)</label><input type="number" id="inputPrice" placeholder="例如：350" min="0" step="0.01"></div>
+            <div class="form-group"><label>购买日期</label><input type="date" id="inputDate"></div>
+            <div class="form-group" id="formGroupVersion"><label>版本色标</label><select id="inputVersion"><option value="red">🔴 限量版</option><option value="blue" selected>🔵 标准版</option><option value="green">🟢 特别版</option></select></div>
+            <div class="form-group"><label>封面图片（可选）</label><input type="file" id="inputImage" accept="image/*" capture="environment"><img class="image-preview-mini" id="imagePreview" alt="预览"></div>
             <button class="btn-submit" id="btnSubmit">保存</button>
             <button class="btn-cancel" id="btnCancel">取消</button>
         </div>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
-
-    <!-- 隐藏的文件上传input用于头像 -->
     <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
 
     <script>
         (function() {
-            // ============ DOM引用 ============
-            const shelfRowPhysical = document.getElementById('shelfRowPhysical');
-            const shelfRowDigital = document.getElementById('shelfRowDigital');
-            const shelfRowSteam = document.getElementById('shelfRowSteam');
-            const gamesEmpty = document.getElementById('gamesEmpty');
-            const deviceGrid = document.getElementById('deviceGrid');
-            const deviceEmpty = document.getElementById('deviceEmpty');
-            const recoupList = document.getElementById('recoupList');
-            const recoupEmpty = document.getElementById('recoupEmpty');
-            const recoupSummary = document.getElementById('recoupSummary');
-            const recoupTotalSold = document.getElementById('recoupTotalSold');
-            const recoupTotalCost = document.getElementById('recoupTotalCost');
-            const recoupTotalPnL = document.getElementById('recoupTotalPnL');
-            const recoupCount = document.getElementById('recoupCount');
-            const overviewList = document.getElementById('overviewList');
-            const overviewEmpty = document.getElementById('overviewEmpty');
+            const $ = id => document.getElementById(id);
+            const shelfRowPhysical = $('shelfRowPhysical'),
+                shelfRowDigital = $('shelfRowDigital'),
+                shelfRowSteam = $('shelfRowSteam'),
+                gamesEmpty = $('gamesEmpty');
+            const deviceListConsole = $('deviceListConsole'),
+                deviceListAccessory = $('deviceListAccessory'),
+                deviceEmpty = $('deviceEmpty');
+            const recoupList = $('recoupList'),
+                recoupEmpty = $('recoupEmpty'),
+                recoupSummary = $('recoupSummary');
+            const overviewList = $('overviewList'),
+                overviewEmpty = $('overviewEmpty');
+            const modalOverlay = $('modalOverlay'),
+                modalCoverImg = $('modalCoverImg'),
+                modalCoverPlaceholder = $('modalCoverPlaceholder');
+            const modalTitle = $('modalTitle'),
+                modalVersionBadge = $('modalVersionBadge'),
+                modalPrice = $('modalPrice'),
+                modalDate = $('modalDate'),
+                modalDays = $('modalDays'),
+                modalVersion = $('modalVersion'),
+                modalDailyValue = $('modalDailyValue'),
+                modalVerdict = $('modalVerdict'),
+                modalClose = $('modalClose');
+            const modalActionsGame = $('modalActionsGame'),
+                modalActionsDevice = $('modalActionsDevice');
+            const formOverlay = $('formOverlay'),
+                formTitle = $('formTitle'),
+                inputTitle = $('inputTitle'),
+                inputType = $('inputType'),
+                inputDeviceType = $('inputDeviceType'),
+                inputPrice = $('inputPrice'),
+                inputDate = $('inputDate'),
+                inputVersion = $('inputVersion'),
+                inputImage = $('inputImage'),
+                imagePreview = $('imagePreview'),
+                formGroupType = $('formGroupType'),
+                formGroupDeviceType = $('formGroupDeviceType'),
+                formGroupVersion = $('formGroupVersion');
+            const fabAdd = $('fabAdd'),
+                toast = $('toast'),
+                profileId = $('profileId'),
+                avatarContainer = $('avatarContainer'),
+                avatarFileInput = $('avatarFileInput'),
+                themeToggle = $('themeToggle');
+            const profileFriendCode = $('profileFriendCode'),
+                bankFriendCode = $('bankFriendCode'),
+                friendCodeDisplay = $('friendCodeDisplay');
+            const confirmOverlay = $('confirmOverlay'),
+                confirmMsg = $('confirmMsg'),
+                confirmYes = $('confirmYes'),
+                confirmNo = $('confirmNo');
 
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modalCoverImg = document.getElementById('modalCoverImg');
-            const modalCoverPlaceholder = document.getElementById('modalCoverPlaceholder');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalVersionBadge = document.getElementById('modalVersionBadge');
-            const modalPrice = document.getElementById('modalPrice');
-            const modalDate = document.getElementById('modalDate');
-            const modalDays = document.getElementById('modalDays');
-            const modalVersion = document.getElementById('modalVersion');
-            const modalDailyValue = document.getElementById('modalDailyValue');
-            const modalVerdict = document.getElementById('modalVerdict');
-            const modalClose = document.getElementById('modalClose');
-            const modalActionsGame = document.getElementById('modalActionsGame');
-            const modalActionsDevice = document.getElementById('modalActionsDevice');
-            const btnEditGame = document.getElementById('btnEditGame');
-            const btnDeleteGame = document.getElementById('btnDeleteGame');
-            const btnSellGame = document.getElementById('btnSellGame');
-            const btnEditDevice = document.getElementById('btnEditDevice');
-            const btnDeleteDevice = document.getElementById('btnDeleteDevice');
-
-            const formOverlay = document.getElementById('formOverlay');
-            const formTitle = document.getElementById('formTitle');
-            const inputTitle = document.getElementById('inputTitle');
-            const inputType = document.getElementById('inputType');
-            const inputDeviceType = document.getElementById('inputDeviceType');
-            const inputPrice = document.getElementById('inputPrice');
-            const inputDate = document.getElementById('inputDate');
-            const inputVersion = document.getElementById('inputVersion');
-            const inputImage = document.getElementById('inputImage');
-            const imagePreview = document.getElementById('imagePreview');
-            const btnSubmit = document.getElementById('btnSubmit');
-            const btnCancel = document.getElementById('btnCancel');
-            const formGroupType = document.getElementById('formGroupType');
-            const formGroupDeviceType = document.getElementById('formGroupDeviceType');
-            const formGroupVersion = document.getElementById('formGroupVersion');
-
-            const fabAdd = document.getElementById('fabAdd');
-            const toast = document.getElementById('toast');
-            const profileId = document.getElementById('profileId');
-            const avatarContainer = document.getElementById('avatarContainer');
-            const avatarFileInput = document.getElementById('avatarFileInput');
-            const profileFriendCode = document.getElementById('profileFriendCode');
-            const bankFriendCode = document.getElementById('bankFriendCode');
-            const friendCodeDisplay = document.getElementById('friendCodeDisplay');
-            const bankTotalValue = document.getElementById('bankTotalValue');
-            const bankGameCount = document.getElementById('bankGameCount');
-            const bankDeviceCount = document.getElementById('bankDeviceCount');
-            const bankAvgDaily = document.getElementById('bankAvgDaily');
-            const badgeGames = document.getElementById('badgeGames');
-            const badgeDevices = document.getElementById('badgeDevices');
-            const badgeRecoup = document.getElementById('badgeRecoup');
-
-            // ============ 数据 ============
-            const STORAGE_GAMES = 'game_collection_data_v3';
-            const STORAGE_DEVICES = 'device_collection_data_v3';
-            const STORAGE_RECOUP = 'recoup_collection_data_v3';
-            const STORAGE_PROFILE = 'game_collection_profile_v2';
-            const STORAGE_FRIEND_CODE = 'friend_code_data';
-
-            let gamesData = [];
-            let devicesData = [];
-            let recoupData = [];
-            let editingId = null;
-            let editingMode = 'game';
-            let currentDetailMode = 'game';
-            let currentDetailId = null;
-            let currentTab = 'tab-overview';
-            let friendCode = 'SW-0000-0000-0000';
+            const STORAGE_GAMES = 'gcv3_g',
+                STORAGE_DEVICES = 'gcv3_d',
+                STORAGE_RECOUP = 'gcv3_r',
+                STORAGE_PROFILE = 'gcv3_p',
+                STORAGE_FRIEND_CODE = 'gcv3_fc',
+                STORAGE_THEME = 'gcv3_theme';
+            let gamesData = [],
+                devicesData = [],
+                recoupData = [],
+                editingId = null,
+                editingMode = 'game',
+                currentDetailMode = 'game',
+                currentDetailId = null,
+                currentTab = 'tab-overview',
+                friendCode = 'SW-0000-0000-0000';
+            let confirmResolve = null;
 
             const defaultGames = [
                 { id: 'g01', title: '塞尔达传说 王国之泪', purchasePrice: 380, purchaseDate: '2023-05-12',
@@ -1712,63 +1670,38 @@
                     type: 'physical', image: null },
                 { id: 'g05', title: '集合啦！动物森友会', purchasePrice: 310, purchaseDate: '2021-06-30', version: 'blue',
                     type: 'digital', image: null },
-                { id: 'g06', title: '马力欧卡丁车8 豪华版', purchasePrice: 280, purchaseDate: '2022-03-18', version: 'green',
-                    type: 'physical', image: null },
-                { id: 'g07', title: '星之卡比 探索发现', purchasePrice: 290, purchaseDate: '2023-07-22', version: 'blue',
-                    type: 'digital', image: null },
-                { id: 'g08', title: '异度神剑3', purchasePrice: 360, purchaseDate: '2024-06-01', version: 'red',
-                    type: 'physical', image: null },
-                { id: 'g09', title: 'Hades', purchasePrice: 78, purchaseDate: '2024-03-15', version: 'blue',
-                    type: 'steam', image: null },
-                { id: 'g10', title: 'Stardew Valley', purchasePrice: 48, purchaseDate: '2023-11-10', version: 'green',
-                    type: 'steam', image: null },
+                { id: 'g06', title: 'Hades', purchasePrice: 78, purchaseDate: '2024-03-15', version: 'blue',
+                type: 'steam', image: null },
             ];
             const defaultDevices = [
                 { id: 'd01', title: 'Switch OLED 白色', purchasePrice: 2100, purchaseDate: '2023-01-15',
                     deviceType: 'switch-oled', image: null },
                 { id: 'd02', title: 'Pro 手柄 黑色', purchasePrice: 429, purchaseDate: '2023-03-10',
-                deviceType: 'pro-controller', image: null },
+                    deviceType: 'pro-controller', image: null },
             ];
             const defaultRecoup = [
                 { id: 'r01', title: '宝可梦 盾', buyPrice: 300, sellPrice: 260, sellDate: '2024-02-20', image: null },
-                { id: 'r02', title: '马力欧网球', buyPrice: 280, sellPrice: 310, sellDate: '2024-05-10', image: null },
             ];
 
-            // ============ 数据加载（修复Bug2：只在无数据时使用默认值，不强制覆盖） ============
             function loadData(key, fallback) {
                 try {
                     const raw = localStorage.getItem(key);
                     if (raw !== null && raw !== undefined) {
                         const data = JSON.parse(raw);
-                        if (Array.isArray(data) && data.length > 0) return data;
-                        // 如果解析出来是空数组，也返回空数组（用户可能手动清空了）
-                        if (Array.isArray(data) && data.length === 0) return [];
+                        if (Array.isArray(data)) return data;
                     }
-                    // 只有当本地存储完全不存在该key时，才返回fallback
-                    if (raw === null || raw === undefined) {
-                        const fb = JSON.parse(JSON.stringify(fallback));
-                        // 首次使用时保存默认数据
-                        if (fb.length > 0) {
-                            try { localStorage.setItem(key, JSON.stringify(fb)); } catch (e) {}
-                        }
-                        return fb;
-                    }
-                    return [];
-                } catch (e) {
                     const fb = JSON.parse(JSON.stringify(fallback));
+                    if (fb.length > 0) try { localStorage.setItem(key, JSON.stringify(fb)); } catch (e) {}
                     return fb;
-                }
+                } catch (e) { return JSON.parse(JSON.stringify(fallback)); }
             }
 
-            function saveData(key, data) {
-                try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) { showToast('存储空间不足'); }
-            }
+            function saveData(key, data) { try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {} }
 
             function loadAll() {
                 gamesData = loadData(STORAGE_GAMES, defaultGames);
                 devicesData = loadData(STORAGE_DEVICES, defaultDevices);
                 recoupData = loadData(STORAGE_RECOUP, defaultRecoup);
-                // 规范化数据
                 gamesData.forEach((g, i) => { if (!g.id) g.id = 'g' + Date.now() + i; if (!g.type) g.type =
                         'physical'; if (!g.version) g.version = 'blue';
                     g.purchasePrice = parseFloat(g.purchasePrice) || 0; });
@@ -1778,135 +1711,71 @@
                 recoupData.forEach((r, i) => { if (!r.id) r.id = 'r' + Date.now() + i;
                     r.buyPrice = parseFloat(r.buyPrice) || 0;
                     r.sellPrice = parseFloat(r.sellPrice) || 0; });
-                // 加载好友编号
-                try {
-                    const fc = localStorage.getItem(STORAGE_FRIEND_CODE);
-                    if (fc) friendCode = fc;
-                } catch (e) {}
+                try { const fc = localStorage.getItem(STORAGE_FRIEND_CODE); if (fc) friendCode = fc; } catch (e) {}
                 friendCodeDisplay.textContent = friendCode;
                 profileFriendCode.querySelector('span').textContent = friendCode;
             }
 
-            function saveAll() {
-                saveData(STORAGE_GAMES, gamesData);
+            function saveAll() { saveData(STORAGE_GAMES, gamesData);
                 saveData(STORAGE_DEVICES, devicesData);
-                saveData(STORAGE_RECOUP, recoupData);
-            }
+                saveData(STORAGE_RECOUP, recoupData); }
 
-            // ============ 工具 ============
-            function getDaysHeld(dateStr) { const d = new Date(dateStr); const now = new Date(); return Math.max(1,
-                    Math.floor((now - d) / (1000 * 60 * 60 * 24))); }
+            function getDaysHeld(d) { return Math.max(1, Math.floor((new Date() - new Date(d)) / 86400000)); }
 
-            function getDailyValue(price, dateStr) { return price / getDaysHeld(dateStr); }
+            function getDailyValue(p, d) { return p / getDaysHeld(d); }
 
-            function formatCurrency(num) { return '¥' + parseFloat(num).toFixed(2); }
+            function fmt(n) { return '¥' + parseFloat(n).toFixed(2); }
 
-            function getVersionLabel(v) { switch (v) { case 'red':
-                    return '限量版';
-                case 'blue':
-                    return '标准版';
-                case 'green':
-                    return '特别版';
-                default:
-                    return '标准版'; } }
+            function vLabel(v) { return { red: '限量版', blue: '标准版', green: '特别版' } [v] || '标准版'; }
 
-            function getVersionBadgeClass(v) { switch (v) { case 'red':
-                    return 'badge-red';
-                case 'blue':
-                    return 'badge-blue';
-                case 'green':
-                    return 'badge-green';
-                default:
-                    return 'badge-blue'; } }
+            function vBadge(v) { return { red: 'badge-red', blue: 'badge-blue', green: 'badge-green' } [v] ||
+            'badge-blue'; }
 
-            function getTypeLabel(t) { switch (t) { case 'physical':
-                    return '实体版';
-                case 'digital':
-                    return '数字版';
-                case 'steam':
-                    return 'Steam';
-                default:
-                    return '实体版'; } }
+            function tLabel(t) { return { physical: '实体版', digital: '数字版', steam: 'Steam' } [t] || '实体版'; }
 
-            function getTypeBadgeClass(t) { switch (t) { case 'physical':
-                    return 'type-badge-physical';
-                case 'digital':
-                    return 'type-badge-digital';
-                case 'steam':
-                    return 'type-badge-steam';
-                default:
-                    return 'type-badge-physical'; } }
+            function tBadge(t) { return { physical: 'type-badge-physical', digital: 'type-badge-digital',
+                steam: 'type-badge-steam' } [t] || 'type-badge-physical'; }
 
-            function getDeviceTypeLabel(t) { switch (t) { case 'switch':
-                    return 'Switch 主机';
-                case 'switch-lite':
-                    return 'Switch Lite';
-                case 'switch-oled':
-                    return 'Switch OLED';
-                case 'pro-controller':
-                    return 'Pro 手柄';
-                case 'joycon':
-                    return 'Joy-Con';
-                case 'other':
-                    return '其他配件';
-                default:
-                    return '设备'; } }
+            function dtLabel(t) { return { switch: 'Switch主机', 'switch-lite': 'Switch Lite', 'switch-oled': 'Switch OLED',
+                'pro-controller': 'Pro手柄', 'joycon': 'Joy-Con', 'other': '其他配件' } [t] || '设备'; }
 
-            function generateId(prefix) { return prefix + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+            function isConsole(t) { return ['switch', 'switch-lite', 'switch-oled'].includes(t); }
 
-            function generatePlaceholderCover(title, version) {
-                const canvas = document.createElement('canvas');
-                canvas.width = 260;
-                canvas.height = 364;
-                const ctx = canvas.getContext('2d');
-                let bgColor, accentColor;
-                switch (version) { case 'red':
-                        bgColor = '#2a1018';
-                        accentColor = '#c0392b';
-                        break;
-                    case 'blue':
-                        bgColor = '#10182a';
-                        accentColor = '#3a6fb5';
-                        break;
-                    case 'green':
-                        bgColor = '#0e2218';
-                        accentColor = '#27ae60';
-                        break;
-                    default:
-                        bgColor = '#1a1a22';
-                        accentColor = '#666'; }
-                ctx.fillStyle = bgColor;
+            function genId(p) { return p + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+
+            function placeholderCover(title, version) {
+                const c = document.createElement('canvas');
+                c.width = 260;
+                c.height = 364;
+                const ctx = c.getContext('2d');
+                const bg = { red: '#2a1018', blue: '#10182a', green: '#0e2218' } [version] || '#1a1a22';
+                const ac = { red: '#c0392b', blue: '#3a6fb5', green: '#27ae60' } [version] || '#666';
+                ctx.fillStyle = bg;
                 ctx.fillRect(0, 0, 260, 364);
-                ctx.strokeStyle = accentColor;
+                ctx.strokeStyle = ac;
                 ctx.lineWidth = 2;
                 ctx.globalAlpha = 0.4;
                 ctx.strokeRect(18, 18, 224, 328);
-                ctx.globalAlpha = 0.2;
-                ctx.strokeRect(26, 26, 208, 312);
                 ctx.globalAlpha = 1;
                 ctx.fillStyle = '#d8d8e0';
                 ctx.font = 'bold 20px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                let lines = [];
-                if (title.length <= 6) lines = [title];
-                else if (title.length <= 12) { const mid = Math.ceil(title.length / 2);
-                    lines = [title.substring(0, mid), title.substring(mid)]; } else lines = [title.substring(0, 6),
-                    title.substring(6, 12), title.substring(12, 16) + '…'
+                let lines = title.length <= 6 ? [title] : title.length <= 12 ? [title.substring(0, Math.ceil(title
+                    .length / 2)), title.substring(Math.ceil(title.length / 2))] : [title.substring(0, 6), title
+                    .substring(6, 12), title.substring(12, 16) + '…'
                 ];
-                const lh = 30;
-                const sy = 182 - (lines.length * lh) / 2;
-                lines.forEach((l, i) => ctx.fillText(l, 130, sy + i * lh));
-                ctx.fillStyle = accentColor;
+                lines.forEach((l, i) => ctx.fillText(l, 130, 182 - (lines.length * 30) / 2 + i * 30));
+                ctx.fillStyle = ac;
                 ctx.fillRect(0, 354, 260, 10);
-                return canvas.toDataURL('image/jpeg', 0.75);
+                return c.toDataURL('image/jpeg', 0.75);
             }
 
-            function generateDevicePlaceholder(title) {
-                const canvas = document.createElement('canvas');
-                canvas.width = 260;
-                canvas.height = 325;
-                const ctx = canvas.getContext('2d');
+            function devicePlaceholder(title) {
+                const c = document.createElement('canvas');
+                c.width = 260;
+                c.height = 325;
+                const ctx = c.getContext('2d');
                 ctx.fillStyle = '#1e1e28';
                 ctx.fillRect(0, 0, 260, 325);
                 ctx.strokeStyle = '#444';
@@ -1918,257 +1787,190 @@
                 ctx.font = 'bold 16px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                const lines = title.length <= 8 ? [title] : [title.substring(0, 8), title.substring(8, 16)];
+                let lines = title.length <= 8 ? [title] : [title.substring(0, 8), title.substring(8, 16)];
                 lines.forEach((l, i) => ctx.fillText(l, 130, 162 + i * 22));
-                return canvas.toDataURL('image/jpeg', 0.75);
+                return c.toDataURL('image/jpeg', 0.75);
             }
 
-            // ============ 更新统计 ============
-            function updateAllStats() {
-                const totalGameValue = gamesData.reduce((s, g) => s + (parseFloat(g.purchasePrice) || 0), 0);
-                const totalDeviceValue = devicesData.reduce((s, d) => s + (parseFloat(d.purchasePrice) || 0), 0);
-                const totalValue = totalGameValue + totalDeviceValue;
-                bankTotalValue.textContent = formatCurrency(totalValue);
-                bankGameCount.textContent = gamesData.length;
-                bankDeviceCount.textContent = devicesData.length;
-                let totalWeightedDays = 0;
-                const allItems = [...gamesData, ...devicesData];
-                allItems.forEach(item => { totalWeightedDays += getDaysHeld(item.purchaseDate); });
-                const avgD = totalWeightedDays > 0 ? totalValue / totalWeightedDays : 0;
-                bankAvgDaily.textContent = formatCurrency(avgD);
-                badgeGames.textContent = gamesData.length;
-                badgeDevices.textContent = devicesData.length;
-                badgeRecoup.textContent = recoupData.length;
-                const totalSold = recoupData.reduce((s, r) => s + (parseFloat(r.sellPrice) || 0), 0);
-                const totalCost = recoupData.reduce((s, r) => s + (parseFloat(r.buyPrice) || 0), 0);
-                const totalPnL = totalSold - totalCost;
-                recoupTotalSold.textContent = formatCurrency(totalSold);
-                recoupTotalCost.textContent = formatCurrency(totalCost);
-                recoupTotalPnL.textContent = formatCurrency(totalPnL);
-                recoupTotalPnL.className = 'recoup-summary-value ' + (totalPnL > 0 ? 'profit' : totalPnL < 0 ?
-                    'loss' : '');
-                recoupCount.textContent = recoupData.length;
+            // 自定义确认弹窗（替代浏览器confirm，修复bug）
+            function customConfirm(msg) {
+                return new Promise((resolve) => {
+                    confirmMsg.textContent = msg;
+                    confirmOverlay.classList.add('active');
+                    confirmResolve = resolve;
+                });
             }
 
-            // ============ 渲染总览 ============
+            function closeConfirm(result) {
+                confirmOverlay.classList.remove('active');
+                if (confirmResolve) { confirmResolve(result);
+                    confirmResolve = null; }
+            }
+            confirmYes.addEventListener('click', (e) => { e.stopPropagation();
+                closeConfirm(true); });
+            confirmNo.addEventListener('click', (e) => { e.stopPropagation();
+                closeConfirm(false); });
+            confirmOverlay.addEventListener('click', function(e) { if (e.target === confirmOverlay) closeConfirm(
+                    false); });
+
+            function updateStats() {
+                const tv = gamesData.reduce((s, g) => s + (g.purchasePrice || 0), 0) + devicesData.reduce((s, d) => s +
+                    (d.purchasePrice || 0), 0);
+                $('bankTotalValue').textContent = fmt(tv);
+                $('bankGameCount').textContent = gamesData.length;
+                $('bankDeviceCount').textContent = devicesData.length;
+                let twd = 0;
+                [...gamesData, ...devicesData].forEach(i => twd += getDaysHeld(i.purchaseDate));
+                $('bankAvgDaily').textContent = fmt(twd > 0 ? tv / twd : 0);
+                $('badgeGames').textContent = gamesData.length;
+                $('badgeDevices').textContent = devicesData.length;
+                $('badgeRecoup').textContent = recoupData.length;
+                const ts = recoupData.reduce((s, r) => s + (r.sellPrice || 0), 0),
+                    tc = recoupData.reduce((s, r) => s + (r.buyPrice || 0), 0),
+                    tp = ts - tc;
+                $('recoupTotalSold').textContent = fmt(ts);
+                $('recoupTotalCost').textContent = fmt(tc);
+                $('recoupTotalPnL').textContent = fmt(tp);
+                $('recoupTotalPnL').className = 'recoup-summary-value ' + (tp > 0 ? 'profit' : tp < 0 ? 'loss' : '');
+                $('recoupCount').textContent = recoupData.length;
+            }
+
             function renderOverview() {
                 overviewList.innerHTML = '';
-                const allItems = [
-                    ...gamesData.map(g => ({ ...g, itemType: 'game' })),
-                    ...devicesData.map(d => ({ ...d, itemType: 'device' })),
-                ];
-                // 按购买日期倒序
-                allItems.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
-                if (allItems.length === 0) {
-                    overviewEmpty.style.display = 'block';
-                } else {
-                    overviewEmpty.style.display = 'none';
-                    allItems.forEach(item => {
-                        const div = document.createElement('div');
-                        div.className = 'overview-item';
-                        const typeLabel = item.itemType === 'game' ? getTypeLabel(item.type || 'physical') :
-                            getDeviceTypeLabel(item.deviceType || 'switch');
-                        const icon = item.itemType === 'game' ? (item.type === 'steam' ? '💻' : item
-                            .type === 'digital' ? '☁️' : '📦') : '🎮';
-                        div.innerHTML = `
-                            <div class="overview-item-icon">${icon}</div>
-                            <div class="overview-item-info">
-                                <div class="overview-item-title">${item.title}</div>
-                                <div class="overview-item-date">${item.purchaseDate}</div>
-                            </div>
-                            <span class="overview-item-type">${typeLabel}</span>
-                            <span class="overview-item-price">${formatCurrency(item.purchasePrice)}</span>
-                        `;
-                        div.addEventListener('click', () => {
-                            if (item.itemType === 'game') {
-                                openDetailGame(item.id);
-                            } else {
-                                openDetailDevice(item.id);
-                            }
-                        });
-                        overviewList.appendChild(div);
-                    });
-                }
+                const all = [...gamesData.map(g => ({ ...g, itemType: 'game' })), ...devicesData.map(d => ({ ...d,
+                    itemType: 'device' }))];
+                all.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+                if (all.length === 0) { overviewEmpty.style.display = 'block'; return; }
+                overviewEmpty.style.display = 'none';
+                all.forEach(item => {
+                    const d = document.createElement('div');
+                    d.className = 'overview-item';
+                    const icon = item.itemType === 'game' ? (item.type === 'steam' ? '💻' : item.type ===
+                        'digital' ? '☁️' : '📦') : '🎮';
+                    d.innerHTML = `<div class="overview-item-icon">${icon}</div><div class="overview-item-info"><div class="overview-item-title">${item.title}</div><div class="overview-item-date">${item.purchaseDate}</div></div><span class="overview-item-type">${item.itemType==='game'?tLabel(item.type):dtLabel(item.deviceType)}</span><span class="overview-item-price">${fmt(item.purchasePrice)}</span>`;
+                    d.addEventListener('click', (e) => { e.stopPropagation(); if (item.itemType === 'game')
+                            openDetailGame(item.id);
+                        else openDetailDevice(item.id); });
+                    overviewList.appendChild(d);
+                });
             }
 
-            // ============ 渲染游戏书架 ============
             function renderGames() {
-                const physical = gamesData.filter(g => g.type === 'physical');
-                const digital = gamesData.filter(g => g.type === 'digital');
-                const steam = gamesData.filter(g => g.type === 'steam');
-
-                function renderRow(container, games) {
+                ['physical', 'digital', 'steam'].forEach(type => {
+                    const container = { physical: shelfRowPhysical, digital: shelfRowDigital,
+                        steam: shelfRowSteam } [type];
+                    const games = gamesData.filter(g => g.type === type);
                     container.innerHTML = '';
-                    if (games.length === 0) {
-                        container.innerHTML =
-                            '<div class="empty-hint" style="padding:20px;width:100%;">暂无此类别游戏</div>';
-                        return;
-                    }
+                    if (games.length === 0) { container.innerHTML =
+                            '<div class="empty-hint" style="padding:20px;width:100%;">暂无此类别游戏</div>'; return; }
                     games.forEach(game => {
                         const card = document.createElement('div');
                         card.className = 'game-card';
-                        card.setAttribute('data-game-id', game.id);
                         const inner = document.createElement('div');
                         inner.className = 'game-card-inner tag-' + (game.version || 'blue');
-                        const typeBadge = document.createElement('span');
-                        typeBadge.className = 'game-card-type-badge ' + getTypeBadgeClass(game.type);
-                        typeBadge.textContent = getTypeLabel(game.type);
-                        inner.appendChild(typeBadge);
+                        const badge = document.createElement('span');
+                        badge.className = 'game-card-type-badge ' + tBadge(game.type);
+                        badge.textContent = tLabel(game.type);
+                        inner.appendChild(badge);
                         const img = document.createElement('img');
                         img.className = 'game-card-cover';
-                        if (game.image && game.image.startsWith('data:')) {
-                            img.src = game.image;
-                            img.alt = game.title;
-                        } else {
-                            img.src = generatePlaceholderCover(game.title, game.version);
-                            img.alt = game.title;
-                            img.classList.add('placeholder-cover');
-                        }
-                        img.onerror = function() {
-                            this.src = generatePlaceholderCover(game.title, game.version);
-                            this.classList.add('placeholder-cover');
-                        };
+                        img.src = (game.image && game.image.startsWith('data:')) ? game.image :
+                            placeholderCover(game.title, game.version);
+                        if (!(game.image && game.image.startsWith('data:'))) img.classList.add(
+                            'placeholder-cover');
+                        img.alt = game.title;
                         img.loading = 'lazy';
-                        inner.appendChild(img);
-                        card.appendChild(inner);
-                        const titleTag = document.createElement('div');
-                        titleTag.className = 'game-card-title-tag';
-                        titleTag.textContent = game.title;
-                        card.appendChild(titleTag);
-                        card.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            openDetailGame(game.id);
-                        });
-                        container.appendChild(card);
-                    });
-                }
-                renderRow(shelfRowPhysical, physical);
-                renderRow(shelfRowDigital, digital);
-                renderRow(shelfRowSteam, steam);
-                const total = gamesData.length;
-                gamesEmpty.style.display = total === 0 ? 'block' : 'none';
-                document.getElementById('shelfPhysical').style.display = physical.length === 0 && digital.length >
-                    0 && steam.length > 0 ? 'none' : '';
-                document.getElementById('shelfDigital').style.display = digital.length === 0 && physical.length >
-                    0 && steam.length > 0 ? 'none' : '';
-                document.getElementById('shelfSteam').style.display = steam.length === 0 && physical.length > 0 &&
-                    digital.length > 0 ? 'none' : '';
-            }
-
-            // ============ 渲染设备 ============
-            function renderDevices() {
-                deviceGrid.innerHTML = '';
-                if (devicesData.length === 0) {
-                    deviceEmpty.style.display = 'block';
-                } else {
-                    deviceEmpty.style.display = 'none';
-                    devicesData.forEach(dev => {
-                        const card = document.createElement('div');
-                        card.className = 'device-card';
-                        const inner = document.createElement('div');
-                        inner.className = 'device-card-inner';
-                        const img = document.createElement('img');
-                        img.className = 'device-card-cover';
-                        if (dev.image && dev.image.startsWith('data:')) {
-                            img.src = dev.image;
-                            img.alt = dev.title;
-                        } else {
-                            img.src = generateDevicePlaceholder(dev.title);
-                            img.alt = dev.title;
-                        }
-                        img.onerror = function() { this.src = generateDevicePlaceholder(dev.title); };
-                        img.loading = 'lazy';
+                        img.onerror = function() { this.src = placeholderCover(game.title, game
+                                .version);
+                            this.classList.add('placeholder-cover'); };
                         inner.appendChild(img);
                         card.appendChild(inner);
                         const tt = document.createElement('div');
-                        tt.className = 'device-card-title-tag';
-                        tt.textContent = dev.title;
+                        tt.className = 'game-card-title-tag';
+                        tt.textContent = game.title;
                         card.appendChild(tt);
-                        card.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            openDetailDevice(dev.id);
-                        });
-                        deviceGrid.appendChild(card);
+                        card.addEventListener('click', (e) => { e.stopPropagation();
+                            openDetailGame(game.id); });
+                        container.appendChild(card);
                     });
-                }
+                });
+                const total = gamesData.length;
+                gamesEmpty.style.display = total === 0 ? 'block' : 'none';
             }
 
-            // ============ 渲染回血 ============
+            function renderDevices() {
+                const consoles = devicesData.filter(d => isConsole(d.deviceType));
+                const accessories = devicesData.filter(d => !isConsole(d.deviceType));
+
+                function renderList(container, items) {
+                    container.innerHTML = '';
+                    if (items.length === 0) { container.innerHTML =
+                            '<div class="empty-hint" style="padding:16px;width:100%;">暂无此类设备</div>'; return; }
+                    items.forEach(dev => {
+                        const item = document.createElement('div');
+                        item.className = 'device-item';
+                        item.innerHTML =
+                            `<div class="device-item-icon">🎮</div><div class="device-item-info"><div class="device-item-title">${dev.title}</div><div class="device-item-date">${dev.purchaseDate} · ${dtLabel(dev.deviceType)}</div></div><span class="device-item-price">${fmt(dev.purchasePrice)}</span>`;
+                        item.addEventListener('click', (e) => { e.stopPropagation();
+                            openDetailDevice(dev.id); });
+                        container.appendChild(item);
+                    });
+                }
+                renderList(deviceListConsole, consoles);
+                renderList(deviceListAccessory, accessories);
+                deviceEmpty.style.display = devicesData.length === 0 ? 'block' : 'none';
+                $('deviceSectionConsole').style.display = consoles.length === 0 && accessories.length > 0 ?
+                    'none' : '';
+                $('deviceSectionAccessory').style.display = accessories.length === 0 && consoles.length > 0 ?
+                    'none' : '';
+            }
+
             function renderRecoup() {
                 recoupList.innerHTML = '';
-                if (recoupData.length === 0) {
-                    recoupEmpty.style.display = 'block';
-                    recoupSummary.style.display = 'none';
-                } else {
-                    recoupEmpty.style.display = 'none';
-                    recoupSummary.style.display = 'flex';
-                    recoupData.forEach(r => {
-                        const pnl = (parseFloat(r.sellPrice) || 0) - (parseFloat(r.buyPrice) || 0);
-                        const item = document.createElement('div');
-                        item.className = 'recoup-item';
-                        item.innerHTML = `
-                            <div class="recoup-item-icon">${pnl > 0 ? '📈' : pnl < 0 ? '📉' : '➖'}</div>
-                            <div class="recoup-item-info">
-                                <div class="recoup-item-title">${r.title}</div>
-                                <div class="recoup-item-date">${r.sellDate}</div>
-                            </div>
-                            <div class="recoup-item-prices">
-                                <span class="recoup-price-buy">成本 ${formatCurrency(r.buyPrice)}</span>
-                                <span class="recoup-price-sell">卖出 ${formatCurrency(r.sellPrice)}</span>
-                                <span class="recoup-pnl ${pnl > 0 ? 'profit' : pnl < 0 ? 'loss' : 'zero'}">${pnl >= 0 ? '+' : ''}${formatCurrency(pnl)}</span>
-                            </div>
-                        `;
-                        item.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            // 修复Bug1：使用独立的删除确认，不触发其他弹窗
-                            deleteRecoupItem(r.id);
-                        });
-                        recoupList.appendChild(item);
+                if (recoupData.length === 0) { recoupEmpty.style.display = 'block';
+                    recoupSummary.style.display = 'none'; return; }
+                recoupEmpty.style.display = 'none';
+                recoupSummary.style.display = 'flex';
+                recoupData.forEach(r => {
+                    const pnl = (r.sellPrice || 0) - (r.buyPrice || 0);
+                    const item = document.createElement('div');
+                    item.className = 'recoup-item';
+                    item.innerHTML =
+                        `<div class="recoup-item-icon">${pnl>0?'📈':pnl<0?'📉':'➖'}</div><div class="recoup-item-info"><div class="recoup-item-title">${r.title}</div><div class="recoup-item-date">${r.sellDate}</div></div><div class="recoup-item-prices"><span class="recoup-price-buy">成本 ${fmt(r.buyPrice)}</span><span class="recoup-price-sell">卖出 ${fmt(r.sellPrice)}</span><span class="recoup-pnl ${pnl>0?'profit':pnl<0?'loss':'zero'}">${pnl>=0?'+':''}${fmt(pnl)}</span></div>`;
+                    item.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        const ok = await customConfirm(`确定删除回血记录：${r.title}？`);
+                        if (ok) { recoupData = recoupData.filter(x => x.id !== r.id);
+                            saveAll();
+                            refreshAll();
+                            showToast('记录已删除'); }
                     });
-                }
+                    recoupList.appendChild(item);
+                });
             }
 
-            // 独立的回血删除函数
-            function deleteRecoupItem(id) {
-                if (confirm('确定要删除此回血记录吗？')) {
-                    recoupData = recoupData.filter(x => x.id !== id);
-                    saveAll();
-                    renderRecoup();
-                    updateAllStats();
-                    renderOverview();
-                    showToast('记录已删除');
-                }
-            }
-
-            // ============ 详情弹窗 ============
             function openDetailGame(gameId) {
                 const game = gamesData.find(g => g.id === gameId);
                 if (!game) return;
                 currentDetailMode = 'game';
                 currentDetailId = gameId;
                 modalTitle.textContent = game.title;
-                modalPrice.textContent = formatCurrency(game.purchasePrice);
+                modalPrice.textContent = fmt(game.purchasePrice);
                 modalDate.textContent = game.purchaseDate;
-                const days = getDaysHeld(game.purchaseDate);
-                modalDays.textContent = days + ' 天';
-                modalVersion.textContent = getVersionLabel(game.version) + ' · ' + getTypeLabel(game.type);
-                modalVersionBadge.textContent = getVersionLabel(game.version);
-                modalVersionBadge.className = 'modal-version-badge ' + getVersionBadgeClass(game.version);
+                modalDays.textContent = getDaysHeld(game.purchaseDate) + ' 天';
+                modalVersion.textContent = vLabel(game.version) + ' · ' + tLabel(game.type);
+                modalVersionBadge.textContent = vLabel(game.version);
+                modalVersionBadge.className = 'modal-version-badge ' + vBadge(game.version);
                 modalCoverImg.style.display = 'none';
                 modalCoverPlaceholder.style.display = 'none';
-                if (game.image && game.image.startsWith('data:')) {
-                    modalCoverImg.src = game.image;
-                    modalCoverImg.style.display = 'block';
-                } else {
-                    modalCoverPlaceholder.src = generatePlaceholderCover(game.title, game.version);
-                    modalCoverPlaceholder.style.display = 'block';
-                }
+                if (game.image && game.image.startsWith('data:')) { modalCoverImg.src = game.image;
+                    modalCoverImg.style.display = 'block'; } else { modalCoverPlaceholder.src = placeholderCover(game
+                        .title, game.version);
+                    modalCoverPlaceholder.style.display = 'block'; }
                 const dv = getDailyValue(game.purchasePrice, game.purchaseDate);
-                modalDailyValue.textContent = formatCurrency(dv);
-                if (dv < 0.5) modalVerdict.textContent = '🏆 超值收藏！每天成本不到5毛钱';
-                else if (dv < 1.5) modalVerdict.textContent = '👍 不错的选择，性价比良好';
-                else if (dv < 5) modalVerdict.textContent = '📅 持有时间尚短，期待未来增值';
-                else modalVerdict.textContent = '🆕 刚入手不久，享受游戏吧';
+                modalDailyValue.textContent = fmt(dv);
+                modalVerdict.textContent = dv < 0.5 ? '🏆 超值收藏！' : dv < 1.5 ? '👍 性价比良好' : dv < 5 ? '📅 持有时间尚短' :
+                    '🆕 享受游戏吧';
                 modalActionsGame.style.display = 'flex';
                 modalActionsDevice.style.display = 'none';
                 modalOverlay.classList.add('active');
@@ -2181,145 +1983,104 @@
                 currentDetailMode = 'device';
                 currentDetailId = devId;
                 modalTitle.textContent = dev.title;
-                modalPrice.textContent = formatCurrency(dev.purchasePrice);
+                modalPrice.textContent = fmt(dev.purchasePrice);
                 modalDate.textContent = dev.purchaseDate;
-                const days = getDaysHeld(dev.purchaseDate);
-                modalDays.textContent = days + ' 天';
-                modalVersion.textContent = getDeviceTypeLabel(dev.deviceType);
-                modalVersionBadge.textContent = getDeviceTypeLabel(dev.deviceType);
+                modalDays.textContent = getDaysHeld(dev.purchaseDate) + ' 天';
+                modalVersion.textContent = dtLabel(dev.deviceType);
+                modalVersionBadge.textContent = dtLabel(dev.deviceType);
                 modalVersionBadge.className = 'modal-version-badge badge-blue';
                 modalCoverImg.style.display = 'none';
                 modalCoverPlaceholder.style.display = 'none';
-                if (dev.image && dev.image.startsWith('data:')) {
-                    modalCoverImg.src = dev.image;
-                    modalCoverImg.style.display = 'block';
-                } else {
-                    modalCoverPlaceholder.src = generateDevicePlaceholder(dev.title);
-                    modalCoverPlaceholder.style.display = 'block';
-                }
+                if (dev.image && dev.image.startsWith('data:')) { modalCoverImg.src = dev.image;
+                    modalCoverImg.style.display = 'block'; } else { modalCoverPlaceholder.src = devicePlaceholder(dev
+                        .title);
+                    modalCoverPlaceholder.style.display = 'block'; }
                 const dv = getDailyValue(dev.purchasePrice, dev.purchaseDate);
-                modalDailyValue.textContent = formatCurrency(dv);
-                if (dv < 1) modalVerdict.textContent = '💎 每天成本很低，值得拥有';
-                else if (dv < 8) modalVerdict.textContent = '📅 合理的使用成本';
-                else modalVerdict.textContent = '🆕 新设备，好好享受';
+                modalDailyValue.textContent = fmt(dv);
+                modalVerdict.textContent = dv < 1 ? '💎 每天成本很低' : dv < 8 ? '📅 合理的使用成本' : '🆕 新设备，好好享受';
                 modalActionsGame.style.display = 'none';
                 modalActionsDevice.style.display = 'flex';
                 modalOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
 
-            function closeDetail() {
-                modalOverlay.classList.remove('active');
+            function closeDetail() { modalOverlay.classList.remove('active');
                 document.body.style.overflow = '';
-                currentDetailId = null;
-            }
-            modalClose.addEventListener('click', (e) => {
-                e.stopPropagation();
-                closeDetail();
-            });
+                currentDetailId = null; }
+            modalClose.addEventListener('click', (e) => { e.stopPropagation();
+                closeDetail(); });
             modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeDetail(); });
             document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (modalOverlay.classList
                         .contains('active')) closeDetail(); if (formOverlay.classList.contains('active'))
                         closeForm(); } });
 
-            // 修复Bug1：所有删除/编辑按钮使用stopPropagation防止事件冒泡
-            btnEditGame.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const game = gamesData.find(g => g.id === currentDetailId);
-                if (game) { closeDetail();
-                    openFormForEditGame(game); }
-            });
-            btnDeleteGame.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (currentDetailId && confirm('确定删除此游戏？此操作不可撤销。')) {
-                    gamesData = gamesData.filter(g => g.id !== currentDetailId);
-                    saveAll();
-                    closeDetail();
-                    refreshAll();
-                    showToast('已删除');
-                }
-            });
-            btnSellGame.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const game = gamesData.find(g => g.id === currentDetailId);
-                if (!game) return;
-                const sellPrice = prompt(`卖出"${game.title}"\n原购买价格：${formatCurrency(game.purchasePrice)}\n请输入卖出价格：`,
-                    game.purchasePrice);
-                if (sellPrice !== null && !isNaN(parseFloat(sellPrice)) && parseFloat(sellPrice) >= 0) {
-                    recoupData.push({
-                        id: generateId('r'),
-                        title: game.title,
-                        buyPrice: parseFloat(game.purchasePrice),
-                        sellPrice: parseFloat(sellPrice),
-                        sellDate: new Date().toISOString().split('T')[0],
-                        image: game.image,
-                    });
+            $('btnEditGame').addEventListener('click', async (e) => { e.stopPropagation(); const game = gamesData.find(
+                    g => g.id === currentDetailId); if (game) { closeDetail();
+                    openFormForEditGame(game); } });
+            $('btnDeleteGame').addEventListener('click', async (e) => { e.stopPropagation(); if (currentDetailId) {
+                    const ok = await customConfirm('确定删除此游戏？此操作不可撤销。'); if (ok) { gamesData = gamesData.filter(g =>
+                            g.id !== currentDetailId);
+                        saveAll();
+                        closeDetail();
+                        refreshAll();
+                        showToast('已删除'); } } });
+            $('btnSellGame').addEventListener('click', async (e) => { e.stopPropagation(); const game = gamesData.find(g =>
+                    g.id === currentDetailId); if (!game) return;
+                const sp = prompt(`卖出"${game.title}"\n原价：${fmt(game.purchasePrice)}\n输入卖出价格：`, game
+                .purchasePrice); if (sp !== null && !isNaN(parseFloat(sp)) && parseFloat(sp) >= 0) { recoupData
+                        .push({ id: genId('r'), title: game.title, buyPrice: parseFloat(game.purchasePrice),
+                            sellPrice: parseFloat(sp), sellDate: new Date().toISOString().split('T')[0],
+                            image: game.image });
                     gamesData = gamesData.filter(g => g.id !== currentDetailId);
                     saveAll();
                     closeDetail();
                     refreshAll();
                     switchTab('tab-recoup');
-                    showToast('已记录回血！');
-                }
-            });
-            btnEditDevice.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const dev = devicesData.find(d => d.id === currentDetailId);
-                if (dev) { closeDetail();
-                    openFormForEditDevice(dev); }
-            });
-            btnDeleteDevice.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (currentDetailId && confirm('确定删除此设备？此操作不可撤销。')) {
-                    devicesData = devicesData.filter(d => d.id !== currentDetailId);
-                    saveAll();
-                    closeDetail();
-                    refreshAll();
-                    showToast('已删除');
-                }
-            });
+                    showToast('已记录回血！'); } });
+            $('btnEditDevice').addEventListener('click', (e) => { e.stopPropagation(); const dev = devicesData.find(d => d
+                    .id === currentDetailId); if (dev) { closeDetail();
+                    openFormForEditDevice(dev); } });
+            $('btnDeleteDevice').addEventListener('click', async (e) => { e.stopPropagation(); if (currentDetailId) {
+                    const ok = await customConfirm('确定删除此设备？此操作不可撤销。'); if (ok) { devicesData = devicesData.filter(
+                            d => d.id !== currentDetailId);
+                        saveAll();
+                        closeDetail();
+                        refreshAll();
+                        showToast('已删除'); } } });
 
-            // ============ 表单 ============
             function openFormForAdd() {
                 editingId = null;
-                if (currentTab === 'tab-devices') {
-                    editingMode = 'device';
+                if (currentTab === 'tab-devices') { editingMode = 'device';
                     formTitle.textContent = '添加设备';
                     formGroupType.style.display = 'none';
                     formGroupDeviceType.style.display = 'block';
                     formGroupVersion.style.display = 'none';
                     inputTitle.placeholder = '输入设备名称';
-                    inputDeviceType.value = 'switch';
-                } else if (currentTab === 'tab-recoup') {
-                    editingMode = 'recoup';
+                    inputDeviceType.value = 'switch'; } else if (currentTab === 'tab-recoup') { editingMode =
+                        'recoup';
                     formTitle.textContent = '添加回血记录';
                     formGroupType.style.display = 'none';
                     formGroupDeviceType.style.display = 'none';
                     formGroupVersion.style.display = 'none';
-                    inputTitle.placeholder = '输入游戏/物品名称';
-                } else {
-                    editingMode = 'game';
+                    inputTitle.placeholder = '输入游戏/物品名称'; } else { editingMode = 'game';
                     formTitle.textContent = '添加新游戏';
                     formGroupType.style.display = 'block';
                     formGroupDeviceType.style.display = 'none';
                     formGroupVersion.style.display = 'block';
                     inputTitle.placeholder = '输入游戏名称';
                     inputType.value = 'physical';
-                    inputVersion.value = 'blue';
-                }
+                    inputVersion.value = 'blue'; }
                 inputTitle.value = '';
                 inputPrice.value = '';
                 inputDate.value = new Date().toISOString().split('T')[0];
                 inputImage.value = '';
                 imagePreview.style.display = 'none';
-                imagePreview.src = '';
                 imagePreview.classList.remove('show');
                 formOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
 
-            function openFormForEditGame(game) {
-                editingId = game.id;
+            function openFormForEditGame(game) { editingId = game.id;
                 editingMode = 'game';
                 formTitle.textContent = '编辑游戏信息';
                 formGroupType.style.display = 'block';
@@ -2332,18 +2093,14 @@
                 inputType.value = game.type;
                 inputImage.value = '';
                 imagePreview.style.display = 'none';
-                imagePreview.classList.remove('show');
-                if (game.image && game.image.startsWith('data:')) {
-                    imagePreview.src = game.image;
+                imagePreview.classList.remove('show'); if (game.image && game.image.startsWith('data:')) { imagePreview
+                        .src = game.image;
                     imagePreview.style.display = 'block';
-                    imagePreview.classList.add('show');
-                }
+                    imagePreview.classList.add('show'); }
                 formOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+                document.body.style.overflow = 'hidden'; }
 
-            function openFormForEditDevice(dev) {
-                editingId = dev.id;
+            function openFormForEditDevice(dev) { editingId = dev.id;
                 editingMode = 'device';
                 formTitle.textContent = '编辑设备信息';
                 formGroupType.style.display = 'none';
@@ -2355,175 +2112,108 @@
                 inputDeviceType.value = dev.deviceType;
                 inputImage.value = '';
                 imagePreview.style.display = 'none';
-                imagePreview.classList.remove('show');
-                if (dev.image && dev.image.startsWith('data:')) {
-                    imagePreview.src = dev.image;
+                imagePreview.classList.remove('show'); if (dev.image && dev.image.startsWith('data:')) { imagePreview
+                        .src = dev.image;
                     imagePreview.style.display = 'block';
-                    imagePreview.classList.add('show');
-                }
+                    imagePreview.classList.add('show'); }
                 formOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+                document.body.style.overflow = 'hidden'; }
 
-            function closeForm() {
-                formOverlay.classList.remove('active');
+            function closeForm() { formOverlay.classList.remove('active');
                 document.body.style.overflow = '';
-                editingId = null;
-            }
-            fabAdd.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openFormForAdd();
-            });
-            btnCancel.addEventListener('click', (e) => {
-                e.stopPropagation();
-                closeForm();
-            });
+                editingId = null; }
+            fabAdd.addEventListener('click', (e) => { e.stopPropagation();
+                openFormForAdd(); });
+            $('btnCancel').addEventListener('click', (e) => { e.stopPropagation();
+                closeForm(); });
             formOverlay.addEventListener('click', e => { if (e.target === formOverlay) closeForm(); });
-
-            inputImage.addEventListener('change', function() {
-                const file = this.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
+            inputImage.addEventListener('change', function() { const f = this.files[0]; if (!f) return;
+                const r = new FileReader();
+                r.onload = function(e) { imagePreview.src = e.target.result;
                     imagePreview.style.display = 'block';
-                    imagePreview.classList.add('show');
-                };
-                reader.readAsDataURL(file);
-            });
+                    imagePreview.classList.add('show'); };
+                r.readAsDataURL(f); });
 
-            function compressImage(dataUrl, maxW = 400, q = 0.6) {
-                return new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.onload = function() {
-                        const c = document.createElement('canvas');
-                        let w = img.width,
-                            h = img.height;
-                        if (w > maxW) { h = Math.round(h * (maxW / w));
-                            w = maxW; }
-                        c.width = w;
-                        c.height = h;
-                        const ctx = c.getContext('2d');
-                        ctx.fillStyle = '#1a1a1e';
-                        ctx.fillRect(0, 0, w, h);
-                        ctx.drawImage(img, 0, 0, w, h);
-                        resolve(c.toDataURL('image/jpeg', q));
-                    };
-                    img.onerror = reject;
-                    img.src = dataUrl;
-                });
-            }
-
-            btnSubmit.addEventListener('click', async function(e) {
-                e.stopPropagation();
-                const title = inputTitle.value.trim();
-                const priceStr = inputPrice.value.trim();
-                const date = inputDate.value;
-                if (!title) { showToast('请输入标题');
-                    return; }
-                if (!priceStr || isNaN(parseFloat(priceStr)) || parseFloat(priceStr) < 0) { showToast('请输入有效价格');
-                    return; }
-                if (!date) { showToast('请选择日期');
-                    return; }
-                const price = parseFloat(priceStr);
-                let imageData = null;
-                if (inputImage.files && inputImage.files[0]) {
-                    const file = inputImage.files[0];
-                    const dataUrl = await new Promise(r => { const reader = new FileReader();
-                        reader.onload = e => r(e.target.result);
-                        reader.readAsDataURL(file); });
-                    try { imageData = await compressImage(dataUrl, 400, 0.6); } catch (e) { imageData = dataUrl; }
-                } else if (editingId) {
-                    if (editingMode === 'game') { const eg = gamesData.find(g => g.id === editingId); if (eg && eg
-                            .image && eg.image.startsWith('data:')) imageData = eg.image; }
-                    if (editingMode === 'device') { const ed = devicesData.find(d => d.id === editingId); if (ed &&
-                            ed.image && ed.image.startsWith('data:')) imageData = ed.image; }
-                }
-                if (editingId) {
-                    if (editingMode === 'game') {
-                        const g = gamesData.find(x => x.id === editingId);
-                        if (g) { Object.assign(g, { title, purchasePrice: price, purchaseDate: date,
-                                version: inputVersion.value, type: inputType.value }); if (imageData) g
-                                .image = imageData; }
-                    } else if (editingMode === 'device') {
-                        const d = devicesData.find(x => x.id === editingId);
-                        if (d) { Object.assign(d, { title, purchasePrice: price, purchaseDate: date,
-                                deviceType: inputDeviceType.value }); if (imageData) d.image = imageData; }
-                    }
-                    showToast('已更新');
-                } else {
-                    if (editingMode === 'game') {
-                        gamesData.push({ id: generateId('g'), title, purchasePrice: price, purchaseDate: date,
-                            version: inputVersion.value, type: inputType.value, image: imageData });
-                    } else if (editingMode === 'device') {
-                        devicesData.push({ id: generateId('d'), title, purchasePrice: price, purchaseDate: date,
-                            deviceType: inputDeviceType.value, image: imageData });
-                    } else if (editingMode === 'recoup') {
-                        recoupData.push({ id: generateId('r'), title, buyPrice: price, sellPrice: price,
-                            sellDate: date, image: imageData });
-                    }
-                    showToast('已添加');
-                }
+            function compressImage(dataUrl, maxW = 400, q = 0.6) { return new Promise((resolve) => { const img = new Image();
+                img.onload = function() { const c = document.createElement('canvas');
+                    let w = img.width,
+                        h = img.height; if (w > maxW) { h = Math.round(h * (maxW / w));
+                        w = maxW; }
+                    c.width = w;
+                    c.height = h;
+                    const ctx = c.getContext('2d');
+                    ctx.fillStyle = '#1a1a1e';
+                    ctx.fillRect(0, 0, w, h);
+                    ctx.drawImage(img, 0, 0, w, h);
+                    resolve(c.toDataURL('image/jpeg', q)); };
+                img.src = dataUrl; }); }
+            $('btnSubmit').addEventListener('click', async function(e) { e.stopPropagation();
+                const title = inputTitle.value.trim(),
+                    ps = inputPrice.value.trim(),
+                    date = inputDate.value; if (!title) { showToast('请输入标题'); return; } if (!ps || isNaN(
+                        parseFloat(ps)) || parseFloat(ps) < 0) { showToast('请输入有效价格'); return; } if (!date) {
+                    showToast('请选择日期'); return; }
+                const price = parseFloat(ps);
+                let imgData = null; if (inputImage.files && inputImage.files[0]) { const dataUrl = await new Promise(
+                        r => { const fr = new FileReader();
+                        fr.onload = e => r(e.target.result);
+                        fr.readAsDataURL(inputImage.files[0]); }); try { imgData = await compressImage(dataUrl,
+                        400, 0.6); } catch (e) { imgData = dataUrl; } } else if (editingId) { if (editingMode ===
+                        'game') { const eg = gamesData.find(g => g.id === editingId); if (eg && eg.image && eg
+                            .image.startsWith('data:')) imgData = eg.image; } if (editingMode === 'device') { const
+                        ed = devicesData.find(d => d.id === editingId); if (ed && ed.image && ed.image.startsWith(
+                            'data:')) imgData = ed.image; } } if (editingId) { if (editingMode === 'game') { const g =
+                        gamesData.find(x => x.id === editingId); if (g) { Object.assign(g, { title,
+                            purchasePrice: price, purchaseDate: date, version: inputVersion.value,
+                            type: inputType.value }); if (imgData) g.image = imgData; } } else if (
+                    editingMode === 'device') { const d = devicesData.find(x => x.id === editingId); if (d) { Object
+                            .assign(d, { title, purchasePrice: price, purchaseDate: date, deviceType: inputDeviceType
+                                .value }); if (imgData) d.image = imgData; } }
+                    showToast('已更新'); } else { if (editingMode === 'game') gamesData.push({ id: genId('g'),
+                        title, purchasePrice: price, purchaseDate: date, version: inputVersion.value,
+                        type: inputType.value, image: imgData }); else if (editingMode === 'device') devicesData
+                        .push({ id: genId('d'), title, purchasePrice: price, purchaseDate: date,
+                            deviceType: inputDeviceType.value, image: imgData }); else if (editingMode ===
+                        'recoup') recoupData.push({ id: genId('r'), title, buyPrice: price, sellPrice: price,
+                            sellDate: date, image: imgData });
+                    showToast('已添加'); }
                 saveAll();
                 closeForm();
-                refreshAll();
-            });
+                refreshAll(); });
 
-            // ============ Tab切换 ============
-            function switchTab(tabId) {
-                currentTab = tabId;
+            function switchTab(tabId) { currentTab = tabId;
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 document.querySelector(`[data-tab="${tabId}"]`)?.classList.add('active');
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                document.getElementById(tabId)?.classList.add('active');
-                updateFabVisibility();
-            }
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    switchTab(btn.getAttribute('data-tab'));
-                });
-            });
+                $(tabId)?.classList.add('active');
+                updateFabVisibility(); }
+            document.querySelectorAll('.tab-btn').forEach(btn => { btn.addEventListener('click', (e) => { e
+                    .stopPropagation();
+                    switchTab(btn.getAttribute('data-tab')); }); });
 
-            function updateFabVisibility() {
-                fabAdd.style.display = 'block';
-                if (currentTab === 'tab-recoup') {
+            function updateFabVisibility() { if (currentTab === 'tab-overview') fabAdd.style.display = 'none';
+                else if (currentTab === 'tab-recoup') { fabAdd.style.display = 'block';
                     fabAdd.textContent = '💰';
-                    fabAdd.title = '添加回血记录';
-                } else if (currentTab === 'tab-devices') {
+                    fabAdd.title = '添加回血记录'; } else if (currentTab === 'tab-devices') { fabAdd.style.display =
+                        'block';
                     fabAdd.textContent = '🔧';
-                    fabAdd.title = '添加设备';
-                } else if (currentTab === 'tab-overview') {
-                    fabAdd.style.display = 'none';
-                } else {
+                    fabAdd.title = '添加设备'; } else { fabAdd.style.display = 'block';
                     fabAdd.textContent = '+';
-                    fabAdd.title = '添加游戏';
-                }
-            }
+                    fabAdd.title = '添加游戏'; } }
 
-            // ============ Toast ============
             let toastTimer;
 
-            function showToast(msg) {
-                toast.textContent = msg;
+            function showToast(msg) { toast.textContent = msg;
                 toast.classList.add('show');
                 clearTimeout(toastTimer);
-                toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
-            }
+                toastTimer = setTimeout(() => toast.classList.remove('show'), 1800); }
 
-            // ============ 头像/昵称/好友编号 ============
-            avatarContainer.addEventListener('click', (e) => {
-                e.stopPropagation();
-                avatarFileInput.click();
-            });
-            avatarFileInput.addEventListener('change', function() {
-                const file = this.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const dataUrl = e.target.result;
-                    const img = document.createElement('img');
-                    img.src = dataUrl;
+            avatarContainer.addEventListener('click', (e) => { e.stopPropagation();
+                avatarFileInput.click(); });
+            avatarFileInput.addEventListener('change', function() { const f = this.files[0]; if (!f) return;
+                const r = new FileReader();
+                r.onload = function(e) { const img = document.createElement('img');
+                    img.src = e.target.result;
                     img.style.cssText =
                         'width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;';
                     img.onmouseenter = () => img.style.filter = 'grayscale(0%)';
@@ -2535,144 +2225,89 @@
                     hint.textContent = '更换头像';
                     avatarContainer.appendChild(hint);
                     saveProfile();
-                    showToast('头像已更新');
-                };
-                reader.readAsDataURL(file);
-                this.value = '';
-            });
-            profileId.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const nn = prompt('设置收藏家昵称：', profileId.textContent);
-                if (nn !== null && nn.trim()) { profileId.textContent = nn.trim();
+                    showToast('头像已更新'); };
+                r.readAsDataURL(f);
+                this.value = ''; });
+            profileId.addEventListener('click', (e) => { e.stopPropagation();
+                const nn = prompt('设置收藏家昵称：', profileId.textContent); if (nn !== null && nn.trim()) { profileId
+                        .textContent = nn.trim();
                     saveProfile();
-                    showToast('昵称已更新'); }
-            });
+                    showToast('昵称已更新'); } });
             profileId.style.cursor = 'pointer';
 
-            // 好友编号：点击复制
-            function copyFriendCode() {
-                const code = friendCodeDisplay.textContent;
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(code).then(() => showToast('好友编号已复制：' + code));
-                } else {
-                    const ta = document.createElement('textarea');
+            function copyFriendCode() { const code = friendCodeDisplay.textContent; if (navigator.clipboard) navigator
+                    .clipboard.writeText(code).then(() => showToast('已复制：' + code)); else { const ta = document
+                        .createElement('textarea');
                     ta.value = code;
-                    ta.style.position = 'fixed';
-                    ta.style.opacity = '0';
+                    ta.style.cssText = 'position:fixed;opacity:0;';
                     document.body.appendChild(ta);
                     ta.select();
                     document.execCommand('copy');
                     document.body.removeChild(ta);
-                    showToast('好友编号已复制：' + code);
-                }
-            }
-            profileFriendCode.addEventListener('click', (e) => {
-                e.stopPropagation();
-                copyFriendCode();
-            });
-            bankFriendCode.addEventListener('click', (e) => {
-                e.stopPropagation();
-                copyFriendCode();
-            });
-
-            // 双击好友编号可编辑
-            [profileFriendCode, bankFriendCode].forEach(el => {
-                el.addEventListener('dblclick', (e) => {
-                    e.stopPropagation();
-                    const newCode = prompt('编辑好友编号（Switch好友编号格式）：', friendCode);
-                    if (newCode !== null && newCode.trim()) {
-                        friendCode = newCode.trim();
+                    showToast('已复制：' + code); } }
+            [profileFriendCode, bankFriendCode].forEach(el => { el.addEventListener('click', (e) => { e
+                    .stopPropagation();
+                    copyFriendCode(); });
+                el.addEventListener('dblclick', (e) => { e.stopPropagation();
+                    const nc = prompt('编辑好友编号：', friendCode); if (nc !== null && nc.trim()) { friendCode = nc
+                            .trim();
                         friendCodeDisplay.textContent = friendCode;
-                        profileFriendCode.querySelector('span').textContent = friendCode;
-                        try { localStorage.setItem(STORAGE_FRIEND_CODE, friendCode); } catch (
-                        e) {}
-                        showToast('好友编号已更新');
-                    }
-                });
-            });
+                        profileFriendCode.querySelector('span').textContent = friendCode; try { localStorage
+                                .setItem(STORAGE_FRIEND_CODE, friendCode); } catch (e) {}
+                        showToast('好友编号已更新'); } }); });
 
-            function loadProfile() {
-                try {
-                    const raw = localStorage.getItem(STORAGE_PROFILE);
-                    if (raw) {
-                        const p = JSON.parse(raw);
-                        if (p.nickname) profileId.textContent = p.nickname;
-                        if (p.avatar) {
-                            const img = document.createElement('img');
-                            img.src = p.avatar;
-                            img.style.cssText =
-                                'width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;';
-                            img.onmouseenter = () => img.style.filter = 'grayscale(0%)';
-                            img.onmouseleave = () => img.style.filter = 'grayscale(100%)';
-                            avatarContainer.innerHTML = '';
-                            avatarContainer.appendChild(img);
-                            const hint = document.createElement('span');
-                            hint.className = 'avatar-edit-hint';
-                            hint.textContent = '更换头像';
-                            avatarContainer.appendChild(hint);
-                        }
-                    }
-                } catch (e) {}
-            }
+            function loadProfile() { try { const raw = localStorage.getItem(STORAGE_PROFILE); if (raw) { const p = JSON
+                            .parse(raw); if (p.nickname) profileId.textContent = p.nickname; if (p.avatar) { const
+                            img = document.createElement('img');
+                        img.src = p.avatar;
+                        img.style.cssText =
+                            'width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;';
+                        img.onmouseenter = () => img.style.filter = 'grayscale(0%)';
+                        img.onmouseleave = () => img.style.filter = 'grayscale(100%)';
+                        avatarContainer.innerHTML = '';
+                        avatarContainer.appendChild(img);
+                        const hint = document.createElement('span');
+                        hint.className = 'avatar-edit-hint';
+                        hint.textContent = '更换头像';
+                        avatarContainer.appendChild(hint); } } } } catch (e) {} }
 
-            function saveProfile() {
-                try {
-                    const p = { nickname: profileId.textContent, avatar: avatarContainer.querySelector('img') ?
-                            avatarContainer.querySelector('img').src : null };
-                    localStorage.setItem(STORAGE_PROFILE, JSON.stringify(p));
-                } catch (e) {}
-            }
+            function saveProfile() { try { localStorage.setItem(STORAGE_PROFILE, JSON.stringify({ nickname: profileId
+                        .textContent, avatar: avatarContainer.querySelector('img') ? avatarContainer.querySelector(
+                        'img').src : null })); } catch (e) {} }
 
-            // ============ 刷新全部 ============
-            function refreshAll() {
-                renderOverview();
+            // 主题切换
+            function loadTheme() { try { const t = localStorage.getItem(STORAGE_THEME); if (t === 'light') document
+                        .body.classList.add('light-mode'); } catch (e) {} }
+
+            function toggleTheme() { document.body.classList.toggle('light-mode'); try { localStorage.setItem(
+                    STORAGE_THEME, document.body.classList.contains('light-mode') ? 'light' : 'dark'); } catch (
+                e) {} }
+            themeToggle.addEventListener('click', (e) => { e.stopPropagation();
+                toggleTheme();
+                showToast(document.body.classList.contains('light-mode') ? '已切换为浅色模式' : '已切换为暗黑模式'); });
+
+            function refreshAll() { renderOverview();
                 renderGames();
                 renderDevices();
                 renderRecoup();
-                updateAllStats();
-                updateFabVisibility();
-            }
+                updateStats();
+                updateFabVisibility(); }
 
-            // ============ 初始化 ============
-            function init() {
-                loadAll();
+            function init() { loadAll();
                 loadProfile();
+                loadTheme();
                 refreshAll();
-                // 默认显示总览tab
-                switchTab('tab-overview');
-            }
+                switchTab('tab-overview'); }
             init();
-
-            // 跨标签页同步
-            window.addEventListener('storage', function(e) {
-                if ([STORAGE_GAMES, STORAGE_DEVICES, STORAGE_RECOUP, STORAGE_FRIEND_CODE].includes(e.key)) {
-                    loadAll();
-                    refreshAll();
-                }
-            });
-
-            // 全局重置
-            window.resetCollection = function() {
-                if (confirm('确定重置所有数据为默认示例？当前数据将丢失。')) {
-                    localStorage.removeItem(STORAGE_GAMES);
-                    localStorage.removeItem(STORAGE_DEVICES);
-                    localStorage.removeItem(STORAGE_RECOUP);
-                    localStorage.removeItem(STORAGE_PROFILE);
-                    localStorage.removeItem(STORAGE_FRIEND_CODE);
-                    location.reload();
-                }
-            };
-
-            console.log('🎮 游戏卡带收藏馆 v3 已就绪');
-            console.log('  📊 Tab0: 总览 - 银行卡 + 全部物品列表');
-            console.log('  📚 Tab1: 游戏 - 实体版/数字版/Steam分区');
-            console.log('  🎮 Tab2: 设备 - 主机配件管理');
-            console.log('  💰 Tab3: 回血 - 卖出记录 + 盈亏计算');
-            console.log('  👤 点击头像更换头像，点击昵称编辑昵称');
-            console.log('  📋 点击好友编号复制，双击编辑');
-            console.log('  💡 控制台执行 resetCollection() 可重置数据');
-            console.log('  🐛 已修复: 删除按钮事件冒泡问题');
-            console.log('  🐛 已修复: 数据持久化问题（仅在首次使用时写入默认数据）');
+            window.addEventListener('storage', function(e) { if ([STORAGE_GAMES, STORAGE_DEVICES, STORAGE_RECOUP,
+                    STORAGE_FRIEND_CODE
+                ].includes(e.key)) { loadAll();
+                    refreshAll(); } });
+            window.resetCollection = function() { if (confirm('确定重置所有数据？')) { [STORAGE_GAMES, STORAGE_DEVICES,
+                    STORAGE_RECOUP, STORAGE_PROFILE, STORAGE_FRIEND_CODE
+                ].forEach(k => localStorage.removeItem(k));
+                    location.reload(); } };
+            console.log('🎮 收藏馆 v4 已就绪 | 自定义确认弹窗 | 主题切换 | 设备分区列表');
         })();
     </script>
 </body>
