@@ -12,7 +12,6 @@
             --border-subtle: #2a2a34; --border-hover: #444458;
             --metal-shelf: #3a3a42; --metal-shelf-light: #4a4a54; --metal-shelf-dark: #2a2a32; --metal-top: #525260;
             --red-tag: #d94a4a; --blue-tag: #4a80c8; --green-tag: #3da86a;
-            --gold-light: #d4b86a; --gold-dark: #a07c2a;
             --card-width: 130px; --tab-font-size: 16px; --base-font-size: 15px;
             --font-display: 'Georgia', 'Times New Roman', 'Songti SC', 'Noto Serif SC', serif;
             --font-body: 'Inter', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
@@ -116,7 +115,6 @@
             background:var(--surface-light); box-shadow:2px 2px 0 rgba(0,0,0,0.4), 4px 4px 8px rgba(0,0,0,0.5);
             transition:all var(--transition-float);
         }
-        /* 完全移除左侧色标 */
         .game-card-type-badge {
             position:absolute; top:6px; right:6px; font-size:10px; padding:2px 8px; border-radius:2px;
             z-index:6; font-weight:500; pointer-events:none; transition: opacity 0.3s;
@@ -132,7 +130,6 @@
         .game-card:hover .game-card-inner { box-shadow:2px 8px 16px rgba(0,0,0,0.6); }
         .game-card:hover .game-card-cover { filter:grayscale(0%) contrast(1) brightness(1); transform:scale(1.03); }
         .game-card:hover .game-card-type-badge { opacity: 0.5; }
-        /* 版本文字显示在卡带下方 */
         .game-card-version-tag {
             text-align:center; font-size:11px; font-weight:400; color:var(--text-muted);
             margin-top:2px; letter-spacing:0.03em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
@@ -229,7 +226,6 @@
         .modal-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 16px; margin:12px 0 18px; }
         .modal-info-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; }
         .modal-info-value { font-size:18px; font-weight:600; color:var(--white); font-family:var(--font-display); }
-
         .daily-value-card {
             background: var(--surface);
             color: var(--text-primary);
@@ -238,33 +234,45 @@
             box-shadow: 0 4px 14px rgba(0,0,0,0.2);
         }
         .daily-value-card .daily-number { font-size:42px; font-weight:700; color: var(--text-primary); }
-        .daily-value-card .daily-unit { font-size: 14px; color: var(--text-secondary); }
-        .daily-value-card .daily-verdict { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-
         .modal-actions { display:flex; gap:8px; margin-top:14px; }
         .btn-edit, .btn-delete, .btn-sell { flex:1; padding:11px 0; border-radius:5px; border:1px solid #444; cursor:pointer; font-size:13px; font-weight:500; text-align:center; background:transparent; color:#ccc; font-family:var(--font-body); }
         .btn-delete { border-color:#4a2020; color:#d47373; }
         .btn-sell { border-color:#3a5030; color:#7cb868; }
         .form-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:250; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.35s; backdrop-filter:blur(6px); }
         .form-overlay.active { opacity:1; pointer-events:all; }
-        .form-panel { background:var(--surface); border-radius:8px; width:92vw; max-width:440px; max-height:85vh; overflow-y:auto; padding:24px 20px; border:1px solid var(--border-subtle); }
+        .form-panel {
+            background: var(--surface); border-radius:8px; width:92vw; max-width:440px; max-height:85vh;
+            overflow-y:auto; padding:24px 20px; border:1px solid var(--border-subtle);
+            position: relative;
+        }
         .form-panel h3 { font-size:22px; color:var(--white); margin-bottom:16px; }
         .form-group { margin-bottom:12px; }
         .form-group label { display:block; font-size:11px; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; }
-        .form-group input, .form-group select { width:100%; padding:10px 12px; background:#1a1a20; border:1px solid #333; border-radius:4px; color:#fff; font-size:15px; font-family:var(--font-body); }
-        .btn-submit { width:100%; padding:12px; background:#ffffff; color:#000000; border:none; border-radius:5px; font-size:15px; font-weight:600; cursor:pointer; margin-top:4px; }
-        .btn-cancel { width:100%; padding:10px; background:transparent; color:#999; border:1px solid #444; border-radius:5px; font-size:13px; cursor:pointer; margin-top:6px; }
-
-        /* 修复浅色模式下+号按钮不可见 */
+        .form-group input, .form-group select {
+            width:100%; padding:10px 12px; background:#1a1a20; border:1px solid #333; border-radius:4px;
+            color:#fff; font-size:15px; font-family:var(--font-body);
+        }
+        .btn-submit {
+            width:100%; padding:12px; background:#ffffff; color:#000000; border:2px solid #000000;
+            border-radius:5px; font-size:15px; font-weight:700; cursor:pointer; margin-top:4px;
+            transition: transform 0.1s;
+        }
+        .btn-submit:active { transform: scale(0.98); }
+        .btn-cancel {
+            width:100%; padding:10px; background:transparent; color:#999; border:1px solid #444;
+            border-radius:5px; font-size:13px; cursor:pointer; margin-top:6px;
+        }
         .fab-add {
             position:fixed; bottom:32px; right:32px; width:52px; height:52px; border-radius:50%;
-            background:#ffffff; color:#000000; border:none; cursor:pointer; font-size:26px; z-index:100;
-            box-shadow:0 6px 18px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center;
+            background:#1a1a1e; color:#ffffff; border:2px solid #444; cursor:pointer; font-size:26px;
+            z-index:100; box-shadow:0 6px 18px rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .fab-add:hover { transform:scale(1.07); box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+        body.light-mode .fab-add {
+            background:#1a1a1e; color:#ffffff; border:2px solid #ccc;
+        }
+        .fab-add:hover { transform:scale(1.07); box-shadow:0 8px 24px rgba(0,0,0,0.6); }
         .fab-add:active { transform:scale(0.95); }
-
         .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#2a2a32; color:#ddd; padding:10px 22px; border-radius:20px; font-size:13px; z-index:350; opacity:0; pointer-events:none; transition:opacity 0.3s; }
         .toast.show { opacity:1; }
         .empty-hint { text-align:center; color:var(--text-muted); font-size:15px; padding:40px 20px; opacity:0.5; }
@@ -340,8 +348,8 @@
                 <div class="daily-value-card">
                     <div class="daily-label" style="font-size:11px; text-transform:uppercase; color:var(--text-muted);">日均持有价值</div>
                     <div class="daily-number" id="modalDailyValue">¥0</div>
-                    <div class="daily-unit">/ 天</div>
-                    <div class="daily-verdict" id="modalVerdict"></div>
+                    <div class="daily-unit" style="font-size:14px; color:var(--text-secondary);">/ 天</div>
+                    <div class="daily-verdict" id="modalVerdict" style="font-size:12px; color:var(--text-muted); margin-top:4px;"></div>
                 </div>
                 <div class="modal-actions" id="modalActionsGame">
                     <button class="btn-edit" id="btnEditGame">编辑</button><button class="btn-sell" id="btnSellGame">卖出回血</button><button class="btn-delete" id="btnDeleteGame">删除</button>
@@ -362,7 +370,8 @@
             <div class="form-group"><label>购买日期</label><input type="date" id="inputDate"></div>
             <div class="form-group" id="formGroupVersion"><label>版本名称</label><input type="text" id="inputVersionText" placeholder="例如：限量版、首发版"></div>
             <div class="form-group"><label>封面图片</label><input type="file" id="inputImage" accept="image/*"><img class="image-preview-mini" id="imagePreview" style="display:none;width:100%;max-height:120px;object-fit:cover;border-radius:4px;margin-top:6px;"></div>
-            <button class="btn-submit" id="btnSubmit">保存</button><button class="btn-cancel" id="btnCancel">取消</button>
+            <button class="btn-submit" id="btnSubmit">保存</button>
+            <button class="btn-cancel" id="btnCancel">取消</button>
         </div>
     </div>
     <div class="toast" id="toast"></div>
@@ -614,12 +623,23 @@
             els.formOverlay.addEventListener('click', e => { if(e.target===els.formOverlay) closeForm(); });
             els.inputImage.addEventListener('change', function(){ const f=this.files[0]; if(!f) return; const r=new FileReader(); r.onload=function(e){ els.imagePreview.src=e.target.result; els.imagePreview.style.display='block'; }; r.readAsDataURL(f); });
             function compressImage(dataUrl, maxW=400, q=0.6){ return new Promise(resolve=>{ const img=new Image(); img.onload=function(){ const c=document.createElement('canvas'); let w=img.width, h=img.height; if(w>maxW){ h=Math.round(h*(maxW/w)); w=maxW; } c.width=w; c.height=h; const ctx=c.getContext('2d'); ctx.fillStyle='#1a1a1e'; ctx.fillRect(0,0,w,h); ctx.drawImage(img,0,0,w,h); resolve(c.toDataURL('image/jpeg',q)); }; img.src=dataUrl; }); }
-            g('btnSubmit').addEventListener('click', async function(e){ e.stopPropagation();
+
+            // 修复保存按钮：直接绑定，并阻止任何默认行为
+            g('btnSubmit').onclick = async function(e) {
+                e.preventDefault();
+                e.stopPropagation();
                 const title=els.inputTitle.value.trim(), ps=els.inputPrice.value.trim(), date=els.inputDate.value;
-                if(!title){ showToast('请输入标题'); return; } if(!ps||isNaN(parseFloat(ps))||parseFloat(ps)<0){ showToast('请输入有效价格'); return; } if(!date){ showToast('请选择日期'); return; }
+                if(!title){ showToast('请输入标题'); return; }
+                if(!ps||isNaN(parseFloat(ps))||parseFloat(ps)<0){ showToast('请输入有效价格'); return; }
+                if(!date){ showToast('请选择日期'); return; }
                 const price=parseFloat(ps); let imgData=null;
-                if(els.inputImage.files&&els.inputImage.files[0]){ const dataUrl=await new Promise(r=>{ const fr=new FileReader(); fr.onload=e=>r(e.target.result); fr.readAsDataURL(els.inputImage.files[0]); }); try{ imgData=await compressImage(dataUrl,400,0.6); }catch(e){ imgData=dataUrl; } }
-                else if(editId){ if(editMode==='game'){ const eg=games.find(g=>g.id===editId); if(eg&&eg.image&&eg.image.startsWith('data:')) imgData=eg.image; } if(editMode==='device'){ const ed=devices.find(d=>d.id===editId); if(ed&&ed.image&&ed.image.startsWith('data:')) imgData=ed.image; } }
+                if(els.inputImage.files&&els.inputImage.files[0]){
+                    const dataUrl=await new Promise(r=>{ const fr=new FileReader(); fr.onload=e=>r(e.target.result); fr.readAsDataURL(els.inputImage.files[0]); });
+                    try{ imgData=await compressImage(dataUrl,400,0.6); }catch(e){ imgData=dataUrl; }
+                } else if(editId){
+                    if(editMode==='game'){ const eg=games.find(g=>g.id===editId); if(eg&&eg.image&&eg.image.startsWith('data:')) imgData=eg.image; }
+                    if(editMode==='device'){ const ed=devices.find(d=>d.id===editId); if(ed&&ed.image&&ed.image.startsWith('data:')) imgData=ed.image; }
+                }
                 if(editId){
                     if(editMode==='game'){ const g=games.find(x=>x.id===editId); if(g){ Object.assign(g,{title,purchasePrice:price,purchaseDate:date,version:els.inputVersionText.value.trim()||'标准版',type:els.inputType.value}); if(imgData) g.image=imgData; } }
                     else if(editMode==='device'){ const d=devices.find(x=>x.id===editId); if(d){ Object.assign(d,{title,purchasePrice:price,purchaseDate:date,deviceType:els.inputDeviceType.value}); if(imgData) d.image=imgData; } }
@@ -631,7 +651,7 @@
                     showToast('已添加');
                 }
                 saveAll(); closeForm(); refreshAll();
-            });
+            };
 
             function switchTab(tabId){ currentTab=tabId; document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.querySelector(`[data-tab="${tabId}"]`)?.classList.add('active'); document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); g(tabId)?.classList.add('active'); updateFabVisibility(); }
             document.querySelectorAll('.tab-btn').forEach(btn=>{ btn.addEventListener('click', e=>{ e.stopPropagation(); switchTab(btn.getAttribute('data-tab')); }); });
@@ -656,7 +676,7 @@
             init();
             window.addEventListener('storage', e=>{ if([KEYS.games,KEYS.devices,KEYS.recoup,KEYS.friendCode].includes(e.key)){ loadAll(); refreshAll(); } });
             window.resetCollection = function(){ if(confirm('确定重置所有数据？')){ Object.values(KEYS).forEach(k=>localStorage.removeItem(k)); location.reload(); } };
-            console.log('✅ 收藏馆 v5.0 已启动 - 自定义版本 & 浅色模式优化');
+            console.log('收藏馆 v5.1 已启动 - 修复保存按钮与浅色模式');
         })();
     </script>
 </body>
