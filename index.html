@@ -116,13 +116,7 @@
             background:var(--surface-light); box-shadow:2px 2px 0 rgba(0,0,0,0.4), 4px 4px 8px rgba(0,0,0,0.5);
             transition:all var(--transition-float);
         }
-        .game-card-inner::before {
-            content:''; position:absolute; left:0; top:0; bottom:0; width:4px; z-index:5;
-            box-shadow: none; transition: width 0.3s ease;
-        }
-        .game-card-inner.tag-red::before { background:var(--red-tag); }
-        .game-card-inner.tag-blue::before { background:var(--blue-tag); }
-        .game-card-inner.tag-green::before { background:var(--green-tag); }
+        /* 完全移除左侧色标 */
         .game-card-type-badge {
             position:absolute; top:6px; right:6px; font-size:10px; padding:2px 8px; border-radius:2px;
             z-index:6; font-weight:500; pointer-events:none; transition: opacity 0.3s;
@@ -138,13 +132,19 @@
         .game-card:hover .game-card-inner { box-shadow:2px 8px 16px rgba(0,0,0,0.6); }
         .game-card:hover .game-card-cover { filter:grayscale(0%) contrast(1) brightness(1); transform:scale(1.03); }
         .game-card:hover .game-card-type-badge { opacity: 0.5; }
+        /* 版本文字显示在卡带下方 */
+        .game-card-version-tag {
+            text-align:center; font-size:11px; font-weight:400; color:var(--text-muted);
+            margin-top:2px; letter-spacing:0.03em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+            max-width:var(--card-width); transition:color 0.3s;
+        }
         .game-card-title-tag {
             text-align:center; font-size:14px; font-weight:600; color:var(--text-primary);
             margin-top:7px; letter-spacing:0.03em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
             max-width:var(--card-width); transition:color 0.3s;
         }
         .game-card:hover .game-card-title-tag { color:var(--text-secondary); }
-        @media (max-width:640px) { :root { --card-width:100px; } .game-card-title-tag { font-size:12px; } }
+        @media (max-width:640px) { :root { --card-width:100px; } .game-card-title-tag { font-size:12px; } .game-card-version-tag { font-size:10px; } }
         .device-section { margin-bottom:28px; }
         .device-section-label { font-size:13px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:8px; font-weight:500; }
         .device-list { display:flex; flex-direction:column; gap:8px; }
@@ -158,7 +158,6 @@
         .device-item-title { font-weight:600; color:var(--white); font-size:16px; }
         .device-item-date { font-size:12px; color:var(--text-muted); }
         .device-item-price { font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--white); flex-shrink:0; }
-        /* 修正瑕疵1：银行卡改为高级金色，统一字体 */
         .bank-card-full {
             background: linear-gradient(145deg, #e0c87c 0%, #c8a840 20%, #f0d890 40%, #b89030 60%, #d8b860 80%, #c8a840 100%);
             border-radius:14px; padding:24px 28px; margin-bottom:28px;
@@ -226,15 +225,11 @@
         .modal-cover-wrap img { width:100%; height:100%; object-fit:cover; filter:grayscale(0%)!important; }
         .modal-body { padding:20px 24px 24px; }
         .modal-game-title { font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--white); }
-        .modal-version-badge { display:inline-block; font-size:11px; padding:3px 9px; border-radius:3px; margin-bottom:14px; font-weight:600; }
-        .badge-red { background:rgba(217,74,74,0.2); color:#e88; }
-        .badge-blue { background:rgba(74,128,200,0.2); color:#8ab; }
-        .badge-green { background:rgba(61,168,106,0.2); color:#6c8; }
+        .modal-version-badge { display:inline-block; font-size:11px; padding:3px 9px; border-radius:3px; margin-bottom:14px; font-weight:600; background:rgba(128,128,140,0.2); color:var(--text-secondary); }
         .modal-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 16px; margin:12px 0 18px; }
         .modal-info-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; }
         .modal-info-value { font-size:18px; font-weight:600; color:var(--white); font-family:var(--font-display); }
 
-        /* 修正瑕疵2：日均价值卡片在浅色模式下的可读性 */
         .daily-value-card {
             background: var(--surface);
             color: var(--text-primary);
@@ -242,7 +237,6 @@
             border-radius:6px; padding:18px 20px; margin-top:6px; text-align:center;
             box-shadow: 0 4px 14px rgba(0,0,0,0.2);
         }
-        .daily-value-card .daily-label { color: var(--text-muted); font-size: 11px; text-transform: uppercase; }
         .daily-value-card .daily-number { font-size:42px; font-weight:700; color: var(--text-primary); }
         .daily-value-card .daily-unit { font-size: 14px; color: var(--text-secondary); }
         .daily-value-card .daily-verdict { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
@@ -258,9 +252,19 @@
         .form-group { margin-bottom:12px; }
         .form-group label { display:block; font-size:11px; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; }
         .form-group input, .form-group select { width:100%; padding:10px 12px; background:#1a1a20; border:1px solid #333; border-radius:4px; color:#fff; font-size:15px; font-family:var(--font-body); }
-        .btn-submit { width:100%; padding:12px; background:var(--white); color:#000; border:none; border-radius:5px; font-size:15px; font-weight:600; cursor:pointer; margin-top:4px; }
+        .btn-submit { width:100%; padding:12px; background:#ffffff; color:#000000; border:none; border-radius:5px; font-size:15px; font-weight:600; cursor:pointer; margin-top:4px; }
         .btn-cancel { width:100%; padding:10px; background:transparent; color:#999; border:1px solid #444; border-radius:5px; font-size:13px; cursor:pointer; margin-top:6px; }
-        .fab-add { position:fixed; bottom:32px; right:32px; width:52px; height:52px; border-radius:50%; background:var(--white); color:#000; border:none; cursor:pointer; font-size:26px; z-index:100; box-shadow:0 6px 18px rgba(0,0,0,0.5); }
+
+        /* 修复浅色模式下+号按钮不可见 */
+        .fab-add {
+            position:fixed; bottom:32px; right:32px; width:52px; height:52px; border-radius:50%;
+            background:#ffffff; color:#000000; border:none; cursor:pointer; font-size:26px; z-index:100;
+            box-shadow:0 6px 18px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .fab-add:hover { transform:scale(1.07); box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+        .fab-add:active { transform:scale(0.95); }
+
         .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#2a2a32; color:#ddd; padding:10px 22px; border-radius:20px; font-size:13px; z-index:350; opacity:0; pointer-events:none; transition:opacity 0.3s; }
         .toast.show { opacity:1; }
         .empty-hint { text-align:center; color:var(--text-muted); font-size:15px; padding:40px 20px; opacity:0.5; }
@@ -331,10 +335,10 @@
                     <div><span class="modal-info-label">购买价格</span><span class="modal-info-value" id="modalPrice"></span></div>
                     <div><span class="modal-info-label">购买日期</span><span class="modal-info-value" id="modalDate"></span></div>
                     <div><span class="modal-info-label">持有天数</span><span class="modal-info-value" id="modalDays"></span></div>
-                    <div><span class="modal-info-label">版本/类型</span><span class="modal-info-value" id="modalVersion"></span></div>
+                    <div><span class="modal-info-label">版本</span><span class="modal-info-value" id="modalVersion"></span></div>
                 </div>
                 <div class="daily-value-card">
-                    <div class="daily-label">日均持有价值</div>
+                    <div class="daily-label" style="font-size:11px; text-transform:uppercase; color:var(--text-muted);">日均持有价值</div>
                     <div class="daily-number" id="modalDailyValue">¥0</div>
                     <div class="daily-unit">/ 天</div>
                     <div class="daily-verdict" id="modalVerdict"></div>
@@ -356,7 +360,7 @@
             <div class="form-group" id="formGroupDeviceType" style="display:none;"><label>设备类型</label><select id="inputDeviceType"><option value="switch">Switch 主机</option><option value="switch-lite">Switch Lite</option><option value="switch-oled">Switch OLED</option><option value="pro-controller">Pro 手柄</option><option value="joycon">Joy-Con</option><option value="other">其他配件</option></select></div>
             <div class="form-group"><label>购买价格 (¥)</label><input type="number" id="inputPrice" min="0" step="0.01"></div>
             <div class="form-group"><label>购买日期</label><input type="date" id="inputDate"></div>
-            <div class="form-group" id="formGroupVersion"><label>版本色标</label><select id="inputVersion"><option value="red">🔴 限量版</option><option value="blue" selected>🔵 标准版</option><option value="green">🟢 特别版</option></select></div>
+            <div class="form-group" id="formGroupVersion"><label>版本名称</label><input type="text" id="inputVersionText" placeholder="例如：限量版、首发版"></div>
             <div class="form-group"><label>封面图片</label><input type="file" id="inputImage" accept="image/*"><img class="image-preview-mini" id="imagePreview" style="display:none;width:100%;max-height:120px;object-fit:cover;border-radius:4px;margin-top:6px;"></div>
             <button class="btn-submit" id="btnSubmit">保存</button><button class="btn-cancel" id="btnCancel">取消</button>
         </div>
@@ -379,7 +383,7 @@
                 modalActionsGame: g('modalActionsGame'), modalActionsDevice: g('modalActionsDevice'),
                 formOverlay: g('formOverlay'), formTitle: g('formTitle'), inputTitle: g('inputTitle'),
                 inputType: g('inputType'), inputDeviceType: g('inputDeviceType'), inputPrice: g('inputPrice'),
-                inputDate: g('inputDate'), inputVersion: g('inputVersion'), inputImage: g('inputImage'),
+                inputDate: g('inputDate'), inputVersionText: g('inputVersionText'), inputImage: g('inputImage'),
                 imagePreview: g('imagePreview'), formGroupType: g('formGroupType'), formGroupDeviceType: g('formGroupDeviceType'),
                 formGroupVersion: g('formGroupVersion'), fabAdd: g('fabAdd'), toast: g('toast'),
                 profileId: g('profileId'), avatarContainer: g('avatarContainer'), avatarFileInput: g('avatarFileInput'),
@@ -392,17 +396,17 @@
                 recoupCount: g('recoupCount')
             };
 
-            const KEYS = { games: 'gcv4_g', devices: 'gcv4_d', recoup: 'gcv4_r', profile: 'gcv4_p', friendCode: 'gcv4_fc', theme: 'gcv4_theme' };
+            const KEYS = { games: 'gcv5_g', devices: 'gcv5_d', recoup: 'gcv5_r', profile: 'gcv5_p', friendCode: 'gcv5_fc', theme: 'gcv5_theme' };
             let games = [], devices = [], recoup = [], editId = null, editMode = 'game', detailMode = 'game', detailId = null,
                 currentTab = 'tab-overview', friendCode = 'SW-0000-0000-0000', confirmCb = null;
 
             const defGames = [
-                { id:'g01', title:'塞尔达传说 王国之泪', purchasePrice:380, purchaseDate:'2023-05-12', version:'red', type:'physical', image:null },
-                { id:'g02', title:'超级马力欧 奥德赛', purchasePrice:299, purchaseDate:'2022-11-20', version:'blue', type:'physical', image:null },
-                { id:'g03', title:'斯普拉遁3', purchasePrice:320, purchaseDate:'2024-01-08', version:'green', type:'digital', image:null },
-                { id:'g04', title:'宝可梦 朱', purchasePrice:350, purchaseDate:'2023-09-15', version:'red', type:'physical', image:null },
-                { id:'g05', title:'Hades', purchasePrice:78, purchaseDate:'2024-03-15', version:'blue', type:'steam', image:null },
-                { id:'g06', title:'Stardew Valley', purchasePrice:48, purchaseDate:'2023-11-10', version:'green', type:'steam', image:null },
+                { id:'g01', title:'塞尔达传说 王国之泪', purchasePrice:380, purchaseDate:'2023-05-12', version:'限量版', type:'physical', image:null },
+                { id:'g02', title:'超级马力欧 奥德赛', purchasePrice:299, purchaseDate:'2022-11-20', version:'标准版', type:'physical', image:null },
+                { id:'g03', title:'斯普拉遁3', purchasePrice:320, purchaseDate:'2024-01-08', version:'特别版', type:'digital', image:null },
+                { id:'g04', title:'宝可梦 朱', purchasePrice:350, purchaseDate:'2023-09-15', version:'首发版', type:'physical', image:null },
+                { id:'g05', title:'Hades', purchasePrice:78, purchaseDate:'2024-03-15', version:'标准版', type:'steam', image:null },
+                { id:'g06', title:'Stardew Valley', purchasePrice:48, purchaseDate:'2023-11-10', version:'标准版', type:'steam', image:null },
             ];
             const defDevices = [
                 { id:'d01', title:'Switch OLED 白色', purchasePrice:2100, purchaseDate:'2023-01-15', deviceType:'switch-oled', image:null },
@@ -427,7 +431,7 @@
                 games = loadData(KEYS.games, defGames);
                 devices = loadData(KEYS.devices, defDevices);
                 recoup = loadData(KEYS.recoup, defRecoup);
-                games.forEach((g,i)=>{ if(!g.id) g.id='g'+Date.now()+i; if(!g.type) g.type='physical'; if(!g.version) g.version='blue'; g.purchasePrice=parseFloat(g.purchasePrice)||0; });
+                games.forEach((g,i)=>{ if(!g.id) g.id='g'+Date.now()+i; if(!g.type) g.type='physical'; if(!g.version) g.version='标准版'; g.purchasePrice=parseFloat(g.purchasePrice)||0; });
                 devices.forEach((d,i)=>{ if(!d.id) d.id='d'+Date.now()+i; d.purchasePrice=parseFloat(d.purchasePrice)||0; if(!d.deviceType) d.deviceType='switch'; });
                 recoup.forEach((r,i)=>{ if(!r.id) r.id='r'+Date.now()+i; r.buyPrice=parseFloat(r.buyPrice)||0; r.sellPrice=parseFloat(r.sellPrice)||0; });
                 try { const fc = localStorage.getItem(KEYS.friendCode); if(fc) friendCode=fc; } catch(e) {}
@@ -436,21 +440,17 @@
             }
             function daysHeld(d) { return Math.max(1, Math.floor((new Date() - new Date(d)) / 86400000)); }
             function fmt(n) { return '¥' + parseFloat(n).toFixed(2); }
-            function vLabel(v) { return {red:'限量版',blue:'标准版',green:'特别版'}[v]||'标准版'; }
             function tLabel(t) { return {physical:'实体版',digital:'数字版',steam:'Steam'}[t]||'实体版'; }
             function dtLabel(t) { return {switch:'Switch主机','switch-lite':'Switch Lite','switch-oled':'Switch OLED','pro-controller':'Pro手柄',joycon:'Joy-Con',other:'其他配件'}[t]||'设备'; }
             function isConsole(t) { return ['switch','switch-lite','switch-oled'].includes(t); }
             function genId(p) { return p + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
-            function placeholderCover(title, version) {
+            function placeholderCover(title) {
                 const c = document.createElement('canvas'); c.width=260; c.height=364; const ctx=c.getContext('2d');
-                const bg={red:'#2a1018',blue:'#10182a',green:'#0e2218'}[version]||'#1a1a22';
-                const ac={red:'#c0392b',blue:'#3a6fb5',green:'#27ae60'}[version]||'#666';
-                ctx.fillStyle=bg; ctx.fillRect(0,0,260,364);
-                ctx.strokeStyle=ac; ctx.lineWidth=2; ctx.globalAlpha=0.4; ctx.strokeRect(18,18,224,328); ctx.globalAlpha=1;
+                ctx.fillStyle='#1a1a22'; ctx.fillRect(0,0,260,364);
+                ctx.strokeStyle='#555'; ctx.lineWidth=2; ctx.globalAlpha=0.4; ctx.strokeRect(18,18,224,328); ctx.globalAlpha=1;
                 ctx.fillStyle='#d8d8e0'; ctx.font='bold 20px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
                 let lines = title.length<=6?[title]:title.length<=12?[title.substring(0,Math.ceil(title.length/2)),title.substring(Math.ceil(title.length/2))]:[title.substring(0,6),title.substring(6,12),title.substring(12,16)+'…'];
                 lines.forEach((l,i)=>ctx.fillText(l,130,182-(lines.length*30)/2+i*30));
-                ctx.fillStyle=ac; ctx.fillRect(0,354,260,10);
                 return c.toDataURL('image/jpeg',0.75);
             }
             function devicePlaceholder(title) {
@@ -516,11 +516,12 @@
                     if (list.length===0) { container.innerHTML='<div class="empty-hint" style="padding:20px;width:100%;">暂无此类别游戏</div>'; return; }
                     list.forEach(game => {
                         const card=document.createElement('div'); card.className='game-card';
-                        const inner=document.createElement('div'); inner.className='game-card-inner tag-'+(game.version||'blue');
+                        const inner=document.createElement('div'); inner.className='game-card-inner';
                         const badge=document.createElement('span'); badge.className='game-card-type-badge type-badge-'+(game.type||'physical'); badge.textContent=tLabel(game.type); inner.appendChild(badge);
-                        const img=document.createElement('img'); img.className='game-card-cover'; img.src=(game.image&&game.image.startsWith('data:'))?game.image:placeholderCover(game.title,game.version); img.alt=game.title; img.loading='lazy';
+                        const img=document.createElement('img'); img.className='game-card-cover'; img.src=(game.image&&game.image.startsWith('data:'))?game.image:placeholderCover(game.title); img.alt=game.title; img.loading='lazy';
                         inner.appendChild(img); card.appendChild(inner);
-                        const tt=document.createElement('div'); tt.className='game-card-title-tag'; tt.textContent=game.title; card.appendChild(tt);
+                        const titleTag=document.createElement('div'); titleTag.className='game-card-title-tag'; titleTag.textContent=game.title; card.appendChild(titleTag);
+                        const versionTag=document.createElement('div'); versionTag.className='game-card-version-tag'; versionTag.textContent=game.version || '标准版'; card.appendChild(versionTag);
                         card.addEventListener('click', e => { e.stopPropagation(); openDetailGame(game.id); });
                         container.appendChild(card);
                     });
@@ -561,11 +562,11 @@
                 detailMode='game'; detailId=id;
                 els.modalTitle.textContent=game.title; els.modalPrice.textContent=fmt(game.purchasePrice);
                 els.modalDate.textContent=game.purchaseDate; els.modalDays.textContent=daysHeld(game.purchaseDate)+' 天';
-                els.modalVersion.textContent=vLabel(game.version)+' · '+tLabel(game.type);
-                els.modalVersionBadge.textContent=vLabel(game.version); els.modalVersionBadge.className='modal-version-badge badge-'+(game.version||'blue');
+                els.modalVersion.textContent=game.version || '标准版';
+                els.modalVersionBadge.textContent=game.version || '标准版';
                 els.modalCoverImg.style.display='none'; els.modalCoverPlaceholder.style.display='none';
                 if(game.image&&game.image.startsWith('data:')){ els.modalCoverImg.src=game.image; els.modalCoverImg.style.display='block'; }
-                else { els.modalCoverPlaceholder.src=placeholderCover(game.title,game.version); els.modalCoverPlaceholder.style.display='block'; }
+                else { els.modalCoverPlaceholder.src=placeholderCover(game.title); els.modalCoverPlaceholder.style.display='block'; }
                 const dv=(game.purchasePrice||0)/daysHeld(game.purchaseDate);
                 els.modalDailyValue.textContent=fmt(dv); els.modalVerdict.textContent=dv<0.5?'🏆 超值收藏！':dv<1.5?'👍 性价比良好':dv<5?'📅 持有时间尚短':'🆕 享受游戏吧';
                 els.modalActionsGame.style.display='flex'; els.modalActionsDevice.style.display='none';
@@ -577,7 +578,7 @@
                 els.modalTitle.textContent=dev.title; els.modalPrice.textContent=fmt(dev.purchasePrice);
                 els.modalDate.textContent=dev.purchaseDate; els.modalDays.textContent=daysHeld(dev.purchaseDate)+' 天';
                 els.modalVersion.textContent=dtLabel(dev.deviceType);
-                els.modalVersionBadge.textContent=dtLabel(dev.deviceType); els.modalVersionBadge.className='modal-version-badge badge-blue';
+                els.modalVersionBadge.textContent=dtLabel(dev.deviceType);
                 els.modalCoverImg.style.display='none'; els.modalCoverPlaceholder.style.display='none';
                 if(dev.image&&dev.image.startsWith('data:')){ els.modalCoverImg.src=dev.image; els.modalCoverImg.style.display='block'; }
                 else { els.modalCoverPlaceholder.src=devicePlaceholder(dev.title); els.modalCoverPlaceholder.style.display='block'; }
@@ -601,11 +602,11 @@
                 editId=null;
                 if(currentTab==='tab-devices'){ editMode='device'; els.formTitle.textContent='添加设备'; els.formGroupType.style.display='none'; els.formGroupDeviceType.style.display='block'; els.formGroupVersion.style.display='none'; els.inputTitle.placeholder='输入设备名称'; els.inputDeviceType.value='switch'; }
                 else if(currentTab==='tab-recoup'){ editMode='recoup'; els.formTitle.textContent='添加回血记录'; els.formGroupType.style.display='none'; els.formGroupDeviceType.style.display='none'; els.formGroupVersion.style.display='none'; els.inputTitle.placeholder='输入游戏/物品名称'; }
-                else { editMode='game'; els.formTitle.textContent='添加新游戏'; els.formGroupType.style.display='block'; els.formGroupDeviceType.style.display='none'; els.formGroupVersion.style.display='block'; els.inputTitle.placeholder='输入游戏名称'; els.inputType.value='physical'; els.inputVersion.value='blue'; }
-                els.inputTitle.value=''; els.inputPrice.value=''; els.inputDate.value=new Date().toISOString().split('T')[0]; els.inputImage.value=''; els.imagePreview.style.display='none'; els.imagePreview.classList.remove('show');
+                else { editMode='game'; els.formTitle.textContent='添加新游戏'; els.formGroupType.style.display='block'; els.formGroupDeviceType.style.display='none'; els.formGroupVersion.style.display='block'; els.inputTitle.placeholder='输入游戏名称'; els.inputType.value='physical'; els.inputVersionText.value='标准版'; }
+                els.inputTitle.value=''; els.inputPrice.value=''; els.inputDate.value=new Date().toISOString().split('T')[0]; els.inputImage.value=''; els.imagePreview.style.display='none';
                 els.formOverlay.classList.add('active'); document.body.style.overflow='hidden';
             }
-            function openFormForEditGame(game){ editId=game.id; editMode='game'; els.formTitle.textContent='编辑游戏信息'; els.formGroupType.style.display='block'; els.formGroupDeviceType.style.display='none'; els.formGroupVersion.style.display='block'; els.inputTitle.value=game.title; els.inputPrice.value=game.purchasePrice; els.inputDate.value=game.purchaseDate; els.inputVersion.value=game.version; els.inputType.value=game.type; els.inputImage.value=''; els.imagePreview.style.display='none'; if(game.image&&game.image.startsWith('data:')){ els.imagePreview.src=game.image; els.imagePreview.style.display='block'; } els.formOverlay.classList.add('active'); document.body.style.overflow='hidden'; }
+            function openFormForEditGame(game){ editId=game.id; editMode='game'; els.formTitle.textContent='编辑游戏信息'; els.formGroupType.style.display='block'; els.formGroupDeviceType.style.display='none'; els.formGroupVersion.style.display='block'; els.inputTitle.value=game.title; els.inputPrice.value=game.purchasePrice; els.inputDate.value=game.purchaseDate; els.inputVersionText.value=game.version || '标准版'; els.inputType.value=game.type; els.inputImage.value=''; els.imagePreview.style.display='none'; if(game.image&&game.image.startsWith('data:')){ els.imagePreview.src=game.image; els.imagePreview.style.display='block'; } els.formOverlay.classList.add('active'); document.body.style.overflow='hidden'; }
             function openFormForEditDevice(dev){ editId=dev.id; editMode='device'; els.formTitle.textContent='编辑设备信息'; els.formGroupType.style.display='none'; els.formGroupDeviceType.style.display='block'; els.formGroupVersion.style.display='none'; els.inputTitle.value=dev.title; els.inputPrice.value=dev.purchasePrice; els.inputDate.value=dev.purchaseDate; els.inputDeviceType.value=dev.deviceType; els.inputImage.value=''; els.imagePreview.style.display='none'; if(dev.image&&dev.image.startsWith('data:')){ els.imagePreview.src=dev.image; els.imagePreview.style.display='block'; } els.formOverlay.classList.add('active'); document.body.style.overflow='hidden'; }
             function closeForm(){ els.formOverlay.classList.remove('active'); document.body.style.overflow=''; editId=null; }
             els.fabAdd.addEventListener('click', e => { e.stopPropagation(); openFormForAdd(); });
@@ -619,8 +620,16 @@
                 const price=parseFloat(ps); let imgData=null;
                 if(els.inputImage.files&&els.inputImage.files[0]){ const dataUrl=await new Promise(r=>{ const fr=new FileReader(); fr.onload=e=>r(e.target.result); fr.readAsDataURL(els.inputImage.files[0]); }); try{ imgData=await compressImage(dataUrl,400,0.6); }catch(e){ imgData=dataUrl; } }
                 else if(editId){ if(editMode==='game'){ const eg=games.find(g=>g.id===editId); if(eg&&eg.image&&eg.image.startsWith('data:')) imgData=eg.image; } if(editMode==='device'){ const ed=devices.find(d=>d.id===editId); if(ed&&ed.image&&ed.image.startsWith('data:')) imgData=ed.image; } }
-                if(editId){ if(editMode==='game'){ const g=games.find(x=>x.id===editId); if(g){ Object.assign(g,{title,purchasePrice:price,purchaseDate:date,version:els.inputVersion.value,type:els.inputType.value}); if(imgData) g.image=imgData; } } else if(editMode==='device'){ const d=devices.find(x=>x.id===editId); if(d){ Object.assign(d,{title,purchasePrice:price,purchaseDate:date,deviceType:els.inputDeviceType.value}); if(imgData) d.image=imgData; } } showToast('已更新'); }
-                else { if(editMode==='game') games.push({id:genId('g'),title,purchasePrice:price,purchaseDate:date,version:els.inputVersion.value,type:els.inputType.value,image:imgData}); else if(editMode==='device') devices.push({id:genId('d'),title,purchasePrice:price,purchaseDate:date,deviceType:els.inputDeviceType.value,image:imgData}); else if(editMode==='recoup') recoup.push({id:genId('r'),title,buyPrice:price,sellPrice:price,sellDate:date,image:imgData}); showToast('已添加'); }
+                if(editId){
+                    if(editMode==='game'){ const g=games.find(x=>x.id===editId); if(g){ Object.assign(g,{title,purchasePrice:price,purchaseDate:date,version:els.inputVersionText.value.trim()||'标准版',type:els.inputType.value}); if(imgData) g.image=imgData; } }
+                    else if(editMode==='device'){ const d=devices.find(x=>x.id===editId); if(d){ Object.assign(d,{title,purchasePrice:price,purchaseDate:date,deviceType:els.inputDeviceType.value}); if(imgData) d.image=imgData; } }
+                    showToast('已更新');
+                } else {
+                    if(editMode==='game') games.push({id:genId('g'),title,purchasePrice:price,purchaseDate:date,version:els.inputVersionText.value.trim()||'标准版',type:els.inputType.value,image:imgData});
+                    else if(editMode==='device') devices.push({id:genId('d'),title,purchasePrice:price,purchaseDate:date,deviceType:els.inputDeviceType.value,image:imgData});
+                    else if(editMode==='recoup') recoup.push({id:genId('r'),title,buyPrice:price,sellPrice:price,sellDate:date,image:imgData});
+                    showToast('已添加');
+                }
                 saveAll(); closeForm(); refreshAll();
             });
 
@@ -647,7 +656,7 @@
             init();
             window.addEventListener('storage', e=>{ if([KEYS.games,KEYS.devices,KEYS.recoup,KEYS.friendCode].includes(e.key)){ loadAll(); refreshAll(); } });
             window.resetCollection = function(){ if(confirm('确定重置所有数据？')){ Object.values(KEYS).forEach(k=>localStorage.removeItem(k)); location.reload(); } };
-            console.log('✅ 收藏馆 v4.2 已启动 - 金色银行卡 & 浅色模式优化');
+            console.log('✅ 收藏馆 v5.0 已启动 - 自定义版本 & 浅色模式优化');
         })();
     </script>
 </body>
