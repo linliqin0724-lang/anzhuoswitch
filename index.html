@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private space</title>
+    <title>Domain</title>
     <style>
         :root {
             --bg: #0a0a0c; --surface: #1a1a1e; --surface-light: #222228; --surface-lighter: #2a2a30;
@@ -829,7 +829,7 @@
             init();
             window.addEventListener('storage', e=>{ if([KEYS.games,KEYS.devices,KEYS.recoup,KEYS.friendCode].includes(e.key)){ loadAll(); refreshAll(); } });
             window.resetCollection = function(){ if(confirm('确定重置所有数据？')){ Object.values(KEYS).forEach(k=>localStorage.removeItem(k)); location.reload(); } };
-            console.log(' 收藏馆 v5.3 已启动 - 银行卡优化');
+            console.log('收藏馆 v5.3 已启动 - 银行卡优化');
         })();
     </script>
 </body>
