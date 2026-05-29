@@ -6,2308 +6,612 @@
     <title>Private space</title>
     <style>
         :root {
-            --bg: #0a0a0c;
-            --surface: #1a1a1e;
-            --surface-light: #222228;
-            --surface-lighter: #2a2a30;
-            --text-primary: #e8e8ec;
-            --text-secondary: #b0b0b8;
-            --text-muted: #6e6e78;
-            --white: #f4f4f6;
-            --silver: #b8b8c0;
-            --silver-light: #d0d0d6;
-            --silver-dark: #8a8a94;
-            --border-subtle: #2a2a34;
-            --border-hover: #444458;
-            --metal-shelf: #3a3a42;
-            --metal-shelf-light: #4a4a54;
-            --metal-shelf-dark: #2a2a32;
-            --metal-top: #525260;
-            --red-tag: #d94a4a;
-            --blue-tag: #4a80c8;
-            --green-tag: #3da86a;
-            --card-width: 130px;
+            --bg: #0a0a0c; --surface: #1a1a1e; --surface-light: #222228; --surface-lighter: #2a2a30;
+            --text-primary: #e8e8ec; --text-secondary: #b0b0b8; --text-muted: #6e6e78; --white: #f4f4f6;
+            --silver: #b8b8c0; --silver-light: #d0d0d6; --silver-dark: #8a8a94;
+            --border-subtle: #2a2a34; --border-hover: #444458;
+            --metal-shelf: #3a3a42; --metal-shelf-light: #4a4a54; --metal-shelf-dark: #2a2a32; --metal-top: #525260;
+            --red-tag: #d94a4a; --blue-tag: #4a80c8; --green-tag: #3da86a;
+            --card-width: 130px; --tab-font-size: 16px; --base-font-size: 15px;
             --font-display: 'Georgia', 'Times New Roman', 'Songti SC', 'Noto Serif SC', serif;
             --font-body: 'Inter', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
-            --tab-font-size: 15px;
-            --base-font-size: 14px;
             --transition-float: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --transition-color: 0.5s ease;
         }
         body.light-mode {
-            --bg: #f5f5f7;
-            --surface: #ffffff;
-            --surface-light: #f0f0f3;
-            --surface-lighter: #e8e8ed;
-            --text-primary: #1a1a22;
-            --text-secondary: #4a4a56;
-            --text-muted: #7a7a88;
-            --white: #1a1a1e;
-            --silver: #5a5a68;
-            --silver-light: #3a3a48;
-            --silver-dark: #7a7a88;
-            --border-subtle: #d8d8de;
-            --border-hover: #b0b0ba;
-            --metal-shelf: #c8c8d0;
-            --metal-shelf-light: #d8d8de;
-            --metal-shelf-dark: #b0b0b8;
-            --metal-top: #d0d0d6;
+            --bg: #f4f4f6; --surface: #ffffff; --surface-light: #f0f0f3; --surface-lighter: #e8e8ed;
+            --text-primary: #1a1a22; --text-secondary: #4a4a56; --text-muted: #7a7a88; --white: #1a1a1e;
+            --silver: #5a5a68; --silver-light: #3a3a48; --silver-dark: #7a7a88;
+            --border-subtle: #d8d8de; --border-hover: #b0b0ba;
+            --metal-shelf: #c8c8d0; --metal-shelf-light: #d8d8de; --metal-shelf-dark: #b0b0b8; --metal-top: #d0d0d6;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: var(--font-body);
-            font-size: var(--base-font-size);
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.4s, color 0.4s;
+            background: var(--bg); color: var(--text-primary); font-family: var(--font-body);
+            font-size: var(--base-font-size); min-height: 100vh; -webkit-font-smoothing: antialiased;
+            overflow-x: hidden; user-select: none; transition: background 0.4s, color 0.4s;
         }
-
         .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 28px 36px 16px;
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
+            display: flex; align-items: center; gap: 20px; padding: 28px 36px 16px;
+            max-width: 1100px; margin: 0 auto; z-index: 10; position: relative;
         }
         .profile-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            border: 2px solid var(--silver-dark);
-            background: var(--surface-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: var(--silver);
-            flex-shrink: 0;
-            overflow: hidden;
-            cursor: pointer;
-            transition: border-color 0.3s;
-            position: relative;
+            width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--silver-dark);
+            background: var(--surface-light); display: flex; align-items: center; justify-content: center;
+            font-size: 28px; color: var(--silver); flex-shrink: 0; overflow: hidden; cursor: pointer;
+            transition: border-color 0.3s; position: relative;
         }
-        .profile-avatar:hover {
-            border-color: var(--silver-light);
+        .profile-avatar:hover { border-color: var(--silver-light); }
+        .profile-avatar img { width:100%; height:100%; object-fit:cover; filter:grayscale(100%); transition: filter 0.5s; }
+        .profile-avatar:hover img { filter:grayscale(0%); }
+        .avatar-edit-hint {
+            position: absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.7); color:#ccc;
+            font-size:9px; text-align:center; padding:3px 0; opacity:0; transition:opacity 0.3s; pointer-events:none;
         }
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%);
-            transition: var(--transition-color);
-        }
-        .profile-avatar:hover img {
-            filter: grayscale(0%);
-        }
-        .profile-avatar .avatar-edit-hint {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.7);
-            color: #ccc;
-            font-size: 9px;
-            text-align: center;
-            padding: 3px 0;
-            opacity: 0;
-            transition: opacity 0.3s;
-            letter-spacing: 0.04em;
-            pointer-events: none;
-        }
-        .profile-avatar:hover .avatar-edit-hint {
-            opacity: 1;
-        }
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            flex: 1;
-            min-width: 0;
-        }
-        .profile-id {
-            font-family: var(--font-display);
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            color: var(--white);
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .profile-id:hover {
-            color: var(--silver-light);
-        }
-        .profile-subtitle {
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-        .profile-friend-code {
-            font-size: 11px;
-            color: var(--silver-dark);
-            letter-spacing: 0.05em;
-            margin-top: 2px;
-            cursor: pointer;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .profile-friend-code:hover {
-            color: var(--silver-light);
-        }
-        .profile-friend-code .copy-icon {
-            font-size: 10px;
-            opacity: 0.7;
-        }
+        .profile-avatar:hover .avatar-edit-hint { opacity:1; }
+        .profile-info { flex:1; min-width:0; }
+        .profile-id { font-family:var(--font-display); font-size:24px; font-weight:700; color:var(--white); cursor:pointer; }
+        .profile-id:hover { color:var(--silver-light); }
+        .profile-subtitle { font-size:12px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase; }
+        .profile-friend-code { font-size:12px; color:var(--silver-dark); cursor:pointer; display:flex; align-items:center; gap:6px; }
+        .profile-friend-code:hover { color:var(--silver-light); }
         .theme-toggle {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--silver-dark);
-            background: var(--surface-light);
-            color: var(--silver);
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            margin-left: auto;
+            flex-shrink:0; width:44px; height:44px; border-radius:50%; border:2px solid var(--silver-dark);
+            background:var(--surface-light); color:var(--silver); cursor:pointer; font-size:20px;
+            display:flex; align-items:center; justify-content:center; transition:all 0.3s; margin-left:auto;
         }
-        .theme-toggle:hover {
-            border-color: var(--silver-light);
-            color: var(--white);
+        .theme-toggle:hover { border-color:var(--silver-light); color:var(--white); }
+        @media (max-width:640px) {
+            .profile-header { padding:16px 12px 10px; gap:10px; }
+            .profile-avatar { width:46px; height:46px; font-size:22px; }
+            .profile-id { font-size:18px; }
+            .theme-toggle { width:36px; height:36px; font-size:17px; }
         }
-        @media (max-width: 640px) {
-            .profile-header {
-                padding: 16px 12px 10px;
-                gap: 10px;
-            }
-            .profile-avatar {
-                width: 46px;
-                height: 46px;
-                font-size: 22px;
-            }
-            .profile-id {
-                font-size: 18px;
-            }
-            .theme-toggle {
-                width: 34px;
-                height: 34px;
-                font-size: 15px;
-            }
-        }
-
         .tab-nav {
-            display: flex;
-            gap: 2px;
-            max-width: 1100px;
-            margin: 12px auto 0;
-            padding: 0 36px;
-            position: relative;
-            z-index: 10;
-            border-bottom: 1px solid var(--border-subtle);
+            display:flex; gap:2px; max-width:1100px; margin:12px auto 0; padding:0 36px;
+            border-bottom:1px solid var(--border-subtle); z-index:10; position:relative;
         }
         .tab-btn {
-            padding: 13px 22px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: var(--tab-font-size);
-            letter-spacing: 0.06em;
-            cursor: pointer;
-            font-family: var(--font-body);
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-            white-space: nowrap;
-            border-radius: 6px 6px 0 0;
+            padding:14px 24px; background:transparent; border:none; color:var(--text-muted);
+            font-size:var(--tab-font-size); letter-spacing:0.06em; cursor:pointer; font-family:var(--font-body);
+            font-weight:500; transition:all 0.3s; white-space:nowrap; border-radius:6px 6px 0 0;
         }
-        .tab-btn:hover {
-            color: var(--text-secondary);
-            background: rgba(128, 128, 140, 0.06);
-        }
-        .tab-btn.active {
-            color: var(--white);
-            background: rgba(128, 128, 140, 0.08);
-        }
+        .tab-btn:hover { color:var(--text-secondary); background:rgba(128,128,140,0.06); }
+        .tab-btn.active { color:var(--white); background:rgba(128,128,140,0.08); }
         .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 12px;
-            right: 12px;
-            height: 2px;
-            background: var(--silver);
-            border-radius: 1px;
+            content:''; position:absolute; bottom:-1px; left:12px; right:12px; height:2px;
+            background:var(--silver); border-radius:1px;
         }
         .tab-badge {
-            display: inline-block;
-            background: var(--surface-lighter);
-            color: var(--silver);
-            font-size: 11px;
-            padding: 3px 10px;
-            border-radius: 10px;
-            margin-left: 6px;
-            letter-spacing: 0.04em;
-            font-weight: 400;
-            vertical-align: 1px;
+            background:var(--surface-lighter); color:var(--silver); font-size:12px;
+            padding:3px 10px; border-radius:10px; margin-left:6px; vertical-align:1px;
         }
-        @media (max-width: 640px) {
-            .tab-nav {
-                padding: 0 8px;
-                overflow-x: auto;
-            }
-            .tab-btn {
-                padding: 10px 13px;
-                font-size: 13px;
-            }
-            .tab-badge {
-                font-size: 10px;
-                padding: 2px 7px;
-                margin-left: 3px;
-            }
+        @media (max-width:640px) {
+            .tab-nav { padding:0 8px; overflow-x:auto; }
+            .tab-btn { padding:11px 14px; font-size:14px; }
+            .tab-badge { font-size:10px; padding:2px 7px; }
         }
-
-        .tab-content {
-            display: none;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px 36px 60px;
-            position: relative;
-            z-index: 5;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @media (max-width: 640px) {
-            .tab-content {
-                padding: 14px 10px 40px;
-            }
-        }
-
-        .shelf-section {
-            margin-bottom: 36px;
-            position: relative;
-        }
+        .tab-content { display:none; max-width:1100px; margin:0 auto; padding:20px 36px 60px; z-index:5; }
+        .tab-content.active { display:block; }
+        @media (max-width:640px) { .tab-content { padding:14px 10px 40px; } }
+        .shelf-section { margin-bottom:36px; }
         .shelf-section-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            padding-left: 4px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size:13px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted);
+            margin-bottom:10px; padding-left:4px; font-weight:500; display:flex; align-items:center; gap:8px;
         }
-        .type-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .type-dot.physical {
-            background: var(--silver);
-            box-shadow: 0 0 6px rgba(180, 180, 190, 0.5);
-        }
-        .type-dot.digital {
-            background: var(--silver-dark);
-            box-shadow: 0 0 6px rgba(130, 130, 145, 0.4);
-        }
-        .type-dot.steam {
-            background: #4a8ec8;
-            box-shadow: 0 0 6px rgba(74, 142, 200, 0.5);
-        }
-        .shelf-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-            padding: 8px 2px 0;
-            position: relative;
-            align-items: flex-end;
-        }
+        .type-dot { width:9px; height:9px; border-radius:50%; }
+        .type-dot.physical { background:var(--silver); }
+        .type-dot.digital { background:var(--silver-dark); }
+        .type-dot.steam { background:#4a8ec8; }
+        .shelf-row { display:flex; flex-wrap:wrap; gap:18px; padding:8px 2px 0; align-items:flex-end; }
         .shelf-board {
-            position: relative;
-            background: linear-gradient(180deg, var(--metal-top) 0%, var(--metal-shelf-light) 15%, var(--metal-shelf) 50%, var(--metal-shelf-dark) 100%);
-            height: 14px;
-            border-radius: 2px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-            margin-top: 4px;
-            position: relative;
-            z-index: 2;
+            height:14px; border-radius:2px; margin-top:4px;
+            background:linear-gradient(180deg, var(--metal-top) 0%, var(--metal-shelf-light) 15%, var(--metal-shelf) 50%, var(--metal-shelf-dark) 100%);
+            box-shadow:0 3px 10px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.4);
         }
-        .shelf-board::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #1a1a22;
-            border-radius: 0 0 2px 2px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        @media (max-width: 640px) {
-            .shelf-row {
-                gap: 10px;
-            }
-            .shelf-section {
-                margin-bottom: 22px;
-            }
-            .shelf-board {
-                height: 10px;
-                margin-top: 2px;
-            }
-        }
-
-        .game-card {
-            width: var(--card-width);
-            flex-shrink: 0;
-            cursor: pointer;
-            position: relative;
-            transition: transform var(--transition-float), box-shadow var(--transition-float);
-            z-index: 3;
-            transform-style: preserve-3d;
-            perspective: 600px;
-        }
+        @media (max-width:640px) { .shelf-row { gap:10px; } .shelf-board { height:10px; } }
+        .game-card { width:var(--card-width); flex-shrink:0; cursor:pointer; position:relative; z-index:3; transition:transform var(--transition-float); }
         .game-card-inner {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1.4;
-            border-radius: 3px 3px 2px 2px;
-            overflow: hidden;
-            background: var(--surface-light);
-            box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4), 4px 4px 8px rgba(0, 0, 0, 0.5), 1px 0 0 rgba(255, 255, 255, 0.02) inset;
-            transition: all var(--transition-float);
+            width:100%; aspect-ratio:1/1.4; border-radius:3px 3px 2px 2px; overflow:hidden;
+            background:var(--surface-light); box-shadow:2px 2px 0 rgba(0,0,0,0.4), 4px 4px 8px rgba(0,0,0,0.5);
+            transition:all var(--transition-float);
         }
-        .game-card-inner::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            z-index: 5;
-            transition: width 0.3s ease;
-        }
-        .game-card-inner.tag-red::before {
-            background: var(--red-tag);
-        }
-        .game-card-inner.tag-blue::before {
-            background: var(--blue-tag);
-        }
-        .game-card-inner.tag-green::before {
-            background: var(--green-tag);
-        }
-        .game-card-type-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            font-size: 10px;
-            letter-spacing: 0.05em;
-            padding: 2px 8px;
-            border-radius: 2px;
-            z-index: 6;
-            font-weight: 500;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        .type-badge-physical {
-            background: rgba(30, 30, 38, 0.85);
-            color: #c8c8d0;
-            border: 1px solid #4a4a56;
-        }
-        .type-badge-digital {
-            background: rgba(40, 40, 50, 0.85);
-            color: #a0a0b0;
-            border: 1px solid #3a3a48;
-        }
-        .type-badge-steam {
-            background: rgba(30, 50, 70, 0.85);
-            color: #8ab8e0;
-            border: 1px solid #3a6080;
-        }
-        .game-card-cover {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            filter: grayscale(100%) contrast(0.9) brightness(0.8);
-            transition: filter var(--transition-color), transform 0.4s ease;
-            background: var(--surface-light);
-        }
-        .game-card-cover.placeholder-cover {
-            filter: grayscale(100%) contrast(0.85) brightness(0.7);
-            object-fit: contain;
-            padding: 16px 8px;
-        }
-        .game-card:hover {
-            transform: translateY(-16px) rotateX(-2deg);
-            z-index: 20;
-        }
-        .game-card:hover .game-card-inner {
-            box-shadow: 2px 8px 16px rgba(0, 0, 0, 0.6), 6px 10px 20px rgba(0, 0, 0, 0.5);
-        }
-        .game-card:hover .game-card-cover {
-            filter: grayscale(0%) contrast(1) brightness(1);
-            transform: scale(1.03);
-        }
-        .game-card:hover .game-card-type-badge {
-            opacity: 0.5;
-        }
-        .game-card:active {
-            transform: translateY(-6px);
-            transition: transform 0.1s ease;
-        }
-        .game-card::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 10%;
-            width: 80%;
-            height: 8px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            z-index: -1;
-            transition: all var(--transition-float);
-            filter: blur(3px);
-        }
-        .game-card:hover::after {
-            bottom: -12px;
-            width: 70%;
-            left: 15%;
-            opacity: 0.55;
-            filter: blur(6px);
-        }
-        .game-card-title-tag {
-            text-align: center;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 7px;
-            letter-spacing: 0.03em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: var(--card-width);
-            transition: color 0.3s;
-        }
-        .game-card:hover .game-card-title-tag {
-            color: var(--text-secondary);
-        }
-        @media (max-width: 640px) {
-            :root {
-                --card-width: 100px;
-            }
-            .game-card-inner::before {
-                width: 3px;
-            }
-            .game-card-title-tag {
-                font-size: 10px;
-                margin-top: 5px;
-            }
-            .game-card:hover {
-                transform: translateY(-10px);
-            }
-            .game-card-type-badge {
-                font-size: 8px;
-                padding: 1px 5px;
-            }
-        }
-
-        /* 设备列表样式 */
-        .device-section {
-            margin-bottom: 28px;
-        }
-        .device-section-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            padding-left: 4px;
-            font-weight: 500;
-        }
-        .device-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .game-card-inner::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; z-index:5; }
+        .game-card-inner.tag-red::before { background:var(--red-tag); }
+        .game-card-inner.tag-blue::before { background:var(--blue-tag); }
+        .game-card-inner.tag-green::before { background:var(--green-tag); }
+        .game-card-type-badge { position:absolute; top:6px; right:6px; font-size:10px; padding:2px 8px; border-radius:2px; z-index:6; font-weight:500; pointer-events:none; }
+        .type-badge-physical { background:rgba(30,30,38,0.85); color:#c8c8d0; }
+        .type-badge-digital { background:rgba(40,40,50,0.85); color:#a0a0b0; }
+        .type-badge-steam { background:rgba(30,50,70,0.85); color:#8ab8e0; }
+        .game-card-cover { width:100%; height:100%; object-fit:cover; filter:grayscale(100%) contrast(0.9) brightness(0.8); transition:filter 0.5s, transform 0.4s; background:var(--surface-light); }
+        .game-card:hover { transform:translateY(-16px) rotateX(-2deg); z-index:20; }
+        .game-card:hover .game-card-inner { box-shadow:2px 8px 16px rgba(0,0,0,0.6); }
+        .game-card:hover .game-card-cover { filter:grayscale(0%) contrast(1) brightness(1); transform:scale(1.03); }
+        .game-card-title-tag { text-align:center; font-size:12px; color:var(--text-muted); margin-top:7px; }
+        .game-card:hover .game-card-title-tag { color:var(--text-secondary); }
+        @media (max-width:640px) { :root { --card-width:100px; } .game-card-title-tag { font-size:10px; } }
+        .device-section { margin-bottom:28px; }
+        .device-section-label { font-size:13px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:8px; font-weight:500; }
+        .device-list { display:flex; flex-direction:column; gap:8px; }
         .device-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            background: var(--surface);
-            border-radius: 8px;
-            padding: 13px 18px;
-            border: 1px solid var(--border-subtle);
-            transition: all 0.25s;
-            cursor: pointer;
-            flex-wrap: wrap;
+            display:flex; align-items:center; gap:14px; background:var(--surface); border-radius:8px;
+            padding:13px 18px; border:1px solid var(--border-subtle); cursor:pointer; transition:all 0.25s; flex-wrap:wrap;
         }
-        .device-item:hover {
-            border-color: var(--border-hover);
-            background: var(--surface-light);
-        }
-        .device-item-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
-            background: var(--surface-lighter);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-        .device-item-info {
-            flex: 1;
-            min-width: 100px;
-        }
-        .device-item-title {
-            font-weight: 600;
-            color: var(--white);
-            letter-spacing: 0.03em;
-            font-size: 15px;
-        }
-        .device-item-date {
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 0.04em;
-        }
-        .device-item-price {
-            font-family: var(--font-display);
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: 0.03em;
-            flex-shrink: 0;
-        }
-        @media (max-width: 640px) {
-            .device-item {
-                padding: 10px 12px;
-                gap: 8px;
-            }
-            .device-item-title {
-                font-size: 13px;
-            }
-            .device-item-price {
-                font-size: 15px;
-            }
-        }
-
+        .device-item:hover { border-color:var(--border-hover); background:var(--surface-light); }
+        .device-item-icon { width:42px; height:42px; border-radius:8px; background:var(--surface-lighter); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+        .device-item-info { flex:1; min-width:100px; }
+        .device-item-title { font-weight:600; color:var(--white); font-size:16px; }
+        .device-item-date { font-size:12px; color:var(--text-muted); }
+        .device-item-price { font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--white); flex-shrink:0; }
         .bank-card-full {
-            background: linear-gradient(145deg, #d8d8e0 0%, #c0c0ca 15%, #e0e0e6 30%, #b8b8c4 50%, #d0d0d8 70%, #c8c8d2 100%);
-            border-radius: 14px;
-            padding: 24px 28px;
-            margin-bottom: 28px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #1a1a22;
+            background:linear-gradient(145deg, #d8d8e0, #c0c0ca, #e0e0e6, #b8b8c4, #d0d0d8, #c8c8d2);
+            border-radius:14px; padding:24px 28px; margin-bottom:28px; box-shadow:0 8px 30px rgba(0,0,0,0.5);
+            border:1px solid rgba(255,255,255,0.2); color:#1a1a22;
         }
-        .bank-card-full::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            right: -10%;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            pointer-events: none;
-        }
-        .bank-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
-        }
-        .bank-card-logo {
-            font-family: var(--font-display);
-            font-size: 14px;
-            letter-spacing: 0.12em;
-            font-weight: 700;
-            color: #3a3a44;
-            text-transform: uppercase;
-        }
-        .bank-card-friend-code {
-            font-family: 'Courier New', 'SF Mono', monospace;
-            font-size: 15px;
-            letter-spacing: 0.08em;
-            color: #3a3a44;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .bank-card-friend-code:hover {
-            color: #1a1a28;
-        }
-        .bank-card-friend-code .friend-label {
-            font-family: var(--font-body);
-            font-size: 10px;
-            letter-spacing: 0.08em;
-            color: #5a5a66;
-            text-transform: uppercase;
-        }
-        .bank-card-friend-code .copy-hint {
-            font-size: 10px;
-            color: #6a6a78;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .bank-card-friend-code:hover .copy-hint {
-            opacity: 1;
-        }
-        .bank-card-details {
-            display: flex;
-            gap: 30px;
-            position: relative;
-            z-index: 1;
-            flex-wrap: wrap;
-        }
-        .bank-card-detail-item {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
-        .bank-card-detail-label {
-            font-size: 10px;
-            letter-spacing: 0.08em;
-            color: #5a5a66;
-            text-transform: uppercase;
-        }
-        .bank-card-detail-value {
-            font-family: var(--font-display);
-            font-size: 24px;
-            font-weight: 700;
-            color: #1a1a24;
-            letter-spacing: 0.03em;
-        }
-        .bank-card-detail-value.large {
-            font-size: 30px;
-        }
-        @media (max-width: 640px) {
-            .bank-card-full {
-                padding: 16px 18px;
-                border-radius: 10px;
-                margin-bottom: 20px;
-            }
-            .bank-card-friend-code {
-                font-size: 13px;
-            }
-            .bank-card-detail-value {
-                font-size: 19px;
-            }
-            .bank-card-detail-value.large {
-                font-size: 24px;
-            }
-            .bank-card-details {
-                gap: 16px;
-            }
-        }
-
-        .overview-list {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-            margin-top: 8px;
-        }
+        .bank-card-header { display:flex; justify-content:space-between; margin-bottom:8px; }
+        .bank-card-logo { font-family:var(--font-display); font-size:15px; font-weight:700; color:#3a3a44; }
+        .bank-card-friend-code { font-family:'Courier New',monospace; font-size:16px; color:#3a3a44; margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:8px; }
+        .bank-card-friend-code:hover { color:#1a1a28; }
+        .bank-card-details { display:flex; gap:30px; flex-wrap:wrap; }
+        .bank-card-detail-label { font-size:11px; color:#5a5a66; text-transform:uppercase; }
+        .bank-card-detail-value { font-family:var(--font-display); font-size:25px; font-weight:700; color:#1a1a24; }
+        .bank-card-detail-value.large { font-size:32px; }
+        .overview-list { display:flex; flex-direction:column; gap:7px; }
         .overview-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            background: var(--surface);
-            border-radius: 8px;
-            padding: 13px 18px;
-            border: 1px solid var(--border-subtle);
-            transition: all 0.25s;
-            cursor: pointer;
-            flex-wrap: wrap;
+            display:flex; align-items:center; gap:14px; background:var(--surface); border-radius:8px;
+            padding:13px 18px; border:1px solid var(--border-subtle); cursor:pointer; transition:all 0.25s; flex-wrap:wrap;
         }
-        .overview-item:hover {
-            border-color: var(--border-hover);
-            background: var(--surface-light);
-        }
-        .overview-item-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 6px;
-            background: var(--surface-lighter);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 17px;
-            flex-shrink: 0;
-        }
-        .overview-item-info {
-            flex: 1;
-            min-width: 100px;
-        }
-        .overview-item-title {
-            font-weight: 600;
-            color: var(--white);
-            letter-spacing: 0.03em;
-            font-size: 15px;
-        }
-        .overview-item-date {
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 0.04em;
-        }
-        .overview-item-price {
-            font-family: var(--font-display);
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: 0.03em;
-            flex-shrink: 0;
-        }
-        .overview-item-type {
-            font-size: 11px;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-            flex-shrink: 0;
-            padding: 3px 9px;
-            background: var(--surface-lighter);
-            border-radius: 3px;
-        }
-        @media (max-width: 640px) {
-            .overview-item {
-                padding: 10px 12px;
-                gap: 8px;
-            }
-            .overview-item-title {
-                font-size: 13px;
-            }
-            .overview-item-price {
-                font-size: 14px;
-            }
-        }
-
-        .recoup-summary {
-            background: var(--surface);
-            border-radius: 10px;
-            padding: 20px 24px;
-            margin-bottom: 24px;
-            border: 1px solid var(--border-subtle);
-            display: flex;
-            gap: 28px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .recoup-summary-item {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .recoup-summary-label {
-            font-size: 11px;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-        .recoup-summary-value {
-            font-family: var(--font-display);
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: 0.03em;
-        }
-        .recoup-summary-value.profit {
-            color: #5fc98a;
-        }
-        .recoup-summary-value.loss {
-            color: #d97373;
-        }
-        .recoup-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .overview-item:hover { border-color:var(--border-hover); background:var(--surface-light); }
+        .overview-item-icon { width:38px; height:38px; border-radius:6px; background:var(--surface-lighter); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+        .overview-item-info { flex:1; }
+        .overview-item-title { font-weight:600; color:var(--white); font-size:16px; }
+        .overview-item-date { font-size:12px; color:var(--text-muted); }
+        .overview-item-price { font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--white); flex-shrink:0; }
+        .overview-item-type { font-size:11px; color:var(--text-muted); padding:3px 9px; background:var(--surface-lighter); border-radius:3px; flex-shrink:0; }
+        .recoup-summary { background:var(--surface); border-radius:10px; padding:20px 24px; margin-bottom:24px; border:1px solid var(--border-subtle); display:flex; gap:28px; flex-wrap:wrap; }
+        .recoup-summary-label { font-size:12px; color:var(--text-muted); text-transform:uppercase; }
+        .recoup-summary-value { font-family:var(--font-display); font-size:27px; font-weight:700; color:var(--white); }
+        .recoup-summary-value.profit { color:#5fc98a; } .recoup-summary-value.loss { color:#d97373; }
+        .recoup-list { display:flex; flex-direction:column; gap:10px; }
         .recoup-item {
-            background: var(--surface);
-            border-radius: 8px;
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border: 1px solid var(--border-subtle);
-            transition: all 0.25s;
-            cursor: pointer;
-            flex-wrap: wrap;
-        }
-        .recoup-item:hover {
-            border-color: var(--border-hover);
-            background: var(--surface-light);
-        }
-        .recoup-item-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 6px;
-            background: var(--surface-lighter);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 19px;
-            flex-shrink: 0;
-        }
-        .recoup-item-info {
-            flex: 1;
-            min-width: 120px;
-        }
-        .recoup-item-title {
-            font-weight: 600;
-            color: var(--white);
-            letter-spacing: 0.03em;
-            font-size: 15px;
-        }
-        .recoup-item-date {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-        .recoup-item-prices {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .recoup-price-buy {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-        .recoup-price-sell {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--white);
-        }
-        .recoup-pnl {
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            padding: 4px 10px;
-            border-radius: 4px;
-            min-width: 60px;
-            text-align: center;
-        }
-        .recoup-pnl.profit {
-            color: #5fc98a;
-            background: rgba(61, 168, 106, 0.1);
-        }
-        .recoup-pnl.loss {
-            color: #d97373;
-            background: rgba(217, 74, 74, 0.1);
-        }
-        .recoup-pnl.zero {
-            color: var(--text-muted);
-            background: rgba(150, 150, 160, 0.08);
-        }
-        @media (max-width: 640px) {
-            .recoup-summary {
-                padding: 14px 16px;
-                gap: 16px;
-            }
-            .recoup-summary-value {
-                font-size: 21px;
-            }
-            .recoup-item {
-                padding: 10px 12px;
-                gap: 8px;
-            }
-        }
-
-        /* 自定义确认弹窗 */
-        .confirm-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 300;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .confirm-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .confirm-dialog {
-            background: var(--surface);
-            border-radius: 10px;
-            padding: 24px 28px 20px;
-            max-width: 380px;
-            width: 88vw;
-            text-align: center;
-            border: 1px solid var(--border-subtle);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-        }
-        .confirm-dialog p {
-            font-size: 16px;
-            color: var(--white);
-            margin-bottom: 20px;
-            letter-spacing: 0.03em;
-            line-height: 1.5;
-        }
-        .confirm-dialog .confirm-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .confirm-btn {
-            flex: 1;
-            padding: 11px 0;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            font-family: var(--font-body);
-            transition: all 0.2s;
-        }
-        .confirm-btn-yes {
-            background: #d94a4a;
-            color: #fff;
-        }
-        .confirm-btn-yes:hover {
-            background: #c0392b;
-        }
-        .confirm-btn-no {
-            background: var(--surface-lighter);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-subtle);
-        }
-        .confirm-btn-no:hover {
-            background: var(--surface-light);
-            color: var(--white);
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 200;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .modal-detail {
-            background: var(--surface);
-            border-radius: 8px;
-            width: 92vw;
-            max-width: 500px;
-            max-height: 88vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-            transform: translateY(20px);
-            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            border: 1px solid var(--border-subtle);
-        }
-        .modal-overlay.active .modal-detail {
-            transform: translateY(0);
-        }
-        .modal-close {
-            position: absolute;
-            top: 12px;
-            right: 14px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.06);
-            border: none;
-            color: #ccc;
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-            line-height: 1;
-        }
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-        }
-        .modal-cover-wrap {
-            width: 100%;
-            aspect-ratio: 16/10;
-            overflow: hidden;
-            border-radius: 8px 8px 0 0;
-            background: #111;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-cover-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(0%) !important;
-        }
-        .modal-body {
-            padding: 20px 24px 24px;
-        }
-        .modal-game-title {
-            font-family: var(--font-display);
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            color: var(--white);
-            margin-bottom: 4px;
-        }
-        .modal-version-badge {
-            display: inline-block;
-            font-size: 11px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 3px 9px;
-            border-radius: 3px;
-            margin-bottom: 14px;
-            font-weight: 600;
-        }
-        .badge-red {
-            background: rgba(217, 74, 74, 0.2);
-            color: #e88;
-        }
-        .badge-blue {
-            background: rgba(74, 128, 200, 0.2);
-            color: #8ab;
-        }
-        .badge-green {
-            background: rgba(61, 168, 106, 0.2);
-            color: #6c8;
-        }
-        .modal-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px 16px;
-            margin: 12px 0 18px;
-        }
-        .modal-info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
-        .modal-info-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            color: var(--text-muted);
-        }
-        .modal-info-value {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--white);
-            font-family: var(--font-display);
-        }
-        .daily-value-card {
-            background: var(--white);
-            color: #000;
-            border-radius: 6px;
-            padding: 18px 20px;
-            margin-top: 6px;
-            text-align: center;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-        }
-        .daily-value-card .daily-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #555;
-            margin-bottom: 2px;
-            font-weight: 500;
-        }
-        .daily-value-card .daily-number {
-            font-family: var(--font-display);
-            font-size: 40px;
-            font-weight: 700;
-            line-height: 1;
-        }
-        .daily-value-card .daily-unit {
-            font-size: 14px;
-            color: #555;
-        }
-        .daily-value-card .daily-verdict {
-            font-size: 12px;
-            color: #666;
-            margin-top: 2px;
-        }
-        .modal-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 14px;
-        }
-        .btn-edit,
-        .btn-delete,
-        .btn-sell {
-            flex: 1;
-            padding: 11px 0;
-            border-radius: 5px;
-            border: 1px solid #444;
-            cursor: pointer;
-            font-size: 13px;
-            letter-spacing: 0.05em;
-            font-weight: 500;
-            transition: all 0.2s;
-            text-align: center;
-            background: transparent;
-            color: #ccc;
-            font-family: var(--font-body);
-        }
-        .btn-edit:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: #666;
-            color: #fff;
-        }
-        .btn-delete {
-            border-color: #4a2020;
-            color: #d47373;
-        }
-        .btn-delete:hover {
-            background: rgba(200, 60, 60, 0.1);
-            border-color: #882020;
-            color: #f09090;
-        }
-        .btn-sell {
-            border-color: #3a5030;
-            color: #7cb868;
-        }
-        .btn-sell:hover {
-            background: rgba(80, 160, 60, 0.1);
-            border-color: #5a8040;
-            color: #90d070;
-        }
-        @media (max-width: 640px) {
-            .modal-detail {
-                width: 95vw;
-                max-height: 85vh;
-            }
-            .modal-body {
-                padding: 14px 16px 18px;
-            }
-            .modal-game-title {
-                font-size: 22px;
-            }
-            .daily-value-card .daily-number {
-                font-size: 32px;
-            }
-        }
-
-        .form-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 250;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
-            backdrop-filter: blur(6px);
-        }
-        .form-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .form-panel {
-            background: var(--surface);
-            border-radius: 8px;
-            width: 92vw;
-            max-width: 440px;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 24px 20px 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--border-subtle);
-            transform: translateY(20px);
-            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .form-overlay.active .form-panel {
-            transform: translateY(0);
-        }
-        .form-panel h3 {
-            font-family: var(--font-display);
-            font-size: 21px;
-            letter-spacing: 0.04em;
-            margin-bottom: 16px;
-            color: var(--white);
-            font-weight: 700;
-        }
-        .form-group {
-            margin-bottom: 12px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            background: #1a1a20;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 15px;
-            font-family: var(--font-body);
-            transition: border-color 0.2s;
-            outline: none;
-        }
-        .form-group input:focus,
-        .form-group select:focus {
-            border-color: #666;
-        }
-        .form-group input[type="file"] {
-            padding: 7px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .form-group input[type="file"]::file-selector-button {
-            background: #333;
-            color: #ddd;
-            border: none;
-            padding: 7px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 8px;
-            font-size: 12px;
-        }
-        .image-preview-mini {
-            width: 100%;
-            max-height: 120px;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-top: 6px;
-            display: none;
-            background: #111;
-        }
-        .image-preview-mini.show {
-            display: block;
-        }
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background: var(--white);
-            color: #000;
-            border: none;
-            border-radius: 5px;
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 4px;
-            font-family: var(--font-body);
-        }
-        .btn-submit:hover {
-            background: #e0e0e4;
-        }
-        .btn-cancel {
-            width: 100%;
-            padding: 10px;
-            background: transparent;
-            color: #999;
-            border: 1px solid #444;
-            border-radius: 5px;
-            font-size: 13px;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            margin-top: 6px;
-            transition: all 0.2s;
-            font-family: var(--font-body);
-        }
-        .btn-cancel:hover {
-            color: #fff;
-            border-color: #666;
-        }
-        @media (max-width: 640px) {
-            .form-panel {
-                padding: 18px 14px 16px;
-            }
-            .form-panel h3 {
-                font-size: 18px;
-            }
-        }
-
-        .fab-add {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: var(--white);
-            color: #000;
-            border: none;
-            cursor: pointer;
-            font-size: 26px;
-            font-weight: 300;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-        }
-        .fab-add:hover {
-            transform: scale(1.07);
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.6);
-            background: #f0f0f2;
-        }
-        .fab-add:active {
-            transform: scale(0.93);
-        }
-        @media (max-width: 640px) {
-            .fab-add {
-                bottom: 18px;
-                right: 14px;
-                width: 44px;
-                height: 44px;
-                font-size: 22px;
-            }
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: #2a2a32;
-            color: #ddd;
-            padding: 10px 22px;
-            border-radius: 20px;
-            font-size: 13px;
-            letter-spacing: 0.04em;
-            z-index: 350;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            border: 1px solid #444;
-            white-space: nowrap;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 10px;
-        }
-        .empty-hint {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 14px;
-            letter-spacing: 0.05em;
-            padding: 40px 20px;
-            opacity: 0.5;
-        }
+            display:flex; align-items:center; gap:14px; background:var(--surface); border-radius:8px;
+            padding:14px 18px; border:1px solid var(--border-subtle); cursor:pointer; transition:all 0.25s; flex-wrap:wrap;
+        }
+        .recoup-item:hover { border-color:var(--border-hover); background:var(--surface-light); }
+        .recoup-item-icon { width:42px; height:42px; border-radius:6px; background:var(--surface-lighter); display:flex; align-items:center; justify-content:center; font-size:19px; flex-shrink:0; }
+        .recoup-item-info { flex:1; }
+        .recoup-item-title { font-weight:600; color:var(--white); font-size:16px; }
+        .recoup-item-date { font-size:12px; color:var(--text-muted); }
+        .recoup-pnl { font-size:16px; font-weight:700; padding:4px 10px; border-radius:4px; }
+        .recoup-pnl.profit { color:#5fc98a; background:rgba(61,168,106,0.1); }
+        .recoup-pnl.loss { color:#d97373; background:rgba(217,74,74,0.1); }
+        .confirm-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:300; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+        .confirm-overlay.active { opacity:1; pointer-events:all; }
+        .confirm-dialog { background:var(--surface); border-radius:10px; padding:24px 28px; max-width:380px; width:88vw; text-align:center; border:1px solid var(--border-subtle); }
+        .confirm-dialog p { font-size:17px; color:var(--white); margin-bottom:20px; }
+        .confirm-buttons { display:flex; gap:10px; }
+        .confirm-btn { flex:1; padding:11px 0; border-radius:6px; border:none; cursor:pointer; font-size:15px; font-weight:600; font-family:var(--font-body); }
+        .confirm-btn-yes { background:#d94a4a; color:#fff; }
+        .confirm-btn-no { background:var(--surface-lighter); color:var(--text-secondary); border:1px solid var(--border-subtle); }
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:200; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.35s; backdrop-filter:blur(6px); }
+        .modal-overlay.active { opacity:1; pointer-events:all; }
+        .modal-detail { background:var(--surface); border-radius:8px; width:92vw; max-width:500px; max-height:88vh; overflow-y:auto; box-shadow:0 20px 50px rgba(0,0,0,0.7); border:1px solid var(--border-subtle); }
+        .modal-close { position:absolute; top:12px; right:14px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:none; color:#ccc; font-size:18px; cursor:pointer; z-index:10; }
+        .modal-cover-wrap { width:100%; aspect-ratio:16/10; background:#111; display:flex; align-items:center; justify-content:center; border-radius:8px 8px 0 0; }
+        .modal-cover-wrap img { width:100%; height:100%; object-fit:cover; filter:grayscale(0%)!important; }
+        .modal-body { padding:20px 24px 24px; }
+        .modal-game-title { font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--white); }
+        .modal-version-badge { display:inline-block; font-size:11px; padding:3px 9px; border-radius:3px; margin-bottom:14px; font-weight:600; }
+        .badge-red { background:rgba(217,74,74,0.2); color:#e88; }
+        .badge-blue { background:rgba(74,128,200,0.2); color:#8ab; }
+        .badge-green { background:rgba(61,168,106,0.2); color:#6c8; }
+        .modal-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 16px; margin:12px 0 18px; }
+        .modal-info-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; }
+        .modal-info-value { font-size:18px; font-weight:600; color:var(--white); font-family:var(--font-display); }
+        .daily-value-card { background:var(--white); color:#000; border-radius:6px; padding:18px 20px; margin-top:6px; text-align:center; }
+        .daily-value-card .daily-number { font-size:42px; font-weight:700; }
+        .modal-actions { display:flex; gap:8px; margin-top:14px; }
+        .btn-edit, .btn-delete, .btn-sell { flex:1; padding:11px 0; border-radius:5px; border:1px solid #444; cursor:pointer; font-size:13px; font-weight:500; text-align:center; background:transparent; color:#ccc; font-family:var(--font-body); }
+        .btn-delete { border-color:#4a2020; color:#d47373; }
+        .btn-sell { border-color:#3a5030; color:#7cb868; }
+        .form-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:250; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.35s; backdrop-filter:blur(6px); }
+        .form-overlay.active { opacity:1; pointer-events:all; }
+        .form-panel { background:var(--surface); border-radius:8px; width:92vw; max-width:440px; max-height:85vh; overflow-y:auto; padding:24px 20px; border:1px solid var(--border-subtle); }
+        .form-panel h3 { font-size:22px; color:var(--white); margin-bottom:16px; }
+        .form-group { margin-bottom:12px; }
+        .form-group label { display:block; font-size:11px; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; }
+        .form-group input, .form-group select { width:100%; padding:10px 12px; background:#1a1a20; border:1px solid #333; border-radius:4px; color:#fff; font-size:15px; font-family:var(--font-body); }
+        .btn-submit { width:100%; padding:12px; background:var(--white); color:#000; border:none; border-radius:5px; font-size:15px; font-weight:600; cursor:pointer; margin-top:4px; }
+        .btn-cancel { width:100%; padding:10px; background:transparent; color:#999; border:1px solid #444; border-radius:5px; font-size:13px; cursor:pointer; margin-top:6px; }
+        .fab-add { position:fixed; bottom:32px; right:32px; width:52px; height:52px; border-radius:50%; background:var(--white); color:#000; border:none; cursor:pointer; font-size:26px; z-index:100; box-shadow:0 6px 18px rgba(0,0,0,0.5); }
+        .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:#2a2a32; color:#ddd; padding:10px 22px; border-radius:20px; font-size:13px; z-index:350; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+        .toast.show { opacity:1; }
+        .empty-hint { text-align:center; color:var(--text-muted); font-size:15px; padding:40px 20px; opacity:0.5; }
     </style>
 </head>
 <body>
     <header class="profile-header">
-        <div class="profile-avatar" id="avatarContainer" title="点击更换头像">
-            <span class="avatar-placeholder">🎮</span>
-            <span class="avatar-edit-hint">更换头像</span>
-        </div>
+        <div class="profile-avatar" id="avatarContainer"><span>🎮</span><span class="avatar-edit-hint">更换头像</span></div>
         <div class="profile-info">
-            <div class="profile-id" id="profileId" title="点击编辑昵称">收藏家</div>
+            <div class="profile-id" id="profileId">收藏家</div>
             <div class="profile-subtitle">GAME CARD COLLECTION</div>
-            <div class="profile-friend-code" id="profileFriendCode" title="点击复制好友编号">
-                <span>SW-0000-0000-0000</span><span class="copy-icon">📋</span>
-            </div>
+            <div class="profile-friend-code" id="profileFriendCode"><span>SW-0000-0000-0000</span> 📋</div>
         </div>
-        <button class="theme-toggle" id="themeToggle" title="切换黑白模式">🌓</button>
+        <button class="theme-toggle" id="themeToggle">🌓</button>
     </header>
-
     <nav class="tab-nav">
         <button class="tab-btn active" data-tab="tab-overview">📊 总览</button>
         <button class="tab-btn" data-tab="tab-games">📚 游戏<span class="tab-badge" id="badgeGames">0</span></button>
         <button class="tab-btn" data-tab="tab-devices">🎮 设备<span class="tab-badge" id="badgeDevices">0</span></button>
         <button class="tab-btn" data-tab="tab-recoup">💰 回血<span class="tab-badge" id="badgeRecoup">0</span></button>
     </nav>
-
     <div class="tab-content active" id="tab-overview">
-        <div class="bank-card-full" id="bankCardFull">
+        <div class="bank-card-full">
             <div class="bank-card-header"><span class="bank-card-logo">Collection Vault</span></div>
-            <div class="bank-card-friend-code" id="bankFriendCode" title="点击复制好友编号">
-                <span class="friend-label">好友编号</span>
-                <span id="friendCodeDisplay">SW-0000-0000-0000</span>
-                <span class="copy-hint">点击复制</span>
-            </div>
+            <div class="bank-card-friend-code" id="bankFriendCode"><span>好友编号</span> <span id="friendCodeDisplay">SW-0000-0000-0000</span> <span style="font-size:10px;color:#6a6a78;">点击复制</span></div>
             <div class="bank-card-details">
-                <div class="bank-card-detail-item"><span class="bank-card-detail-label">总资产价值</span><span class="bank-card-detail-value large" id="bankTotalValue">¥0</span></div>
-                <div class="bank-card-detail-item"><span class="bank-card-detail-label">游戏数量</span><span class="bank-card-detail-value" id="bankGameCount">0</span></div>
-                <div class="bank-card-detail-item"><span class="bank-card-detail-label">设备数量</span><span class="bank-card-detail-value" id="bankDeviceCount">0</span></div>
-                <div class="bank-card-detail-item"><span class="bank-card-detail-label">整体日均成本</span><span class="bank-card-detail-value" id="bankAvgDaily">¥0</span></div>
+                <div><span class="bank-card-detail-label">总资产价值</span><span class="bank-card-detail-value large" id="bankTotalValue">¥0</span></div>
+                <div><span class="bank-card-detail-label">游戏数量</span><span class="bank-card-detail-value" id="bankGameCount">0</span></div>
+                <div><span class="bank-card-detail-label">设备数量</span><span class="bank-card-detail-value" id="bankDeviceCount">0</span></div>
+                <div><span class="bank-card-detail-label">整体日均成本</span><span class="bank-card-detail-value" id="bankAvgDaily">¥0</span></div>
             </div>
         </div>
         <div class="overview-list" id="overviewList"></div>
         <div class="empty-hint" id="overviewEmpty" style="display:none;">暂无任何收藏<br>去游戏或设备页面添加吧</div>
     </div>
-
     <div class="tab-content" id="tab-games">
-        <div class="shelf-section" id="shelfPhysical"><div class="shelf-section-label"><span class="type-dot physical"></span>实体版卡带</div><div class="shelf-row" id="shelfRowPhysical"></div><div class="shelf-board"></div></div>
-        <div class="shelf-section" id="shelfDigital"><div class="shelf-section-label"><span class="type-dot digital"></span>数字版游戏</div><div class="shelf-row" id="shelfRowDigital"></div><div class="shelf-board"></div></div>
-        <div class="shelf-section" id="shelfSteam"><div class="shelf-section-label"><span class="type-dot steam"></span>Steam 游戏</div><div class="shelf-row" id="shelfRowSteam"></div><div class="shelf-board"></div></div>
-        <div class="empty-hint" id="gamesEmpty" style="display:none;">游戏库空空如也<br>点击右下角 + 添加你的第一张游戏</div>
+        <div class="shelf-section"><div class="shelf-section-label"><span class="type-dot physical"></span>实体版卡带</div><div class="shelf-row" id="shelfRowPhysical"></div><div class="shelf-board"></div></div>
+        <div class="shelf-section"><div class="shelf-section-label"><span class="type-dot digital"></span>数字版游戏</div><div class="shelf-row" id="shelfRowDigital"></div><div class="shelf-board"></div></div>
+        <div class="shelf-section"><div class="shelf-section-label"><span class="type-dot steam"></span>Steam 游戏</div><div class="shelf-row" id="shelfRowSteam"></div><div class="shelf-board"></div></div>
+        <div class="empty-hint" id="gamesEmpty" style="display:none;">游戏库空空如也</div>
     </div>
-
     <div class="tab-content" id="tab-devices">
-        <div class="device-section" id="deviceSectionConsole"><div class="device-section-label">🎮 主机</div><div class="device-list" id="deviceListConsole"></div></div>
-        <div class="device-section" id="deviceSectionAccessory"><div class="device-section-label">🔧 配件</div><div class="device-list" id="deviceListAccessory"></div></div>
-        <div class="empty-hint" id="deviceEmpty" style="display:none;">暂无设备记录<br>点击右下角 + 添加主机或配件</div>
+        <div class="device-section"><div class="device-section-label">🎮 主机</div><div class="device-list" id="deviceListConsole"></div></div>
+        <div class="device-section"><div class="device-section-label">🔧 配件</div><div class="device-list" id="deviceListAccessory"></div></div>
+        <div class="empty-hint" id="deviceEmpty" style="display:none;">暂无设备记录</div>
     </div>
-
     <div class="tab-content" id="tab-recoup">
         <div class="recoup-summary" id="recoupSummary">
-            <div class="recoup-summary-item"><span class="recoup-summary-label">卖出总金额</span><span class="recoup-summary-value" id="recoupTotalSold">¥0</span></div>
-            <div class="recoup-summary-item"><span class="recoup-summary-label">总成本</span><span class="recoup-summary-value" id="recoupTotalCost">¥0</span></div>
-            <div class="recoup-summary-item"><span class="recoup-summary-label">总盈亏</span><span class="recoup-summary-value" id="recoupTotalPnL">¥0</span></div>
-            <div class="recoup-summary-item"><span class="recoup-summary-label">交易笔数</span><span class="recoup-summary-value" id="recoupCount">0</span></div>
+            <div><span class="recoup-summary-label">卖出总金额</span><span class="recoup-summary-value" id="recoupTotalSold">¥0</span></div>
+            <div><span class="recoup-summary-label">总成本</span><span class="recoup-summary-value" id="recoupTotalCost">¥0</span></div>
+            <div><span class="recoup-summary-label">总盈亏</span><span class="recoup-summary-value" id="recoupTotalPnL">¥0</span></div>
+            <div><span class="recoup-summary-label">交易笔数</span><span class="recoup-summary-value" id="recoupCount">0</span></div>
         </div>
         <div class="recoup-list" id="recoupList"></div>
         <div class="empty-hint" id="recoupEmpty" style="display:none;">暂无回血记录</div>
     </div>
-
-    <button class="fab-add" id="fabAdd" title="添加" aria-label="添加">+</button>
-
-    <!-- 自定义确认弹窗 -->
+    <button class="fab-add" id="fabAdd">+</button>
     <div class="confirm-overlay" id="confirmOverlay">
-        <div class="confirm-dialog">
-            <p id="confirmMsg">确定要执行此操作吗？</p>
-            <div class="confirm-buttons">
-                <button class="confirm-btn confirm-btn-no" id="confirmNo">取消</button>
-                <button class="confirm-btn confirm-btn-yes" id="confirmYes">确认删除</button>
-            </div>
-        </div>
+        <div class="confirm-dialog"><p id="confirmMsg"></p><div class="confirm-buttons"><button class="confirm-btn confirm-btn-no" id="confirmNo">取消</button><button class="confirm-btn confirm-btn-yes" id="confirmYes">确认删除</button></div></div>
     </div>
-
-    <!-- 详情弹窗 -->
     <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-detail" id="modalDetail">
+        <div class="modal-detail">
             <button class="modal-close" id="modalClose">✕</button>
-            <div class="modal-cover-wrap" id="modalCoverWrap">
-                <img src="" alt="" id="modalCoverImg" style="display:none;">
-                <img src="" alt="" id="modalCoverPlaceholder" style="display:none;">
-            </div>
+            <div class="modal-cover-wrap"><img src="" id="modalCoverImg" style="display:none;"><img src="" id="modalCoverPlaceholder" style="display:none;"></div>
             <div class="modal-body">
-                <h2 class="modal-game-title" id="modalTitle"></h2>
-                <span class="modal-version-badge" id="modalVersionBadge"></span>
+                <h2 class="modal-game-title" id="modalTitle"></h2><span class="modal-version-badge" id="modalVersionBadge"></span>
                 <div class="modal-info-grid">
-                    <div class="modal-info-item"><span class="modal-info-label">购买价格</span><span class="modal-info-value" id="modalPrice"></span></div>
-                    <div class="modal-info-item"><span class="modal-info-label">购买日期</span><span class="modal-info-value" id="modalDate"></span></div>
-                    <div class="modal-info-item"><span class="modal-info-label">持有天数</span><span class="modal-info-value" id="modalDays"></span></div>
-                    <div class="modal-info-item"><span class="modal-info-label">版本/类型</span><span class="modal-info-value" id="modalVersion"></span></div>
+                    <div><span class="modal-info-label">购买价格</span><span class="modal-info-value" id="modalPrice"></span></div>
+                    <div><span class="modal-info-label">购买日期</span><span class="modal-info-value" id="modalDate"></span></div>
+                    <div><span class="modal-info-label">持有天数</span><span class="modal-info-value" id="modalDays"></span></div>
+                    <div><span class="modal-info-label">版本/类型</span><span class="modal-info-value" id="modalVersion"></span></div>
                 </div>
-                <div class="daily-value-card">
-                    <div class="daily-label">日均持有价值</div><div class="daily-number" id="modalDailyValue">¥0</div>
-                    <div class="daily-unit">/ 天</div><div class="daily-verdict" id="modalVerdict"></div>
-                </div>
+                <div class="daily-value-card"><div class="daily-number" id="modalDailyValue">¥0</div><div style="font-size:12px;color:#555;">日均持有价值</div><div id="modalVerdict" style="font-size:12px;color:#666;"></div></div>
                 <div class="modal-actions" id="modalActionsGame">
-                    <button class="btn-edit" id="btnEditGame">编辑</button>
-                    <button class="btn-sell" id="btnSellGame">卖出回血</button>
-                    <button class="btn-delete" id="btnDeleteGame">删除</button>
+                    <button class="btn-edit" id="btnEditGame">编辑</button><button class="btn-sell" id="btnSellGame">卖出回血</button><button class="btn-delete" id="btnDeleteGame">删除</button>
                 </div>
                 <div class="modal-actions" id="modalActionsDevice" style="display:none;">
-                    <button class="btn-edit" id="btnEditDevice">编辑</button>
-                    <button class="btn-delete" id="btnDeleteDevice">删除</button>
+                    <button class="btn-edit" id="btnEditDevice">编辑</button><button class="btn-delete" id="btnDeleteDevice">删除</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- 表单弹窗 -->
     <div class="form-overlay" id="formOverlay">
-        <div class="form-panel" id="formPanel">
+        <div class="form-panel">
             <h3 id="formTitle">添加新游戏</h3>
-            <div class="form-group"><label>标题</label><input type="text" id="inputTitle" placeholder="输入名称" maxlength="40"></div>
+            <div class="form-group"><label>标题</label><input type="text" id="inputTitle" maxlength="40"></div>
             <div class="form-group" id="formGroupType"><label>类型</label><select id="inputType"><option value="physical">📦 实体版</option><option value="digital">☁️ 数字版</option><option value="steam">💻 Steam</option></select></div>
             <div class="form-group" id="formGroupDeviceType" style="display:none;"><label>设备类型</label><select id="inputDeviceType"><option value="switch">Switch 主机</option><option value="switch-lite">Switch Lite</option><option value="switch-oled">Switch OLED</option><option value="pro-controller">Pro 手柄</option><option value="joycon">Joy-Con</option><option value="other">其他配件</option></select></div>
-            <div class="form-group"><label>购买价格 (¥)</label><input type="number" id="inputPrice" placeholder="例如：350" min="0" step="0.01"></div>
+            <div class="form-group"><label>购买价格 (¥)</label><input type="number" id="inputPrice" min="0" step="0.01"></div>
             <div class="form-group"><label>购买日期</label><input type="date" id="inputDate"></div>
             <div class="form-group" id="formGroupVersion"><label>版本色标</label><select id="inputVersion"><option value="red">🔴 限量版</option><option value="blue" selected>🔵 标准版</option><option value="green">🟢 特别版</option></select></div>
-            <div class="form-group"><label>封面图片（可选）</label><input type="file" id="inputImage" accept="image/*" capture="environment"><img class="image-preview-mini" id="imagePreview" alt="预览"></div>
-            <button class="btn-submit" id="btnSubmit">保存</button>
-            <button class="btn-cancel" id="btnCancel">取消</button>
+            <div class="form-group"><label>封面图片</label><input type="file" id="inputImage" accept="image/*"><img class="image-preview-mini" id="imagePreview" style="display:none;width:100%;max-height:120px;object-fit:cover;border-radius:4px;margin-top:6px;"></div>
+            <button class="btn-submit" id="btnSubmit">保存</button><button class="btn-cancel" id="btnCancel">取消</button>
         </div>
     </div>
-
     <div class="toast" id="toast"></div>
     <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
 
     <script>
         (function() {
-            const $ = id => document.getElementById(id);
-            const shelfRowPhysical = $('shelfRowPhysical'),
-                shelfRowDigital = $('shelfRowDigital'),
-                shelfRowSteam = $('shelfRowSteam'),
-                gamesEmpty = $('gamesEmpty');
-            const deviceListConsole = $('deviceListConsole'),
-                deviceListAccessory = $('deviceListAccessory'),
-                deviceEmpty = $('deviceEmpty');
-            const recoupList = $('recoupList'),
-                recoupEmpty = $('recoupEmpty'),
-                recoupSummary = $('recoupSummary');
-            const overviewList = $('overviewList'),
-                overviewEmpty = $('overviewEmpty');
-            const modalOverlay = $('modalOverlay'),
-                modalCoverImg = $('modalCoverImg'),
-                modalCoverPlaceholder = $('modalCoverPlaceholder');
-            const modalTitle = $('modalTitle'),
-                modalVersionBadge = $('modalVersionBadge'),
-                modalPrice = $('modalPrice'),
-                modalDate = $('modalDate'),
-                modalDays = $('modalDays'),
-                modalVersion = $('modalVersion'),
-                modalDailyValue = $('modalDailyValue'),
-                modalVerdict = $('modalVerdict'),
-                modalClose = $('modalClose');
-            const modalActionsGame = $('modalActionsGame'),
-                modalActionsDevice = $('modalActionsDevice');
-            const formOverlay = $('formOverlay'),
-                formTitle = $('formTitle'),
-                inputTitle = $('inputTitle'),
-                inputType = $('inputType'),
-                inputDeviceType = $('inputDeviceType'),
-                inputPrice = $('inputPrice'),
-                inputDate = $('inputDate'),
-                inputVersion = $('inputVersion'),
-                inputImage = $('inputImage'),
-                imagePreview = $('imagePreview'),
-                formGroupType = $('formGroupType'),
-                formGroupDeviceType = $('formGroupDeviceType'),
-                formGroupVersion = $('formGroupVersion');
-            const fabAdd = $('fabAdd'),
-                toast = $('toast'),
-                profileId = $('profileId'),
-                avatarContainer = $('avatarContainer'),
-                avatarFileInput = $('avatarFileInput'),
-                themeToggle = $('themeToggle');
-            const profileFriendCode = $('profileFriendCode'),
-                bankFriendCode = $('bankFriendCode'),
-                friendCodeDisplay = $('friendCodeDisplay');
-            const confirmOverlay = $('confirmOverlay'),
-                confirmMsg = $('confirmMsg'),
-                confirmYes = $('confirmYes'),
-                confirmNo = $('confirmNo');
+            // 安全获取元素
+            const g = id => document.getElementById(id);
+            // 所有DOM引用
+            const els = {
+                shelfRowPhysical: g('shelfRowPhysical'), shelfRowDigital: g('shelfRowDigital'), shelfRowSteam: g('shelfRowSteam'),
+                gamesEmpty: g('gamesEmpty'), deviceListConsole: g('deviceListConsole'), deviceListAccessory: g('deviceListAccessory'),
+                deviceEmpty: g('deviceEmpty'), recoupList: g('recoupList'), recoupEmpty: g('recoupEmpty'),
+                recoupSummary: g('recoupSummary'), overviewList: g('overviewList'), overviewEmpty: g('overviewEmpty'),
+                modalOverlay: g('modalOverlay'), modalCoverImg: g('modalCoverImg'), modalCoverPlaceholder: g('modalCoverPlaceholder'),
+                modalTitle: g('modalTitle'), modalVersionBadge: g('modalVersionBadge'), modalPrice: g('modalPrice'),
+                modalDate: g('modalDate'), modalDays: g('modalDays'), modalVersion: g('modalVersion'),
+                modalDailyValue: g('modalDailyValue'), modalVerdict: g('modalVerdict'), modalClose: g('modalClose'),
+                modalActionsGame: g('modalActionsGame'), modalActionsDevice: g('modalActionsDevice'),
+                formOverlay: g('formOverlay'), formTitle: g('formTitle'), inputTitle: g('inputTitle'),
+                inputType: g('inputType'), inputDeviceType: g('inputDeviceType'), inputPrice: g('inputPrice'),
+                inputDate: g('inputDate'), inputVersion: g('inputVersion'), inputImage: g('inputImage'),
+                imagePreview: g('imagePreview'), formGroupType: g('formGroupType'), formGroupDeviceType: g('formGroupDeviceType'),
+                formGroupVersion: g('formGroupVersion'), fabAdd: g('fabAdd'), toast: g('toast'),
+                profileId: g('profileId'), avatarContainer: g('avatarContainer'), avatarFileInput: g('avatarFileInput'),
+                themeToggle: g('themeToggle'), profileFriendCode: g('profileFriendCode'), bankFriendCode: g('bankFriendCode'),
+                friendCodeDisplay: g('friendCodeDisplay'), confirmOverlay: g('confirmOverlay'), confirmMsg: g('confirmMsg'),
+                confirmYes: g('confirmYes'), confirmNo: g('confirmNo'),
+                bankTotalValue: g('bankTotalValue'), bankGameCount: g('bankGameCount'), bankDeviceCount: g('bankDeviceCount'),
+                bankAvgDaily: g('bankAvgDaily'), badgeGames: g('badgeGames'), badgeDevices: g('badgeDevices'), badgeRecoup: g('badgeRecoup'),
+                recoupTotalSold: g('recoupTotalSold'), recoupTotalCost: g('recoupTotalCost'), recoupTotalPnL: g('recoupTotalPnL'),
+                recoupCount: g('recoupCount')
+            };
 
-            const STORAGE_GAMES = 'gcv3_g',
-                STORAGE_DEVICES = 'gcv3_d',
-                STORAGE_RECOUP = 'gcv3_r',
-                STORAGE_PROFILE = 'gcv3_p',
-                STORAGE_FRIEND_CODE = 'gcv3_fc',
-                STORAGE_THEME = 'gcv3_theme';
-            let gamesData = [],
-                devicesData = [],
-                recoupData = [],
-                editingId = null,
-                editingMode = 'game',
-                currentDetailMode = 'game',
-                currentDetailId = null,
-                currentTab = 'tab-overview',
-                friendCode = 'SW-0000-0000-0000';
-            let confirmResolve = null;
+            // 数据存储
+            const KEYS = { games: 'gcv4_g', devices: 'gcv4_d', recoup: 'gcv4_r', profile: 'gcv4_p', friendCode: 'gcv4_fc', theme: 'gcv4_theme' };
+            let games = [], devices = [], recoup = [], editId = null, editMode = 'game', detailMode = 'game', detailId = null,
+                currentTab = 'tab-overview', friendCode = 'SW-0000-0000-0000', confirmCb = null;
 
-            const defaultGames = [
-                { id: 'g01', title: '塞尔达传说 王国之泪', purchasePrice: 380, purchaseDate: '2023-05-12',
-                    version: 'red', type: 'physical', image: null },
-                { id: 'g02', title: '超级马力欧 奥德赛', purchasePrice: 299, purchaseDate: '2022-11-20', version: 'blue',
-                    type: 'physical', image: null },
-                { id: 'g03', title: '斯普拉遁3', purchasePrice: 320, purchaseDate: '2024-01-08', version: 'green',
-                    type: 'digital', image: null },
-                { id: 'g04', title: '宝可梦 朱', purchasePrice: 350, purchaseDate: '2023-09-15', version: 'red',
-                    type: 'physical', image: null },
-                { id: 'g05', title: '集合啦！动物森友会', purchasePrice: 310, purchaseDate: '2021-06-30', version: 'blue',
-                    type: 'digital', image: null },
-                { id: 'g06', title: 'Hades', purchasePrice: 78, purchaseDate: '2024-03-15', version: 'blue',
-                type: 'steam', image: null },
+            const defGames = [
+                { id:'g01', title:'塞尔达传说 王国之泪', purchasePrice:380, purchaseDate:'2023-05-12', version:'red', type:'physical', image:null },
+                { id:'g02', title:'超级马力欧 奥德赛', purchasePrice:299, purchaseDate:'2022-11-20', version:'blue', type:'physical', image:null },
+                { id:'g03', title:'斯普拉遁3', purchasePrice:320, purchaseDate:'2024-01-08', version:'green', type:'digital', image:null },
+                { id:'g04', title:'宝可梦 朱', purchasePrice:350, purchaseDate:'2023-09-15', version:'red', type:'physical', image:null },
+                { id:'g05', title:'Hades', purchasePrice:78, purchaseDate:'2024-03-15', version:'blue', type:'steam', image:null },
+                { id:'g06', title:'Stardew Valley', purchasePrice:48, purchaseDate:'2023-11-10', version:'green', type:'steam', image:null },
             ];
-            const defaultDevices = [
-                { id: 'd01', title: 'Switch OLED 白色', purchasePrice: 2100, purchaseDate: '2023-01-15',
-                    deviceType: 'switch-oled', image: null },
-                { id: 'd02', title: 'Pro 手柄 黑色', purchasePrice: 429, purchaseDate: '2023-03-10',
-                    deviceType: 'pro-controller', image: null },
+            const defDevices = [
+                { id:'d01', title:'Switch OLED 白色', purchasePrice:2100, purchaseDate:'2023-01-15', deviceType:'switch-oled', image:null },
+                { id:'d02', title:'Pro 手柄 黑色', purchasePrice:429, purchaseDate:'2023-03-10', deviceType:'pro-controller', image:null },
             ];
-            const defaultRecoup = [
-                { id: 'r01', title: '宝可梦 盾', buyPrice: 300, sellPrice: 260, sellDate: '2024-02-20', image: null },
+            const defRecoup = [
+                { id:'r01', title:'宝可梦 盾', buyPrice:300, sellPrice:260, sellDate:'2024-02-20', image:null },
             ];
 
-            function loadData(key, fallback) {
+            function loadData(key, fb) {
                 try {
-                    const raw = localStorage.getItem(key);
-                    if (raw !== null && raw !== undefined) {
-                        const data = JSON.parse(raw);
-                        if (Array.isArray(data)) return data;
-                    }
-                    const fb = JSON.parse(JSON.stringify(fallback));
-                    if (fb.length > 0) try { localStorage.setItem(key, JSON.stringify(fb)); } catch (e) {}
-                    return fb;
-                } catch (e) { return JSON.parse(JSON.stringify(fallback)); }
+                    const r = localStorage.getItem(key);
+                    if (r !== null && r !== undefined) { const d = JSON.parse(r); if (Array.isArray(d)) return d; }
+                } catch(e) {}
+                const copy = JSON.parse(JSON.stringify(fb));
+                if (copy.length > 0) try { localStorage.setItem(key, JSON.stringify(copy)); } catch(e) {}
+                return copy;
             }
-
-            function saveData(key, data) { try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {} }
-
+            function saveAll() {
+                try { localStorage.setItem(KEYS.games, JSON.stringify(games)); } catch(e) {}
+                try { localStorage.setItem(KEYS.devices, JSON.stringify(devices)); } catch(e) {}
+                try { localStorage.setItem(KEYS.recoup, JSON.stringify(recoup)); } catch(e) {}
+            }
             function loadAll() {
-                gamesData = loadData(STORAGE_GAMES, defaultGames);
-                devicesData = loadData(STORAGE_DEVICES, defaultDevices);
-                recoupData = loadData(STORAGE_RECOUP, defaultRecoup);
-                gamesData.forEach((g, i) => { if (!g.id) g.id = 'g' + Date.now() + i; if (!g.type) g.type =
-                        'physical'; if (!g.version) g.version = 'blue';
-                    g.purchasePrice = parseFloat(g.purchasePrice) || 0; });
-                devicesData.forEach((d, i) => { if (!d.id) d.id = 'd' + Date.now() + i;
-                    d.purchasePrice = parseFloat(d.purchasePrice) || 0; if (!d.deviceType) d.deviceType =
-                        'switch'; });
-                recoupData.forEach((r, i) => { if (!r.id) r.id = 'r' + Date.now() + i;
-                    r.buyPrice = parseFloat(r.buyPrice) || 0;
-                    r.sellPrice = parseFloat(r.sellPrice) || 0; });
-                try { const fc = localStorage.getItem(STORAGE_FRIEND_CODE); if (fc) friendCode = fc; } catch (e) {}
-                friendCodeDisplay.textContent = friendCode;
-                profileFriendCode.querySelector('span').textContent = friendCode;
+                games = loadData(KEYS.games, defGames);
+                devices = loadData(KEYS.devices, defDevices);
+                recoup = loadData(KEYS.recoup, defRecoup);
+                games.forEach((g,i)=>{ if(!g.id) g.id='g'+Date.now()+i; if(!g.type) g.type='physical'; if(!g.version) g.version='blue'; g.purchasePrice=parseFloat(g.purchasePrice)||0; });
+                devices.forEach((d,i)=>{ if(!d.id) d.id='d'+Date.now()+i; d.purchasePrice=parseFloat(d.purchasePrice)||0; if(!d.deviceType) d.deviceType='switch'; });
+                recoup.forEach((r,i)=>{ if(!r.id) r.id='r'+Date.now()+i; r.buyPrice=parseFloat(r.buyPrice)||0; r.sellPrice=parseFloat(r.sellPrice)||0; });
+                try { const fc = localStorage.getItem(KEYS.friendCode); if(fc) friendCode=fc; } catch(e) {}
+                els.friendCodeDisplay.textContent = friendCode;
+                els.profileFriendCode.querySelector('span').textContent = friendCode;
             }
-
-            function saveAll() { saveData(STORAGE_GAMES, gamesData);
-                saveData(STORAGE_DEVICES, devicesData);
-                saveData(STORAGE_RECOUP, recoupData); }
-
-            function getDaysHeld(d) { return Math.max(1, Math.floor((new Date() - new Date(d)) / 86400000)); }
-
-            function getDailyValue(p, d) { return p / getDaysHeld(d); }
-
+            function daysHeld(d) { return Math.max(1, Math.floor((new Date() - new Date(d)) / 86400000)); }
             function fmt(n) { return '¥' + parseFloat(n).toFixed(2); }
-
-            function vLabel(v) { return { red: '限量版', blue: '标准版', green: '特别版' } [v] || '标准版'; }
-
-            function vBadge(v) { return { red: 'badge-red', blue: 'badge-blue', green: 'badge-green' } [v] ||
-            'badge-blue'; }
-
-            function tLabel(t) { return { physical: '实体版', digital: '数字版', steam: 'Steam' } [t] || '实体版'; }
-
-            function tBadge(t) { return { physical: 'type-badge-physical', digital: 'type-badge-digital',
-                steam: 'type-badge-steam' } [t] || 'type-badge-physical'; }
-
-            function dtLabel(t) { return { switch: 'Switch主机', 'switch-lite': 'Switch Lite', 'switch-oled': 'Switch OLED',
-                'pro-controller': 'Pro手柄', 'joycon': 'Joy-Con', 'other': '其他配件' } [t] || '设备'; }
-
-            function isConsole(t) { return ['switch', 'switch-lite', 'switch-oled'].includes(t); }
-
-            function genId(p) { return p + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
-
+            function vLabel(v) { return {red:'限量版',blue:'标准版',green:'特别版'}[v]||'标准版'; }
+            function tLabel(t) { return {physical:'实体版',digital:'数字版',steam:'Steam'}[t]||'实体版'; }
+            function dtLabel(t) { return {switch:'Switch主机','switch-lite':'Switch Lite','switch-oled':'Switch OLED','pro-controller':'Pro手柄',joycon:'Joy-Con',other:'其他配件'}[t]||'设备'; }
+            function isConsole(t) { return ['switch','switch-lite','switch-oled'].includes(t); }
+            function genId(p) { return p + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
             function placeholderCover(title, version) {
-                const c = document.createElement('canvas');
-                c.width = 260;
-                c.height = 364;
-                const ctx = c.getContext('2d');
-                const bg = { red: '#2a1018', blue: '#10182a', green: '#0e2218' } [version] || '#1a1a22';
-                const ac = { red: '#c0392b', blue: '#3a6fb5', green: '#27ae60' } [version] || '#666';
-                ctx.fillStyle = bg;
-                ctx.fillRect(0, 0, 260, 364);
-                ctx.strokeStyle = ac;
-                ctx.lineWidth = 2;
-                ctx.globalAlpha = 0.4;
-                ctx.strokeRect(18, 18, 224, 328);
-                ctx.globalAlpha = 1;
-                ctx.fillStyle = '#d8d8e0';
-                ctx.font = 'bold 20px "PingFang SC","Microsoft YaHei",sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                let lines = title.length <= 6 ? [title] : title.length <= 12 ? [title.substring(0, Math.ceil(title
-                    .length / 2)), title.substring(Math.ceil(title.length / 2))] : [title.substring(0, 6), title
-                    .substring(6, 12), title.substring(12, 16) + '…'
-                ];
-                lines.forEach((l, i) => ctx.fillText(l, 130, 182 - (lines.length * 30) / 2 + i * 30));
-                ctx.fillStyle = ac;
-                ctx.fillRect(0, 354, 260, 10);
-                return c.toDataURL('image/jpeg', 0.75);
+                const c = document.createElement('canvas'); c.width=260; c.height=364; const ctx=c.getContext('2d');
+                const bg={red:'#2a1018',blue:'#10182a',green:'#0e2218'}[version]||'#1a1a22';
+                const ac={red:'#c0392b',blue:'#3a6fb5',green:'#27ae60'}[version]||'#666';
+                ctx.fillStyle=bg; ctx.fillRect(0,0,260,364);
+                ctx.strokeStyle=ac; ctx.lineWidth=2; ctx.globalAlpha=0.4; ctx.strokeRect(18,18,224,328); ctx.globalAlpha=1;
+                ctx.fillStyle='#d8d8e0'; ctx.font='bold 20px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+                let lines = title.length<=6?[title]:title.length<=12?[title.substring(0,Math.ceil(title.length/2)),title.substring(Math.ceil(title.length/2))]:[title.substring(0,6),title.substring(6,12),title.substring(12,16)+'…'];
+                lines.forEach((l,i)=>ctx.fillText(l,130,182-(lines.length*30)/2+i*30));
+                ctx.fillStyle=ac; ctx.fillRect(0,354,260,10);
+                return c.toDataURL('image/jpeg',0.75);
             }
-
             function devicePlaceholder(title) {
-                const c = document.createElement('canvas');
-                c.width = 260;
-                c.height = 325;
-                const ctx = c.getContext('2d');
-                ctx.fillStyle = '#1e1e28';
-                ctx.fillRect(0, 0, 260, 325);
-                ctx.strokeStyle = '#444';
-                ctx.lineWidth = 1.5;
-                ctx.globalAlpha = 0.5;
-                ctx.strokeRect(30, 30, 200, 265);
-                ctx.globalAlpha = 1;
-                ctx.fillStyle = '#a0a0b0';
-                ctx.font = 'bold 16px "PingFang SC","Microsoft YaHei",sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                let lines = title.length <= 8 ? [title] : [title.substring(0, 8), title.substring(8, 16)];
-                lines.forEach((l, i) => ctx.fillText(l, 130, 162 + i * 22));
-                return c.toDataURL('image/jpeg', 0.75);
+                const c=document.createElement('canvas'); c.width=260; c.height=325; const ctx=c.getContext('2d');
+                ctx.fillStyle='#1e1e28'; ctx.fillRect(0,0,260,325);
+                ctx.strokeStyle='#444'; ctx.lineWidth=1.5; ctx.globalAlpha=0.5; ctx.strokeRect(30,30,200,265); ctx.globalAlpha=1;
+                ctx.fillStyle='#a0a0b0'; ctx.font='bold 16px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+                let lines=title.length<=8?[title]:[title.substring(0,8),title.substring(8,16)];
+                lines.forEach((l,i)=>ctx.fillText(l,130,162+i*22));
+                return c.toDataURL('image/jpeg',0.75);
             }
-
-            // 自定义确认弹窗（替代浏览器confirm，修复bug）
             function customConfirm(msg) {
-                return new Promise((resolve) => {
-                    confirmMsg.textContent = msg;
-                    confirmOverlay.classList.add('active');
-                    confirmResolve = resolve;
+                return new Promise(resolve => {
+                    els.confirmMsg.textContent = msg;
+                    els.confirmOverlay.classList.add('active');
+                    confirmCb = resolve;
                 });
             }
-
             function closeConfirm(result) {
-                confirmOverlay.classList.remove('active');
-                if (confirmResolve) { confirmResolve(result);
-                    confirmResolve = null; }
+                els.confirmOverlay.classList.remove('active');
+                if (confirmCb) { confirmCb(result); confirmCb = null; }
             }
-            confirmYes.addEventListener('click', (e) => { e.stopPropagation();
-                closeConfirm(true); });
-            confirmNo.addEventListener('click', (e) => { e.stopPropagation();
-                closeConfirm(false); });
-            confirmOverlay.addEventListener('click', function(e) { if (e.target === confirmOverlay) closeConfirm(
-                    false); });
+            els.confirmYes.addEventListener('click', e => { e.stopPropagation(); closeConfirm(true); });
+            els.confirmNo.addEventListener('click', e => { e.stopPropagation(); closeConfirm(false); });
+            els.confirmOverlay.addEventListener('click', function(e) { if (e.target === els.confirmOverlay) closeConfirm(false); });
 
             function updateStats() {
-                const tv = gamesData.reduce((s, g) => s + (g.purchasePrice || 0), 0) + devicesData.reduce((s, d) => s +
-                    (d.purchasePrice || 0), 0);
-                $('bankTotalValue').textContent = fmt(tv);
-                $('bankGameCount').textContent = gamesData.length;
-                $('bankDeviceCount').textContent = devicesData.length;
-                let twd = 0;
-                [...gamesData, ...devicesData].forEach(i => twd += getDaysHeld(i.purchaseDate));
-                $('bankAvgDaily').textContent = fmt(twd > 0 ? tv / twd : 0);
-                $('badgeGames').textContent = gamesData.length;
-                $('badgeDevices').textContent = devicesData.length;
-                $('badgeRecoup').textContent = recoupData.length;
-                const ts = recoupData.reduce((s, r) => s + (r.sellPrice || 0), 0),
-                    tc = recoupData.reduce((s, r) => s + (r.buyPrice || 0), 0),
-                    tp = ts - tc;
-                $('recoupTotalSold').textContent = fmt(ts);
-                $('recoupTotalCost').textContent = fmt(tc);
-                $('recoupTotalPnL').textContent = fmt(tp);
-                $('recoupTotalPnL').className = 'recoup-summary-value ' + (tp > 0 ? 'profit' : tp < 0 ? 'loss' : '');
-                $('recoupCount').textContent = recoupData.length;
+                const tv = games.reduce((s,g)=>s+(g.purchasePrice||0),0) + devices.reduce((s,d)=>s+(d.purchasePrice||0),0);
+                els.bankTotalValue.textContent = fmt(tv);
+                els.bankGameCount.textContent = games.length;
+                els.bankDeviceCount.textContent = devices.length;
+                let twd = 0; [...games, ...devices].forEach(i => twd += daysHeld(i.purchaseDate));
+                els.bankAvgDaily.textContent = fmt(twd > 0 ? tv / twd : 0);
+                els.badgeGames.textContent = games.length;
+                els.badgeDevices.textContent = devices.length;
+                els.badgeRecoup.textContent = recoup.length;
+                const ts = recoup.reduce((s,r)=>s+(r.sellPrice||0),0), tc = recoup.reduce((s,r)=>s+(r.buyPrice||0),0), tp = ts - tc;
+                els.recoupTotalSold.textContent = fmt(ts);
+                els.recoupTotalCost.textContent = fmt(tc);
+                els.recoupTotalPnL.textContent = fmt(tp);
+                els.recoupTotalPnL.className = 'recoup-summary-value ' + (tp > 0 ? 'profit' : tp < 0 ? 'loss' : '');
+                els.recoupCount.textContent = recoup.length;
             }
-
             function renderOverview() {
-                overviewList.innerHTML = '';
-                const all = [...gamesData.map(g => ({ ...g, itemType: 'game' })), ...devicesData.map(d => ({ ...d,
-                    itemType: 'device' }))];
-                all.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
-                if (all.length === 0) { overviewEmpty.style.display = 'block'; return; }
-                overviewEmpty.style.display = 'none';
+                els.overviewList.innerHTML = '';
+                const all = [...games.map(g=>({...g,itemType:'game'})), ...devices.map(d=>({...d,itemType:'device'}))];
+                all.sort((a,b)=>new Date(b.purchaseDate)-new Date(a.purchaseDate));
+                if (all.length===0) { els.overviewEmpty.style.display='block'; return; }
+                els.overviewEmpty.style.display='none';
                 all.forEach(item => {
-                    const d = document.createElement('div');
-                    d.className = 'overview-item';
-                    const icon = item.itemType === 'game' ? (item.type === 'steam' ? '💻' : item.type ===
-                        'digital' ? '☁️' : '📦') : '🎮';
-                    d.innerHTML = `<div class="overview-item-icon">${icon}</div><div class="overview-item-info"><div class="overview-item-title">${item.title}</div><div class="overview-item-date">${item.purchaseDate}</div></div><span class="overview-item-type">${item.itemType==='game'?tLabel(item.type):dtLabel(item.deviceType)}</span><span class="overview-item-price">${fmt(item.purchasePrice)}</span>`;
-                    d.addEventListener('click', (e) => { e.stopPropagation(); if (item.itemType === 'game')
-                            openDetailGame(item.id);
-                        else openDetailDevice(item.id); });
-                    overviewList.appendChild(d);
+                    const d=document.createElement('div'); d.className='overview-item';
+                    const icon=item.itemType==='game'?(item.type==='steam'?'💻':item.type==='digital'?'☁️':'📦'):'🎮';
+                    d.innerHTML=`<div class="overview-item-icon">${icon}</div><div class="overview-item-info"><div class="overview-item-title">${item.title}</div><div class="overview-item-date">${item.purchaseDate}</div></div><span class="overview-item-type">${item.itemType==='game'?tLabel(item.type):dtLabel(item.deviceType)}</span><span class="overview-item-price">${fmt(item.purchasePrice)}</span>`;
+                    d.addEventListener('click', e => { e.stopPropagation(); if(item.itemType==='game') openDetailGame(item.id); else openDetailDevice(item.id); });
+                    els.overviewList.appendChild(d);
                 });
             }
-
             function renderGames() {
-                ['physical', 'digital', 'steam'].forEach(type => {
-                    const container = { physical: shelfRowPhysical, digital: shelfRowDigital,
-                        steam: shelfRowSteam } [type];
-                    const games = gamesData.filter(g => g.type === type);
+                ['physical','digital','steam'].forEach(type => {
+                    const container = {physical:els.shelfRowPhysical, digital:els.shelfRowDigital, steam:els.shelfRowSteam}[type];
+                    const list = games.filter(g=>g.type===type);
                     container.innerHTML = '';
-                    if (games.length === 0) { container.innerHTML =
-                            '<div class="empty-hint" style="padding:20px;width:100%;">暂无此类别游戏</div>'; return; }
-                    games.forEach(game => {
-                        const card = document.createElement('div');
-                        card.className = 'game-card';
-                        const inner = document.createElement('div');
-                        inner.className = 'game-card-inner tag-' + (game.version || 'blue');
-                        const badge = document.createElement('span');
-                        badge.className = 'game-card-type-badge ' + tBadge(game.type);
-                        badge.textContent = tLabel(game.type);
-                        inner.appendChild(badge);
-                        const img = document.createElement('img');
-                        img.className = 'game-card-cover';
-                        img.src = (game.image && game.image.startsWith('data:')) ? game.image :
-                            placeholderCover(game.title, game.version);
-                        if (!(game.image && game.image.startsWith('data:'))) img.classList.add(
-                            'placeholder-cover');
-                        img.alt = game.title;
-                        img.loading = 'lazy';
-                        img.onerror = function() { this.src = placeholderCover(game.title, game
-                                .version);
-                            this.classList.add('placeholder-cover'); };
-                        inner.appendChild(img);
-                        card.appendChild(inner);
-                        const tt = document.createElement('div');
-                        tt.className = 'game-card-title-tag';
-                        tt.textContent = game.title;
-                        card.appendChild(tt);
-                        card.addEventListener('click', (e) => { e.stopPropagation();
-                            openDetailGame(game.id); });
+                    if (list.length===0) { container.innerHTML='<div class="empty-hint" style="padding:20px;width:100%;">暂无此类别游戏</div>'; return; }
+                    list.forEach(game => {
+                        const card=document.createElement('div'); card.className='game-card';
+                        const inner=document.createElement('div'); inner.className='game-card-inner tag-'+(game.version||'blue');
+                        const badge=document.createElement('span'); badge.className='game-card-type-badge type-badge-'+(game.type||'physical'); badge.textContent=tLabel(game.type); inner.appendChild(badge);
+                        const img=document.createElement('img'); img.className='game-card-cover'; img.src=(game.image&&game.image.startsWith('data:'))?game.image:placeholderCover(game.title,game.version); img.alt=game.title; img.loading='lazy';
+                        inner.appendChild(img); card.appendChild(inner);
+                        const tt=document.createElement('div'); tt.className='game-card-title-tag'; tt.textContent=game.title; card.appendChild(tt);
+                        card.addEventListener('click', e => { e.stopPropagation(); openDetailGame(game.id); });
                         container.appendChild(card);
                     });
                 });
-                const total = gamesData.length;
-                gamesEmpty.style.display = total === 0 ? 'block' : 'none';
+                els.gamesEmpty.style.display = games.length===0 ? 'block' : 'none';
             }
-
             function renderDevices() {
-                const consoles = devicesData.filter(d => isConsole(d.deviceType));
-                const accessories = devicesData.filter(d => !isConsole(d.deviceType));
-
+                const consoles = devices.filter(d=>isConsole(d.deviceType));
+                const accessories = devices.filter(d=>!isConsole(d.deviceType));
                 function renderList(container, items) {
                     container.innerHTML = '';
-                    if (items.length === 0) { container.innerHTML =
-                            '<div class="empty-hint" style="padding:16px;width:100%;">暂无此类设备</div>'; return; }
+                    if (items.length===0) { container.innerHTML='<div class="empty-hint" style="padding:16px;width:100%;">暂无此类设备</div>'; return; }
                     items.forEach(dev => {
-                        const item = document.createElement('div');
-                        item.className = 'device-item';
-                        item.innerHTML =
-                            `<div class="device-item-icon">🎮</div><div class="device-item-info"><div class="device-item-title">${dev.title}</div><div class="device-item-date">${dev.purchaseDate} · ${dtLabel(dev.deviceType)}</div></div><span class="device-item-price">${fmt(dev.purchasePrice)}</span>`;
-                        item.addEventListener('click', (e) => { e.stopPropagation();
-                            openDetailDevice(dev.id); });
+                        const item=document.createElement('div'); item.className='device-item';
+                        item.innerHTML=`<div class="device-item-icon">🎮</div><div class="device-item-info"><div class="device-item-title">${dev.title}</div><div class="device-item-date">${dev.purchaseDate} · ${dtLabel(dev.deviceType)}</div></div><span class="device-item-price">${fmt(dev.purchasePrice)}</span>`;
+                        item.addEventListener('click', e => { e.stopPropagation(); openDetailDevice(dev.id); });
                         container.appendChild(item);
                     });
                 }
-                renderList(deviceListConsole, consoles);
-                renderList(deviceListAccessory, accessories);
-                deviceEmpty.style.display = devicesData.length === 0 ? 'block' : 'none';
-                $('deviceSectionConsole').style.display = consoles.length === 0 && accessories.length > 0 ?
-                    'none' : '';
-                $('deviceSectionAccessory').style.display = accessories.length === 0 && consoles.length > 0 ?
-                    'none' : '';
+                renderList(els.deviceListConsole, consoles);
+                renderList(els.deviceListAccessory, accessories);
+                els.deviceEmpty.style.display = devices.length===0 ? 'block' : 'none';
             }
-
             function renderRecoup() {
-                recoupList.innerHTML = '';
-                if (recoupData.length === 0) { recoupEmpty.style.display = 'block';
-                    recoupSummary.style.display = 'none'; return; }
-                recoupEmpty.style.display = 'none';
-                recoupSummary.style.display = 'flex';
-                recoupData.forEach(r => {
-                    const pnl = (r.sellPrice || 0) - (r.buyPrice || 0);
-                    const item = document.createElement('div');
-                    item.className = 'recoup-item';
-                    item.innerHTML =
-                        `<div class="recoup-item-icon">${pnl>0?'📈':pnl<0?'📉':'➖'}</div><div class="recoup-item-info"><div class="recoup-item-title">${r.title}</div><div class="recoup-item-date">${r.sellDate}</div></div><div class="recoup-item-prices"><span class="recoup-price-buy">成本 ${fmt(r.buyPrice)}</span><span class="recoup-price-sell">卖出 ${fmt(r.sellPrice)}</span><span class="recoup-pnl ${pnl>0?'profit':pnl<0?'loss':'zero'}">${pnl>=0?'+':''}${fmt(pnl)}</span></div>`;
-                    item.addEventListener('click', async (e) => {
-                        e.stopPropagation();
-                        const ok = await customConfirm(`确定删除回血记录：${r.title}？`);
-                        if (ok) { recoupData = recoupData.filter(x => x.id !== r.id);
-                            saveAll();
-                            refreshAll();
-                            showToast('记录已删除'); }
-                    });
-                    recoupList.appendChild(item);
+                els.recoupList.innerHTML = '';
+                if (recoup.length===0) { els.recoupEmpty.style.display='block'; els.recoupSummary.style.display='none'; return; }
+                els.recoupEmpty.style.display='none'; els.recoupSummary.style.display='flex';
+                recoup.forEach(r => {
+                    const pnl=(r.sellPrice||0)-(r.buyPrice||0);
+                    const item=document.createElement('div'); item.className='recoup-item';
+                    item.innerHTML=`<div class="recoup-item-icon">${pnl>0?'📈':pnl<0?'📉':'➖'}</div><div class="recoup-item-info"><div class="recoup-item-title">${r.title}</div><div class="recoup-item-date">${r.sellDate}</div></div><div style="display:flex;gap:16px;align-items:center;"><span style="font-size:13px;color:var(--text-muted);">成本 ${fmt(r.buyPrice)}</span><span style="font-size:15px;font-weight:600;color:var(--white);">卖出 ${fmt(r.sellPrice)}</span><span class="recoup-pnl ${pnl>0?'profit':pnl<0?'loss':'zero'}">${pnl>=0?'+':''}${fmt(pnl)}</span></div>`;
+                    item.addEventListener('click', async e => { e.stopPropagation(); const ok=await customConfirm(`确定删除回血记录：${r.title}？`); if(ok){ recoup=recoup.filter(x=>x.id!==r.id); saveAll(); refreshAll(); showToast('记录已删除'); } });
+                    els.recoupList.appendChild(item);
                 });
             }
-
-            function openDetailGame(gameId) {
-                const game = gamesData.find(g => g.id === gameId);
-                if (!game) return;
-                currentDetailMode = 'game';
-                currentDetailId = gameId;
-                modalTitle.textContent = game.title;
-                modalPrice.textContent = fmt(game.purchasePrice);
-                modalDate.textContent = game.purchaseDate;
-                modalDays.textContent = getDaysHeld(game.purchaseDate) + ' 天';
-                modalVersion.textContent = vLabel(game.version) + ' · ' + tLabel(game.type);
-                modalVersionBadge.textContent = vLabel(game.version);
-                modalVersionBadge.className = 'modal-version-badge ' + vBadge(game.version);
-                modalCoverImg.style.display = 'none';
-                modalCoverPlaceholder.style.display = 'none';
-                if (game.image && game.image.startsWith('data:')) { modalCoverImg.src = game.image;
-                    modalCoverImg.style.display = 'block'; } else { modalCoverPlaceholder.src = placeholderCover(game
-                        .title, game.version);
-                    modalCoverPlaceholder.style.display = 'block'; }
-                const dv = getDailyValue(game.purchasePrice, game.purchaseDate);
-                modalDailyValue.textContent = fmt(dv);
-                modalVerdict.textContent = dv < 0.5 ? '🏆 超值收藏！' : dv < 1.5 ? '👍 性价比良好' : dv < 5 ? '📅 持有时间尚短' :
-                    '🆕 享受游戏吧';
-                modalActionsGame.style.display = 'flex';
-                modalActionsDevice.style.display = 'none';
-                modalOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            function openDetailGame(id) {
+                const game=games.find(g=>g.id===id); if(!game) return;
+                detailMode='game'; detailId=id;
+                els.modalTitle.textContent=game.title; els.modalPrice.textContent=fmt(game.purchasePrice);
+                els.modalDate.textContent=game.purchaseDate; els.modalDays.textContent=daysHeld(game.purchaseDate)+' 天';
+                els.modalVersion.textContent=vLabel(game.version)+' · '+tLabel(game.type);
+                els.modalVersionBadge.textContent=vLabel(game.version); els.modalVersionBadge.className='modal-version-badge badge-'+(game.version||'blue');
+                els.modalCoverImg.style.display='none'; els.modalCoverPlaceholder.style.display='none';
+                if(game.image&&game.image.startsWith('data:')){ els.modalCoverImg.src=game.image; els.modalCoverImg.style.display='block'; }
+                else { els.modalCoverPlaceholder.src=placeholderCover(game.title,game.version); els.modalCoverPlaceholder.style.display='block'; }
+                const dv=(game.purchasePrice||0)/daysHeld(game.purchaseDate);
+                els.modalDailyValue.textContent=fmt(dv); els.modalVerdict.textContent=dv<0.5?'🏆 超值收藏！':dv<1.5?'👍 性价比良好':dv<5?'📅 持有时间尚短':'🆕 享受游戏吧';
+                els.modalActionsGame.style.display='flex'; els.modalActionsDevice.style.display='none';
+                els.modalOverlay.classList.add('active'); document.body.style.overflow='hidden';
             }
-
-            function openDetailDevice(devId) {
-                const dev = devicesData.find(d => d.id === devId);
-                if (!dev) return;
-                currentDetailMode = 'device';
-                currentDetailId = devId;
-                modalTitle.textContent = dev.title;
-                modalPrice.textContent = fmt(dev.purchasePrice);
-                modalDate.textContent = dev.purchaseDate;
-                modalDays.textContent = getDaysHeld(dev.purchaseDate) + ' 天';
-                modalVersion.textContent = dtLabel(dev.deviceType);
-                modalVersionBadge.textContent = dtLabel(dev.deviceType);
-                modalVersionBadge.className = 'modal-version-badge badge-blue';
-                modalCoverImg.style.display = 'none';
-                modalCoverPlaceholder.style.display = 'none';
-                if (dev.image && dev.image.startsWith('data:')) { modalCoverImg.src = dev.image;
-                    modalCoverImg.style.display = 'block'; } else { modalCoverPlaceholder.src = devicePlaceholder(dev
-                        .title);
-                    modalCoverPlaceholder.style.display = 'block'; }
-                const dv = getDailyValue(dev.purchasePrice, dev.purchaseDate);
-                modalDailyValue.textContent = fmt(dv);
-                modalVerdict.textContent = dv < 1 ? '💎 每天成本很低' : dv < 8 ? '📅 合理的使用成本' : '🆕 新设备，好好享受';
-                modalActionsGame.style.display = 'none';
-                modalActionsDevice.style.display = 'flex';
-                modalOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            function openDetailDevice(id) {
+                const dev=devices.find(d=>d.id===id); if(!dev) return;
+                detailMode='device'; detailId=id;
+                els.modalTitle.textContent=dev.title; els.modalPrice.textContent=fmt(dev.purchasePrice);
+                els.modalDate.textContent=dev.purchaseDate; els.modalDays.textContent=daysHeld(dev.purchaseDate)+' 天';
+                els.modalVersion.textContent=dtLabel(dev.deviceType);
+                els.modalVersionBadge.textContent=dtLabel(dev.deviceType); els.modalVersionBadge.className='modal-version-badge badge-blue';
+                els.modalCoverImg.style.display='none'; els.modalCoverPlaceholder.style.display='none';
+                if(dev.image&&dev.image.startsWith('data:')){ els.modalCoverImg.src=dev.image; els.modalCoverImg.style.display='block'; }
+                else { els.modalCoverPlaceholder.src=devicePlaceholder(dev.title); els.modalCoverPlaceholder.style.display='block'; }
+                const dv=(dev.purchasePrice||0)/daysHeld(dev.purchaseDate);
+                els.modalDailyValue.textContent=fmt(dv); els.modalVerdict.textContent=dv<1?'💎 每天成本很低':dv<8?'📅 合理的使用成本':'🆕 新设备，好好享受';
+                els.modalActionsGame.style.display='none'; els.modalActionsDevice.style.display='flex';
+                els.modalOverlay.classList.add('active'); document.body.style.overflow='hidden';
             }
+            function closeDetail() { els.modalOverlay.classList.remove('active'); document.body.style.overflow=''; detailId=null; }
+            els.modalClose.addEventListener('click', e => { e.stopPropagation(); closeDetail(); });
+            els.modalOverlay.addEventListener('click', e => { if(e.target===els.modalOverlay) closeDetail(); });
+            document.addEventListener('keydown', e => { if(e.key==='Escape'){ if(els.modalOverlay.classList.contains('active')) closeDetail(); if(els.formOverlay.classList.contains('active')) closeForm(); } });
 
-            function closeDetail() { modalOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-                currentDetailId = null; }
-            modalClose.addEventListener('click', (e) => { e.stopPropagation();
-                closeDetail(); });
-            modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeDetail(); });
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (modalOverlay.classList
-                        .contains('active')) closeDetail(); if (formOverlay.classList.contains('active'))
-                        closeForm(); } });
-
-            $('btnEditGame').addEventListener('click', async (e) => { e.stopPropagation(); const game = gamesData.find(
-                    g => g.id === currentDetailId); if (game) { closeDetail();
-                    openFormForEditGame(game); } });
-            $('btnDeleteGame').addEventListener('click', async (e) => { e.stopPropagation(); if (currentDetailId) {
-                    const ok = await customConfirm('确定删除此游戏？此操作不可撤销。'); if (ok) { gamesData = gamesData.filter(g =>
-                            g.id !== currentDetailId);
-                        saveAll();
-                        closeDetail();
-                        refreshAll();
-                        showToast('已删除'); } } });
-            $('btnSellGame').addEventListener('click', async (e) => { e.stopPropagation(); const game = gamesData.find(g =>
-                    g.id === currentDetailId); if (!game) return;
-                const sp = prompt(`卖出"${game.title}"\n原价：${fmt(game.purchasePrice)}\n输入卖出价格：`, game
-                .purchasePrice); if (sp !== null && !isNaN(parseFloat(sp)) && parseFloat(sp) >= 0) { recoupData
-                        .push({ id: genId('r'), title: game.title, buyPrice: parseFloat(game.purchasePrice),
-                            sellPrice: parseFloat(sp), sellDate: new Date().toISOString().split('T')[0],
-                            image: game.image });
-                    gamesData = gamesData.filter(g => g.id !== currentDetailId);
-                    saveAll();
-                    closeDetail();
-                    refreshAll();
-                    switchTab('tab-recoup');
-                    showToast('已记录回血！'); } });
-            $('btnEditDevice').addEventListener('click', (e) => { e.stopPropagation(); const dev = devicesData.find(d => d
-                    .id === currentDetailId); if (dev) { closeDetail();
-                    openFormForEditDevice(dev); } });
-            $('btnDeleteDevice').addEventListener('click', async (e) => { e.stopPropagation(); if (currentDetailId) {
-                    const ok = await customConfirm('确定删除此设备？此操作不可撤销。'); if (ok) { devicesData = devicesData.filter(
-                            d => d.id !== currentDetailId);
-                        saveAll();
-                        closeDetail();
-                        refreshAll();
-                        showToast('已删除'); } } });
+            g('btnEditGame').addEventListener('click', async e => { e.stopPropagation(); const game=games.find(g=>g.id===detailId); if(game){ closeDetail(); openFormForEditGame(game); } });
+            g('btnDeleteGame').addEventListener('click', async e => { e.stopPropagation(); if(detailId){ const ok=await customConfirm('确定删除此游戏？此操作不可撤销。'); if(ok){ games=games.filter(g=>g.id!==detailId); saveAll(); closeDetail(); refreshAll(); showToast('已删除'); } } });
+            g('btnSellGame').addEventListener('click', async e => { e.stopPropagation(); const game=games.find(g=>g.id===detailId); if(!game) return; const sp=prompt(`卖出"${game.title}"\n原价：${fmt(game.purchasePrice)}\n输入卖出价格：`,game.purchasePrice); if(sp!==null&&!isNaN(parseFloat(sp))&&parseFloat(sp)>=0){ recoup.push({id:genId('r'),title:game.title,buyPrice:parseFloat(game.purchasePrice),sellPrice:parseFloat(sp),sellDate:new Date().toISOString().split('T')[0],image:game.image}); games=games.filter(g=>g.id!==detailId); saveAll(); closeDetail(); refreshAll(); switchTab('tab-recoup'); showToast('已记录回血！'); } });
+            g('btnEditDevice').addEventListener('click', e => { e.stopPropagation(); const dev=devices.find(d=>d.id===detailId); if(dev){ closeDetail(); openFormForEditDevice(dev); } });
+            g('btnDeleteDevice').addEventListener('click', async e => { e.stopPropagation(); if(detailId){ const ok=await customConfirm('确定删除此设备？此操作不可撤销。'); if(ok){ devices=devices.filter(d=>d.id!==detailId); saveAll(); closeDetail(); refreshAll(); showToast('已删除'); } } });
 
             function openFormForAdd() {
-                editingId = null;
-                if (currentTab === 'tab-devices') { editingMode = 'device';
-                    formTitle.textContent = '添加设备';
-                    formGroupType.style.display = 'none';
-                    formGroupDeviceType.style.display = 'block';
-                    formGroupVersion.style.display = 'none';
-                    inputTitle.placeholder = '输入设备名称';
-                    inputDeviceType.value = 'switch'; } else if (currentTab === 'tab-recoup') { editingMode =
-                        'recoup';
-                    formTitle.textContent = '添加回血记录';
-                    formGroupType.style.display = 'none';
-                    formGroupDeviceType.style.display = 'none';
-                    formGroupVersion.style.display = 'none';
-                    inputTitle.placeholder = '输入游戏/物品名称'; } else { editingMode = 'game';
-                    formTitle.textContent = '添加新游戏';
-                    formGroupType.style.display = 'block';
-                    formGroupDeviceType.style.display = 'none';
-                    formGroupVersion.style.display = 'block';
-                    inputTitle.placeholder = '输入游戏名称';
-                    inputType.value = 'physical';
-                    inputVersion.value = 'blue'; }
-                inputTitle.value = '';
-                inputPrice.value = '';
-                inputDate.value = new Date().toISOString().split('T')[0];
-                inputImage.value = '';
-                imagePreview.style.display = 'none';
-                imagePreview.classList.remove('show');
-                formOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                editId=null;
+                if(currentTab==='tab-devices'){ editMode='device'; els.formTitle.textContent='添加设备'; els.formGroupType.style.display='none'; els.formGroupDeviceType.style.display='block'; els.formGroupVersion.style.display='none'; els.inputTitle.placeholder='输入设备名称'; els.inputDeviceType.value='switch'; }
+                else if(currentTab==='tab-recoup'){ editMode='recoup'; els.formTitle.textContent='添加回血记录'; els.formGroupType.style.display='none'; els.formGroupDeviceType.style.display='none'; els.formGroupVersion.style.display='none'; els.inputTitle.placeholder='输入游戏/物品名称'; }
+                else { editMode='game'; els.formTitle.textContent='添加新游戏'; els.formGroupType.style.display='block'; els.formGroupDeviceType.style.display='none'; els.formGroupVersion.style.display='block'; els.inputTitle.placeholder='输入游戏名称'; els.inputType.value='physical'; els.inputVersion.value='blue'; }
+                els.inputTitle.value=''; els.inputPrice.value=''; els.inputDate.value=new Date().toISOString().split('T')[0]; els.inputImage.value=''; els.imagePreview.style.display='none'; els.imagePreview.classList.remove('show');
+                els.formOverlay.classList.add('active'); document.body.style.overflow='hidden';
             }
+            function openFormForEditGame(game){ editId=game.id; editMode='game'; els.formTitle.textContent='编辑游戏信息'; els.formGroupType.style.display='block'; els.formGroupDeviceType.style.display='none'; els.formGroupVersion.style.display='block'; els.inputTitle.value=game.title; els.inputPrice.value=game.purchasePrice; els.inputDate.value=game.purchaseDate; els.inputVersion.value=game.version; els.inputType.value=game.type; els.inputImage.value=''; els.imagePreview.style.display='none'; if(game.image&&game.image.startsWith('data:')){ els.imagePreview.src=game.image; els.imagePreview.style.display='block'; } els.formOverlay.classList.add('active'); document.body.style.overflow='hidden'; }
+            function openFormForEditDevice(dev){ editId=dev.id; editMode='device'; els.formTitle.textContent='编辑设备信息'; els.formGroupType.style.display='none'; els.formGroupDeviceType.style.display='block'; els.formGroupVersion.style.display='none'; els.inputTitle.value=dev.title; els.inputPrice.value=dev.purchasePrice; els.inputDate.value=dev.purchaseDate; els.inputDeviceType.value=dev.deviceType; els.inputImage.value=''; els.imagePreview.style.display='none'; if(dev.image&&dev.image.startsWith('data:')){ els.imagePreview.src=dev.image; els.imagePreview.style.display='block'; } els.formOverlay.classList.add('active'); document.body.style.overflow='hidden'; }
+            function closeForm(){ els.formOverlay.classList.remove('active'); document.body.style.overflow=''; editId=null; }
+            els.fabAdd.addEventListener('click', e => { e.stopPropagation(); openFormForAdd(); });
+            g('btnCancel').addEventListener('click', e => { e.stopPropagation(); closeForm(); });
+            els.formOverlay.addEventListener('click', e => { if(e.target===els.formOverlay) closeForm(); });
+            els.inputImage.addEventListener('change', function(){ const f=this.files[0]; if(!f) return; const r=new FileReader(); r.onload=function(e){ els.imagePreview.src=e.target.result; els.imagePreview.style.display='block'; }; r.readAsDataURL(f); });
+            function compressImage(dataUrl, maxW=400, q=0.6){ return new Promise(resolve=>{ const img=new Image(); img.onload=function(){ const c=document.createElement('canvas'); let w=img.width, h=img.height; if(w>maxW){ h=Math.round(h*(maxW/w)); w=maxW; } c.width=w; c.height=h; const ctx=c.getContext('2d'); ctx.fillStyle='#1a1a1e'; ctx.fillRect(0,0,w,h); ctx.drawImage(img,0,0,w,h); resolve(c.toDataURL('image/jpeg',q)); }; img.src=dataUrl; }); }
+            g('btnSubmit').addEventListener('click', async function(e){ e.stopPropagation();
+                const title=els.inputTitle.value.trim(), ps=els.inputPrice.value.trim(), date=els.inputDate.value;
+                if(!title){ showToast('请输入标题'); return; } if(!ps||isNaN(parseFloat(ps))||parseFloat(ps)<0){ showToast('请输入有效价格'); return; } if(!date){ showToast('请选择日期'); return; }
+                const price=parseFloat(ps); let imgData=null;
+                if(els.inputImage.files&&els.inputImage.files[0]){ const dataUrl=await new Promise(r=>{ const fr=new FileReader(); fr.onload=e=>r(e.target.result); fr.readAsDataURL(els.inputImage.files[0]); }); try{ imgData=await compressImage(dataUrl,400,0.6); }catch(e){ imgData=dataUrl; } }
+                else if(editId){ if(editMode==='game'){ const eg=games.find(g=>g.id===editId); if(eg&&eg.image&&eg.image.startsWith('data:')) imgData=eg.image; } if(editMode==='device'){ const ed=devices.find(d=>d.id===editId); if(ed&&ed.image&&ed.image.startsWith('data:')) imgData=ed.image; } }
+                if(editId){ if(editMode==='game'){ const g=games.find(x=>x.id===editId); if(g){ Object.assign(g,{title,purchasePrice:price,purchaseDate:date,version:els.inputVersion.value,type:els.inputType.value}); if(imgData) g.image=imgData; } } else if(editMode==='device'){ const d=devices.find(x=>x.id===editId); if(d){ Object.assign(d,{title,purchasePrice:price,purchaseDate:date,deviceType:els.inputDeviceType.value}); if(imgData) d.image=imgData; } } showToast('已更新'); }
+                else { if(editMode==='game') games.push({id:genId('g'),title,purchasePrice:price,purchaseDate:date,version:els.inputVersion.value,type:els.inputType.value,image:imgData}); else if(editMode==='device') devices.push({id:genId('d'),title,purchasePrice:price,purchaseDate:date,deviceType:els.inputDeviceType.value,image:imgData}); else if(editMode==='recoup') recoup.push({id:genId('r'),title,buyPrice:price,sellPrice:price,sellDate:date,image:imgData}); showToast('已添加'); }
+                saveAll(); closeForm(); refreshAll();
+            });
 
-            function openFormForEditGame(game) { editingId = game.id;
-                editingMode = 'game';
-                formTitle.textContent = '编辑游戏信息';
-                formGroupType.style.display = 'block';
-                formGroupDeviceType.style.display = 'none';
-                formGroupVersion.style.display = 'block';
-                inputTitle.value = game.title;
-                inputPrice.value = game.purchasePrice;
-                inputDate.value = game.purchaseDate;
-                inputVersion.value = game.version;
-                inputType.value = game.type;
-                inputImage.value = '';
-                imagePreview.style.display = 'none';
-                imagePreview.classList.remove('show'); if (game.image && game.image.startsWith('data:')) { imagePreview
-                        .src = game.image;
-                    imagePreview.style.display = 'block';
-                    imagePreview.classList.add('show'); }
-                formOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden'; }
-
-            function openFormForEditDevice(dev) { editingId = dev.id;
-                editingMode = 'device';
-                formTitle.textContent = '编辑设备信息';
-                formGroupType.style.display = 'none';
-                formGroupDeviceType.style.display = 'block';
-                formGroupVersion.style.display = 'none';
-                inputTitle.value = dev.title;
-                inputPrice.value = dev.purchasePrice;
-                inputDate.value = dev.purchaseDate;
-                inputDeviceType.value = dev.deviceType;
-                inputImage.value = '';
-                imagePreview.style.display = 'none';
-                imagePreview.classList.remove('show'); if (dev.image && dev.image.startsWith('data:')) { imagePreview
-                        .src = dev.image;
-                    imagePreview.style.display = 'block';
-                    imagePreview.classList.add('show'); }
-                formOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden'; }
-
-            function closeForm() { formOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-                editingId = null; }
-            fabAdd.addEventListener('click', (e) => { e.stopPropagation();
-                openFormForAdd(); });
-            $('btnCancel').addEventListener('click', (e) => { e.stopPropagation();
-                closeForm(); });
-            formOverlay.addEventListener('click', e => { if (e.target === formOverlay) closeForm(); });
-            inputImage.addEventListener('change', function() { const f = this.files[0]; if (!f) return;
-                const r = new FileReader();
-                r.onload = function(e) { imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                    imagePreview.classList.add('show'); };
-                r.readAsDataURL(f); });
-
-            function compressImage(dataUrl, maxW = 400, q = 0.6) { return new Promise((resolve) => { const img = new Image();
-                img.onload = function() { const c = document.createElement('canvas');
-                    let w = img.width,
-                        h = img.height; if (w > maxW) { h = Math.round(h * (maxW / w));
-                        w = maxW; }
-                    c.width = w;
-                    c.height = h;
-                    const ctx = c.getContext('2d');
-                    ctx.fillStyle = '#1a1a1e';
-                    ctx.fillRect(0, 0, w, h);
-                    ctx.drawImage(img, 0, 0, w, h);
-                    resolve(c.toDataURL('image/jpeg', q)); };
-                img.src = dataUrl; }); }
-            $('btnSubmit').addEventListener('click', async function(e) { e.stopPropagation();
-                const title = inputTitle.value.trim(),
-                    ps = inputPrice.value.trim(),
-                    date = inputDate.value; if (!title) { showToast('请输入标题'); return; } if (!ps || isNaN(
-                        parseFloat(ps)) || parseFloat(ps) < 0) { showToast('请输入有效价格'); return; } if (!date) {
-                    showToast('请选择日期'); return; }
-                const price = parseFloat(ps);
-                let imgData = null; if (inputImage.files && inputImage.files[0]) { const dataUrl = await new Promise(
-                        r => { const fr = new FileReader();
-                        fr.onload = e => r(e.target.result);
-                        fr.readAsDataURL(inputImage.files[0]); }); try { imgData = await compressImage(dataUrl,
-                        400, 0.6); } catch (e) { imgData = dataUrl; } } else if (editingId) { if (editingMode ===
-                        'game') { const eg = gamesData.find(g => g.id === editingId); if (eg && eg.image && eg
-                            .image.startsWith('data:')) imgData = eg.image; } if (editingMode === 'device') { const
-                        ed = devicesData.find(d => d.id === editingId); if (ed && ed.image && ed.image.startsWith(
-                            'data:')) imgData = ed.image; } } if (editingId) { if (editingMode === 'game') { const g =
-                        gamesData.find(x => x.id === editingId); if (g) { Object.assign(g, { title,
-                            purchasePrice: price, purchaseDate: date, version: inputVersion.value,
-                            type: inputType.value }); if (imgData) g.image = imgData; } } else if (
-                    editingMode === 'device') { const d = devicesData.find(x => x.id === editingId); if (d) { Object
-                            .assign(d, { title, purchasePrice: price, purchaseDate: date, deviceType: inputDeviceType
-                                .value }); if (imgData) d.image = imgData; } }
-                    showToast('已更新'); } else { if (editingMode === 'game') gamesData.push({ id: genId('g'),
-                        title, purchasePrice: price, purchaseDate: date, version: inputVersion.value,
-                        type: inputType.value, image: imgData }); else if (editingMode === 'device') devicesData
-                        .push({ id: genId('d'), title, purchasePrice: price, purchaseDate: date,
-                            deviceType: inputDeviceType.value, image: imgData }); else if (editingMode ===
-                        'recoup') recoupData.push({ id: genId('r'), title, buyPrice: price, sellPrice: price,
-                            sellDate: date, image: imgData });
-                    showToast('已添加'); }
-                saveAll();
-                closeForm();
-                refreshAll(); });
-
-            function switchTab(tabId) { currentTab = tabId;
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector(`[data-tab="${tabId}"]`)?.classList.add('active');
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                $(tabId)?.classList.add('active');
-                updateFabVisibility(); }
-            document.querySelectorAll('.tab-btn').forEach(btn => { btn.addEventListener('click', (e) => { e
-                    .stopPropagation();
-                    switchTab(btn.getAttribute('data-tab')); }); });
-
-            function updateFabVisibility() { if (currentTab === 'tab-overview') fabAdd.style.display = 'none';
-                else if (currentTab === 'tab-recoup') { fabAdd.style.display = 'block';
-                    fabAdd.textContent = '💰';
-                    fabAdd.title = '添加回血记录'; } else if (currentTab === 'tab-devices') { fabAdd.style.display =
-                        'block';
-                    fabAdd.textContent = '🔧';
-                    fabAdd.title = '添加设备'; } else { fabAdd.style.display = 'block';
-                    fabAdd.textContent = '+';
-                    fabAdd.title = '添加游戏'; } }
+            function switchTab(tabId){ currentTab=tabId; document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.querySelector(`[data-tab="${tabId}"]`)?.classList.add('active'); document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); g(tabId)?.classList.add('active'); updateFabVisibility(); }
+            document.querySelectorAll('.tab-btn').forEach(btn=>{ btn.addEventListener('click', e=>{ e.stopPropagation(); switchTab(btn.getAttribute('data-tab')); }); });
+            function updateFabVisibility(){ if(currentTab==='tab-overview') els.fabAdd.style.display='none'; else if(currentTab==='tab-recoup'){ els.fabAdd.style.display='block'; els.fabAdd.textContent='💰'; } else if(currentTab==='tab-devices'){ els.fabAdd.style.display='block'; els.fabAdd.textContent='🔧'; } else { els.fabAdd.style.display='block'; els.fabAdd.textContent='+'; } }
 
             let toastTimer;
+            function showToast(msg){ els.toast.textContent=msg; els.toast.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>els.toast.classList.remove('show'),1800); }
 
-            function showToast(msg) { toast.textContent = msg;
-                toast.classList.add('show');
-                clearTimeout(toastTimer);
-                toastTimer = setTimeout(() => toast.classList.remove('show'), 1800); }
+            els.avatarContainer.addEventListener('click', e=>{ e.stopPropagation(); els.avatarFileInput.click(); });
+            els.avatarFileInput.addEventListener('change', function(){ const f=this.files[0]; if(!f) return; const r=new FileReader(); r.onload=function(e){ const img=document.createElement('img'); img.src=e.target.result; img.style.cssText='width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;'; els.avatarContainer.innerHTML=''; els.avatarContainer.appendChild(img); const hint=document.createElement('span'); hint.className='avatar-edit-hint'; hint.textContent='更换头像'; els.avatarContainer.appendChild(hint); saveProfile(); showToast('头像已更新'); }; r.readAsDataURL(f); this.value=''; });
+            els.profileId.addEventListener('click', e=>{ e.stopPropagation(); const nn=prompt('设置收藏家昵称：',els.profileId.textContent); if(nn!==null&&nn.trim()){ els.profileId.textContent=nn.trim(); saveProfile(); showToast('昵称已更新'); } });
+            function copyFriendCode(){ const code=els.friendCodeDisplay.textContent; if(navigator.clipboard) navigator.clipboard.writeText(code).then(()=>showToast('已复制：'+code)); else { const ta=document.createElement('textarea'); ta.value=code; ta.style.cssText='position:fixed;opacity:0;'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('已复制：'+code); } }
+            [els.profileFriendCode, els.bankFriendCode].forEach(el=>{ el.addEventListener('click', e=>{ e.stopPropagation(); copyFriendCode(); }); el.addEventListener('dblclick', e=>{ e.stopPropagation(); const nc=prompt('编辑好友编号：',friendCode); if(nc!==null&&nc.trim()){ friendCode=nc.trim(); els.friendCodeDisplay.textContent=friendCode; els.profileFriendCode.querySelector('span').textContent=friendCode; try{localStorage.setItem(KEYS.friendCode,friendCode);}catch(e){} showToast('好友编号已更新'); } }); });
+            function loadProfile(){ try{ const r=localStorage.getItem(KEYS.profile); if(r){ const p=JSON.parse(r); if(p.nickname) els.profileId.textContent=p.nickname; if(p.avatar){ const img=document.createElement('img'); img.src=p.avatar; img.style.cssText='width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;'; els.avatarContainer.innerHTML=''; els.avatarContainer.appendChild(img); const hint=document.createElement('span'); hint.className='avatar-edit-hint'; hint.textContent='更换头像'; els.avatarContainer.appendChild(hint); } } }catch(e){} }
+            function saveProfile(){ try{ localStorage.setItem(KEYS.profile, JSON.stringify({nickname:els.profileId.textContent, avatar:els.avatarContainer.querySelector('img')?els.avatarContainer.querySelector('img').src:null})); }catch(e){} }
+            function loadTheme(){ try{ if(localStorage.getItem(KEYS.theme)==='light') document.body.classList.add('light-mode'); }catch(e){} }
+            function toggleTheme(){ document.body.classList.toggle('light-mode'); try{ localStorage.setItem(KEYS.theme, document.body.classList.contains('light-mode')?'light':'dark'); }catch(e){} }
+            els.themeToggle.addEventListener('click', e=>{ e.stopPropagation(); toggleTheme(); showToast(document.body.classList.contains('light-mode')?'浅色模式':'暗黑模式'); });
 
-            avatarContainer.addEventListener('click', (e) => { e.stopPropagation();
-                avatarFileInput.click(); });
-            avatarFileInput.addEventListener('change', function() { const f = this.files[0]; if (!f) return;
-                const r = new FileReader();
-                r.onload = function(e) { const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.cssText =
-                        'width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;';
-                    img.onmouseenter = () => img.style.filter = 'grayscale(0%)';
-                    img.onmouseleave = () => img.style.filter = 'grayscale(100%)';
-                    avatarContainer.innerHTML = '';
-                    avatarContainer.appendChild(img);
-                    const hint = document.createElement('span');
-                    hint.className = 'avatar-edit-hint';
-                    hint.textContent = '更换头像';
-                    avatarContainer.appendChild(hint);
-                    saveProfile();
-                    showToast('头像已更新'); };
-                r.readAsDataURL(f);
-                this.value = ''; });
-            profileId.addEventListener('click', (e) => { e.stopPropagation();
-                const nn = prompt('设置收藏家昵称：', profileId.textContent); if (nn !== null && nn.trim()) { profileId
-                        .textContent = nn.trim();
-                    saveProfile();
-                    showToast('昵称已更新'); } });
-            profileId.style.cursor = 'pointer';
-
-            function copyFriendCode() { const code = friendCodeDisplay.textContent; if (navigator.clipboard) navigator
-                    .clipboard.writeText(code).then(() => showToast('已复制：' + code)); else { const ta = document
-                        .createElement('textarea');
-                    ta.value = code;
-                    ta.style.cssText = 'position:fixed;opacity:0;';
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(ta);
-                    showToast('已复制：' + code); } }
-            [profileFriendCode, bankFriendCode].forEach(el => { el.addEventListener('click', (e) => { e
-                    .stopPropagation();
-                    copyFriendCode(); });
-                el.addEventListener('dblclick', (e) => { e.stopPropagation();
-                    const nc = prompt('编辑好友编号：', friendCode); if (nc !== null && nc.trim()) { friendCode = nc
-                            .trim();
-                        friendCodeDisplay.textContent = friendCode;
-                        profileFriendCode.querySelector('span').textContent = friendCode; try { localStorage
-                                .setItem(STORAGE_FRIEND_CODE, friendCode); } catch (e) {}
-                        showToast('好友编号已更新'); } }); });
-
-            function loadProfile() { try { const raw = localStorage.getItem(STORAGE_PROFILE); if (raw) { const p = JSON
-                            .parse(raw); if (p.nickname) profileId.textContent = p.nickname; if (p.avatar) { const
-                            img = document.createElement('img');
-                        img.src = p.avatar;
-                        img.style.cssText =
-                            'width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;';
-                        img.onmouseenter = () => img.style.filter = 'grayscale(0%)';
-                        img.onmouseleave = () => img.style.filter = 'grayscale(100%)';
-                        avatarContainer.innerHTML = '';
-                        avatarContainer.appendChild(img);
-                        const hint = document.createElement('span');
-                        hint.className = 'avatar-edit-hint';
-                        hint.textContent = '更换头像';
-                        avatarContainer.appendChild(hint); } } } } catch (e) {} }
-
-            function saveProfile() { try { localStorage.setItem(STORAGE_PROFILE, JSON.stringify({ nickname: profileId
-                        .textContent, avatar: avatarContainer.querySelector('img') ? avatarContainer.querySelector(
-                        'img').src : null })); } catch (e) {} }
-
-            // 主题切换
-            function loadTheme() { try { const t = localStorage.getItem(STORAGE_THEME); if (t === 'light') document
-                        .body.classList.add('light-mode'); } catch (e) {} }
-
-            function toggleTheme() { document.body.classList.toggle('light-mode'); try { localStorage.setItem(
-                    STORAGE_THEME, document.body.classList.contains('light-mode') ? 'light' : 'dark'); } catch (
-                e) {} }
-            themeToggle.addEventListener('click', (e) => { e.stopPropagation();
-                toggleTheme();
-                showToast(document.body.classList.contains('light-mode') ? '已切换为浅色模式' : '已切换为暗黑模式'); });
-
-            function refreshAll() { renderOverview();
-                renderGames();
-                renderDevices();
-                renderRecoup();
-                updateStats();
-                updateFabVisibility(); }
-
-            function init() { loadAll();
-                loadProfile();
-                loadTheme();
-                refreshAll();
-                switchTab('tab-overview'); }
+            function refreshAll(){ renderOverview(); renderGames(); renderDevices(); renderRecoup(); updateStats(); updateFabVisibility(); }
+            function init(){ loadAll(); loadProfile(); loadTheme(); refreshAll(); switchTab('tab-overview'); }
             init();
-            window.addEventListener('storage', function(e) { if ([STORAGE_GAMES, STORAGE_DEVICES, STORAGE_RECOUP,
-                    STORAGE_FRIEND_CODE
-                ].includes(e.key)) { loadAll();
-                    refreshAll(); } });
-            window.resetCollection = function() { if (confirm('确定重置所有数据？')) { [STORAGE_GAMES, STORAGE_DEVICES,
-                    STORAGE_RECOUP, STORAGE_PROFILE, STORAGE_FRIEND_CODE
-                ].forEach(k => localStorage.removeItem(k));
-                    location.reload(); } };
-            console.log('🎮 收藏馆 v4 已就绪 | 自定义确认弹窗 | 主题切换 | 设备分区列表');
+            window.addEventListener('storage', e=>{ if([KEYS.games,KEYS.devices,KEYS.recoup,KEYS.friendCode].includes(e.key)){ loadAll(); refreshAll(); } });
+            window.resetCollection = function(){ if(confirm('确定重置所有数据？')){ Object.values(KEYS).forEach(k=>localStorage.removeItem(k)); location.reload(); } };
+            console.log('✅ 收藏馆 v4.1 已启动 - 所有功能正常');
         })();
     </script>
 </body>
