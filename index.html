@@ -11,7 +11,6 @@
             --silver: #b8b8c0; --silver-light: #d0d0d6; --silver-dark: #8a8a94;
             --border-subtle: #2a2a34; --border-hover: #444458;
             --metal-shelf: #3a3a42; --metal-shelf-light: #4a4a54; --metal-shelf-dark: #2a2a32; --metal-top: #525260;
-            --red-tag: #d94a4a; --blue-tag: #4a80c8; --green-tag: #3da86a;
             --card-width: 130px; --tab-font-size: 16px; --base-font-size: 15px;
             --font-display: 'Georgia', 'Times New Roman', 'Songti SC', 'Noto Serif SC', serif;
             --font-body: 'Inter', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
@@ -124,7 +123,6 @@
         .type-badge-steam { background:rgba(30,50,70,0.85); color:#8ab8e0; }
         .game-card-cover {
             width:100%; height:100%; object-fit:cover;
-            /* 移除滤镜，保持原色 */
             transition: transform 0.4s; background:var(--surface-light);
         }
         .game-card:hover { transform:translateY(-16px) rotateX(-2deg); z-index:20; }
@@ -156,28 +154,126 @@
         .device-item-title { font-weight:600; color:var(--white); font-size:16px; }
         .device-item-date { font-size:12px; color:var(--text-muted); }
         .device-item-price { font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--white); flex-shrink:0; }
+
+        /* ============ 银行卡样式 ============ */
+        .bank-card-wrapper {
+            position: relative;
+            margin-bottom: 28px;
+        }
         .bank-card-full {
             background: linear-gradient(145deg, #e0c87c 0%, #c8a840 20%, #f0d890 40%, #b89030 60%, #d8b860 80%, #c8a840 100%);
-            border-radius:14px; padding:24px 28px; margin-bottom:28px;
+            border-radius:14px; padding:24px 28px;
             box-shadow:0 8px 30px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
             border:1px solid rgba(255,255,255,0.3); color:#1a1a22;
             position: relative; overflow: hidden;
+            transition: background 0.5s ease, border-color 0.5s ease;
+        }
+        /* 银灰色银行卡 */
+        .bank-card-full.silver {
+            background: linear-gradient(145deg, #d0d0d8 0%, #b8b8c4 20%, #e0e0e6 40%, #b0b0bc 60%, #c8c8d2 80%, #c0c0c8 100%);
+            border:1px solid rgba(200,200,210,0.4);
         }
         .bank-card-full::before {
             content: ''; position: absolute; top: -20%; right: -15%; width: 180px; height: 180px;
             background: rgba(255,255,255,0.1); border-radius: 50%; pointer-events: none;
         }
         .bank-card-header { display:flex; justify-content:space-between; margin-bottom:8px; position: relative; z-index: 1; }
-        .bank-card-logo { font-family:var(--font-display); font-size:15px; font-weight:700; color:#2a1f08; }
+        .bank-card-logo { font-family:var(--font-display); font-size:15px; font-weight:700; color:#2a1f08; transition: color 0.5s; }
+        .bank-card-full.silver .bank-card-logo { color:#3a3a46; }
+
         .bank-card-friend-code {
             font-family: var(--font-body); font-size:16px; color:#2a1f08; margin-bottom:12px;
             cursor:pointer; display:flex; align-items:center; gap:8px; position: relative; z-index: 1;
+            transition: color 0.5s;
         }
-        .bank-card-friend-code:hover { color:#000; }
+        .bank-card-full.silver .bank-card-friend-code { color:#3a3a46; }
+        .bank-card-friend-code .friend-label {
+            font-size:11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color:#3a2a10;
+            transition: color 0.5s;
+        }
+        .bank-card-full.silver .bank-card-friend-code .friend-label { color:#5a5a66; }
+        .bank-card-friend-code .friend-code-num {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+        /* 复制按钮 */
+        .copy-btn {
+            flex-shrink: 0;
+            padding: 5px 12px;
+            border-radius: 14px;
+            border: 1px solid #3a2a10;
+            background: rgba(58,42,16,0.08);
+            color: #3a2a10;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: var(--font-body);
+            white-space: nowrap;
+        }
+        .copy-btn:hover {
+            background: rgba(58,42,16,0.18);
+            border-color: #1a1008;
+            color: #1a1008;
+        }
+        .bank-card-full.silver .copy-btn {
+            border-color: #5a5a66;
+            background: rgba(90,90,102,0.08);
+            color: #5a5a66;
+        }
+        .bank-card-full.silver .copy-btn:hover {
+            background: rgba(90,90,102,0.18);
+            border-color: #3a3a46;
+            color: #3a3a46;
+        }
+
         .bank-card-details { display:flex; gap:30px; flex-wrap:wrap; position: relative; z-index: 1; }
-        .bank-card-detail-label { font-size:11px; color:#3a2a10; text-transform:uppercase; }
-        .bank-card-detail-value { font-family:var(--font-display); font-size:25px; font-weight:700; color:#1a1008; }
+        .bank-card-detail-label { font-size:11px; color:#3a2a10; text-transform:uppercase; transition: color 0.5s; }
+        .bank-card-full.silver .bank-card-detail-label { color:#5a5a66; }
+        .bank-card-detail-value { font-family:var(--font-display); font-size:25px; font-weight:700; color:#1a1008; transition: color 0.5s; }
+        .bank-card-full.silver .bank-card-detail-value { color:#2a2a36; }
         .bank-card-detail-value.large { font-size:32px; }
+
+        /* 银行卡切换按钮 */
+        .card-switch-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .card-switch-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+        .card-switch-btn.gold {
+            background: linear-gradient(135deg, #e0c87c, #b89030);
+        }
+        .card-switch-btn.silver-btn {
+            background: linear-gradient(135deg, #d0d0d8, #a0a0b0);
+        }
+        .card-switch-btn.active {
+            border-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+            transform: scale(1.2);
+        }
+        .card-switch-btn:hover {
+            transform: scale(1.1);
+        }
+        .card-switch-btn.active:hover {
+            transform: scale(1.2);
+        }
+
         .overview-list { display:flex; flex-direction:column; gap:7px; }
         .overview-item {
             display:flex; align-items:center; gap:14px; background:var(--surface); border-radius:8px;
@@ -253,10 +349,9 @@
             width:100%; padding:10px 12px; background:#1a1a20; border:1px solid #333; border-radius:4px;
             color:#fff; font-size:15px; font-family:var(--font-body);
         }
-        /* 修正1：保存按钮边框与取消按钮统一 */
         .btn-submit {
             width:100%; padding:12px; background:#ffffff; color:#000000;
-            border:1px solid #444; /* 与取消按钮边框一致 */
+            border:1px solid #444;
             border-radius:5px; font-size:15px; font-weight:700; cursor:pointer; margin-top:4px;
             transition: transform 0.1s;
         }
@@ -298,14 +393,25 @@
         <button class="tab-btn" data-tab="tab-recoup">💰 回血<span class="tab-badge" id="badgeRecoup">0</span></button>
     </nav>
     <div class="tab-content active" id="tab-overview">
-        <div class="bank-card-full">
-            <div class="bank-card-header"><span class="bank-card-logo">Collection Vault</span></div>
-            <div class="bank-card-friend-code" id="bankFriendCode"><span>好友编号</span> <span id="friendCodeDisplay">SW-0000-0000-0000</span> <span style="font-size:10px;color:#3a2a10;">点击复制</span></div>
-            <div class="bank-card-details">
-                <div><span class="bank-card-detail-label">总资产价值</span><span class="bank-card-detail-value large" id="bankTotalValue">¥0</span></div>
-                <div><span class="bank-card-detail-label">游戏数量</span><span class="bank-card-detail-value" id="bankGameCount">0</span></div>
-                <div><span class="bank-card-detail-label">设备数量</span><span class="bank-card-detail-value" id="bankDeviceCount">0</span></div>
-                <div><span class="bank-card-detail-label">整体日均成本</span><span class="bank-card-detail-value" id="bankAvgDaily">¥0</span></div>
+        <!-- 银行卡 + 切换按钮 -->
+        <div class="bank-card-wrapper">
+            <div class="bank-card-full" id="bankCardFull">
+                <div class="bank-card-header"><span class="bank-card-logo">Collection Vault</span></div>
+                <div class="bank-card-friend-code" id="bankFriendCode">
+                    <span class="friend-label">好友编号</span>
+                    <span class="friend-code-num" id="friendCodeDisplay">SW-0000-0000-0000</span>
+                    <button class="copy-btn" id="copyBtn">复制</button>
+                </div>
+                <div class="bank-card-details">
+                    <div><span class="bank-card-detail-label">总资产价值</span><span class="bank-card-detail-value large" id="bankTotalValue">¥0</span></div>
+                    <div><span class="bank-card-detail-label">游戏数量</span><span class="bank-card-detail-value" id="bankGameCount">0</span></div>
+                    <div><span class="bank-card-detail-label">设备数量</span><span class="bank-card-detail-value" id="bankDeviceCount">0</span></div>
+                    <div><span class="bank-card-detail-label">整体日均成本</span><span class="bank-card-detail-value" id="bankAvgDaily">¥0</span></div>
+                </div>
+            </div>
+            <div class="card-switch-row">
+                <button class="card-switch-btn gold active" id="switchGold" title="高级金色"></button>
+                <button class="card-switch-btn silver-btn" id="switchSilver" title="高级银灰"></button>
             </div>
         </div>
         <div class="overview-list" id="overviewList"></div>
@@ -373,7 +479,6 @@
             <div class="form-group"><label>购买日期</label><input type="date" id="inputDate"></div>
             <div class="form-group" id="formGroupVersion"><label>版本名称</label><input type="text" id="inputVersionText" placeholder="例如：限量版、首发版"></div>
             <div class="form-group"><label>封面图片</label>
-                <!-- 修正2：阻止文件选择按钮的事件冒泡，避免误触保存 -->
                 <input type="file" id="inputImage" accept="image/*" onclick="event.stopPropagation();">
                 <img class="image-preview-mini" id="imagePreview" style="display:none;width:100%;max-height:120px;object-fit:cover;border-radius:4px;margin-top:6px;">
             </div>
@@ -409,12 +514,14 @@
                 bankTotalValue: g('bankTotalValue'), bankGameCount: g('bankGameCount'), bankDeviceCount: g('bankDeviceCount'),
                 bankAvgDaily: g('bankAvgDaily'), badgeGames: g('badgeGames'), badgeDevices: g('badgeDevices'), badgeRecoup: g('badgeRecoup'),
                 recoupTotalSold: g('recoupTotalSold'), recoupTotalCost: g('recoupTotalCost'), recoupTotalPnL: g('recoupTotalPnL'),
-                recoupCount: g('recoupCount')
+                recoupCount: g('recoupCount'), bankCardFull: g('bankCardFull'), copyBtn: g('copyBtn'),
+                switchGold: g('switchGold'), switchSilver: g('switchSilver')
             };
 
-            const KEYS = { games: 'gcv5_g', devices: 'gcv5_d', recoup: 'gcv5_r', profile: 'gcv5_p', friendCode: 'gcv5_fc', theme: 'gcv5_theme' };
+            const KEYS = { games: 'gcv5_g', devices: 'gcv5_d', recoup: 'gcv5_r', profile: 'gcv5_p', friendCode: 'gcv5_fc', theme: 'gcv5_theme', cardStyle: 'gcv5_cardStyle' };
             let games = [], devices = [], recoup = [], editId = null, editMode = 'game', detailMode = 'game', detailId = null,
                 currentTab = 'tab-overview', friendCode = 'SW-0000-0000-0000', confirmCb = null;
+            let cardStyle = 'gold'; // 'gold' | 'silver'
 
             const defGames = [
                 { id:'g01', title:'塞尔达传说 王国之泪', purchasePrice:380, purchaseDate:'2023-05-12', version:'限量版', type:'physical', image:null },
@@ -453,6 +560,25 @@
                 try { const fc = localStorage.getItem(KEYS.friendCode); if(fc) friendCode=fc; } catch(e) {}
                 els.friendCodeDisplay.textContent = friendCode;
                 els.profileFriendCode.querySelector('span').textContent = friendCode;
+                // 加载银行卡样式偏好
+                try { const cs = localStorage.getItem(KEYS.cardStyle); if(cs === 'silver' || cs === 'gold') cardStyle = cs; } catch(e) {}
+                applyCardStyle();
+            }
+            function applyCardStyle() {
+                if (cardStyle === 'silver') {
+                    els.bankCardFull.classList.add('silver');
+                    els.switchGold.classList.remove('active');
+                    els.switchSilver.classList.add('active');
+                } else {
+                    els.bankCardFull.classList.remove('silver');
+                    els.switchGold.classList.add('active');
+                    els.switchSilver.classList.remove('active');
+                }
+            }
+            function setCardStyle(style) {
+                cardStyle = style;
+                try { localStorage.setItem(KEYS.cardStyle, style); } catch(e) {}
+                applyCardStyle();
             }
             function daysHeld(d) { return Math.max(1, Math.floor((new Date() - new Date(d)) / 86400000)); }
             function fmt(n) { return '¥' + parseFloat(n).toFixed(2); }
@@ -535,7 +661,6 @@
                         const inner=document.createElement('div'); inner.className='game-card-inner';
                         const badge=document.createElement('span'); badge.className='game-card-type-badge type-badge-'+(game.type||'physical'); badge.textContent=tLabel(game.type); inner.appendChild(badge);
                         const img=document.createElement('img'); img.className='game-card-cover';
-                        // 直接使用图片数据，如果没有则使用占位图
                         img.src=(game.image&&game.image.startsWith('data:'))?game.image:placeholderCover(game.title);
                         img.alt=game.title; img.loading='lazy';
                         inner.appendChild(img); card.appendChild(inner);
@@ -679,7 +804,20 @@
             els.avatarFileInput.addEventListener('change', function(){ const f=this.files[0]; if(!f) return; const r=new FileReader(); r.onload=function(e){ const img=document.createElement('img'); img.src=e.target.result; img.style.cssText='width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;'; els.avatarContainer.innerHTML=''; els.avatarContainer.appendChild(img); const hint=document.createElement('span'); hint.className='avatar-edit-hint'; hint.textContent='更换头像'; els.avatarContainer.appendChild(hint); saveProfile(); showToast('头像已更新'); }; r.readAsDataURL(f); this.value=''; });
             els.profileId.addEventListener('click', e=>{ e.stopPropagation(); const nn=prompt('设置收藏家昵称：',els.profileId.textContent); if(nn!==null&&nn.trim()){ els.profileId.textContent=nn.trim(); saveProfile(); showToast('昵称已更新'); } });
             function copyFriendCode(){ const code=els.friendCodeDisplay.textContent; if(navigator.clipboard) navigator.clipboard.writeText(code).then(()=>showToast('已复制：'+code)); else { const ta=document.createElement('textarea'); ta.value=code; ta.style.cssText='position:fixed;opacity:0;'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('已复制：'+code); } }
-            [els.profileFriendCode, els.bankFriendCode].forEach(el=>{ el.addEventListener('click', e=>{ e.stopPropagation(); copyFriendCode(); }); el.addEventListener('dblclick', e=>{ e.stopPropagation(); const nc=prompt('编辑好友编号：',friendCode); if(nc!==null&&nc.trim()){ friendCode=nc.trim(); els.friendCodeDisplay.textContent=friendCode; els.profileFriendCode.querySelector('span').textContent=friendCode; try{localStorage.setItem(KEYS.friendCode,friendCode);}catch(e){} showToast('好友编号已更新'); } }); });
+
+            // 复制按钮点击事件
+            els.copyBtn.addEventListener('click', e => { e.stopPropagation(); copyFriendCode(); });
+            // 好友编号行点击复制（保留）
+            els.bankFriendCode.addEventListener('click', e => { e.stopPropagation(); copyFriendCode(); });
+            els.bankFriendCode.addEventListener('dblclick', e => { e.stopPropagation(); const nc=prompt('编辑好友编号：',friendCode); if(nc!==null&&nc.trim()){ friendCode=nc.trim(); els.friendCodeDisplay.textContent=friendCode; els.profileFriendCode.querySelector('span').textContent=friendCode; try{localStorage.setItem(KEYS.friendCode,friendCode);}catch(e){} showToast('好友编号已更新'); } });
+            // profile好友编号
+            els.profileFriendCode.addEventListener('click', e=>{ e.stopPropagation(); copyFriendCode(); });
+            els.profileFriendCode.addEventListener('dblclick', e=>{ e.stopPropagation(); const nc=prompt('编辑好友编号：',friendCode); if(nc!==null&&nc.trim()){ friendCode=nc.trim(); els.friendCodeDisplay.textContent=friendCode; els.profileFriendCode.querySelector('span').textContent=friendCode; try{localStorage.setItem(KEYS.friendCode,friendCode);}catch(e){} showToast('好友编号已更新'); } });
+
+            // 银行卡切换按钮
+            els.switchGold.addEventListener('click', e => { e.stopPropagation(); setCardStyle('gold'); });
+            els.switchSilver.addEventListener('click', e => { e.stopPropagation(); setCardStyle('silver'); });
+
             function loadProfile(){ try{ const r=localStorage.getItem(KEYS.profile); if(r){ const p=JSON.parse(r); if(p.nickname) els.profileId.textContent=p.nickname; if(p.avatar){ const img=document.createElement('img'); img.src=p.avatar; img.style.cssText='width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;'; els.avatarContainer.innerHTML=''; els.avatarContainer.appendChild(img); const hint=document.createElement('span'); hint.className='avatar-edit-hint'; hint.textContent='更换头像'; els.avatarContainer.appendChild(hint); } } }catch(e){} }
             function saveProfile(){ try{ localStorage.setItem(KEYS.profile, JSON.stringify({nickname:els.profileId.textContent, avatar:els.avatarContainer.querySelector('img')?els.avatarContainer.querySelector('img').src:null})); }catch(e){} }
             function loadTheme(){ try{ if(localStorage.getItem(KEYS.theme)==='light') document.body.classList.add('light-mode'); }catch(e){} }
@@ -691,7 +829,7 @@
             init();
             window.addEventListener('storage', e=>{ if([KEYS.games,KEYS.devices,KEYS.recoup,KEYS.friendCode].includes(e.key)){ loadAll(); refreshAll(); } });
             window.resetCollection = function(){ if(confirm('确定重置所有数据？')){ Object.values(KEYS).forEach(k=>localStorage.removeItem(k)); location.reload(); } };
-            console.log('收藏馆 v5.2 已启动 - 细节修复');
+            console.log(' 收藏馆 v5.3 已启动 - 银行卡优化');
         })();
     </script>
 </body>
