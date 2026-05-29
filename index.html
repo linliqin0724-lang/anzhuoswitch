@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>游戏卡带收藏馆</title>
+    <title>Private space</title>
     <style>
         :root {
             --bg: #0a0a0c;
@@ -76,6 +76,7 @@
             overflow: hidden;
             cursor: pointer;
             transition: border-color 0.3s;
+            position: relative;
         }
         .profile-avatar:hover {
             border-color: var(--silver-light);
@@ -89,6 +90,24 @@
         }
         .profile-avatar:hover img {
             filter: grayscale(0%);
+        }
+        .profile-avatar .avatar-edit-hint {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: #ccc;
+            font-size: 8px;
+            text-align: center;
+            padding: 3px 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+            letter-spacing: 0.04em;
+            pointer-events: none;
+        }
+        .profile-avatar:hover .avatar-edit-hint {
+            opacity: 1;
         }
         .profile-info {
             display: flex;
@@ -113,65 +132,24 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
         }
-
-        /* 迷你银行卡 */
-        .mini-bank-card {
+        .profile-friend-code {
+            font-size: 10px;
+            color: var(--silver-dark);
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+            cursor: pointer;
+            transition: color 0.3s;
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #2a2a34 0%, #1e1e28 40%, #252530 100%);
-            border: 1px solid #3a3a48;
-            border-radius: 10px;
-            padding: 10px 16px;
-            margin-left: auto;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            flex-shrink: 0;
+            gap: 4px;
         }
-        .mini-bank-card:hover {
-            border-color: var(--silver-dark);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-            transform: translateY(-1px);
+        .profile-friend-code:hover {
+            color: var(--silver-light);
         }
-        .mini-bank-chip {
-            width: 24px;
-            height: 18px;
-            background: linear-gradient(135deg, #c8c8d0, #909098);
-            border-radius: 3px;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .mini-bank-chip::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 3px;
-            right: 3px;
-            bottom: 2px;
-            border: 1px solid #707078;
-            border-radius: 1px;
-        }
-        .mini-bank-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0px;
-        }
-        .mini-bank-label {
+        .profile-friend-code .copy-icon {
             font-size: 9px;
-            letter-spacing: 0.1em;
-            color: var(--silver-dark);
-            text-transform: uppercase;
+            opacity: 0.6;
         }
-        .mini-bank-value {
-            font-family: var(--font-display);
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: 0.03em;
-        }
-
         @media (max-width: 640px) {
             .profile-header {
                 padding: 16px 12px 10px;
@@ -185,14 +163,6 @@
             }
             .profile-id {
                 font-size: 18px;
-            }
-            .mini-bank-card {
-                padding: 8px 12px;
-                gap: 6px;
-                margin-left: 0;
-            }
-            .mini-bank-value {
-                font-size: 15px;
             }
         }
 
@@ -260,14 +230,14 @@
                 -webkit-overflow-scrolling: touch;
             }
             .tab-btn {
-                padding: 10px 14px;
+                padding: 10px 12px;
                 font-size: 12px;
                 letter-spacing: 0.04em;
             }
             .tab-badge {
                 font-size: 9px;
                 padding: 1px 6px;
-                margin-left: 3px;
+                margin-left: 2px;
             }
         }
 
@@ -289,7 +259,7 @@
             }
         }
 
-        /* ============ 书架区域（Tab1） ============ */
+        /* ============ 书架区域（Tab1 游戏） ============ */
         .shelf-section {
             margin-bottom: 40px;
             position: relative;
@@ -319,6 +289,10 @@
         .type-dot.digital {
             background: var(--silver-dark);
             box-shadow: 0 0 6px rgba(140, 140, 150, 0.4);
+        }
+        .type-dot.steam {
+            background: #4a8ec8;
+            box-shadow: 0 0 6px rgba(74, 142, 200, 0.5);
         }
         .shelf-row {
             display: flex;
@@ -428,6 +402,12 @@
             background: rgba(40, 40, 50, 0.85);
             color: #a0a0b0;
             border: 1px solid #3a3a48;
+            font-style: italic;
+        }
+        .type-badge-steam {
+            background: rgba(30, 50, 70, 0.85);
+            color: #8ab8e0;
+            border: 1px solid #3a6080;
             font-style: italic;
         }
         .game-card-cover {
@@ -598,7 +578,7 @@
             }
         }
 
-        /* ============ 银行卡设计（Tab2） ============ */
+        /* ============ 银行卡设计（总览Tab） ============ */
         .bank-card-full {
             background: linear-gradient(145deg, #d8d8e0 0%, #c0c0ca 15%, #e0e0e6 30%, #b8b8c4 50%, #d0d0d8 70%, #c8c8d2 100%);
             border-radius: 14px;
@@ -639,6 +619,8 @@
             margin-bottom: 10px;
             position: relative;
             z-index: 1;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .bank-card-logo {
             font-family: var(--font-display);
@@ -663,15 +645,39 @@
             border: 1.5px solid #888894;
             border-radius: 2px;
         }
-        .bank-card-number {
+        .bank-card-friend-code {
             font-family: 'Courier New', 'SF Mono', monospace;
-            font-size: 20px;
-            letter-spacing: 0.14em;
-            color: #2a2a34;
-            margin-bottom: 14px;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            color: #3a3a44;
             position: relative;
             z-index: 1;
-            font-weight: 500;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .bank-card-friend-code:hover {
+            color: #1a1a28;
+        }
+        .bank-card-friend-code .friend-label {
+            font-family: var(--font-body);
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            color: #5a5a66;
+            text-transform: uppercase;
+        }
+        .bank-card-friend-code .copy-hint {
+            font-size: 9px;
+            color: #6a6a78;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .bank-card-friend-code:hover .copy-hint {
+            opacity: 1;
         }
         .bank-card-details {
             display: flex;
@@ -707,8 +713,8 @@
                 border-radius: 10px;
                 margin-bottom: 20px;
             }
-            .bank-card-number {
-                font-size: 16px;
+            .bank-card-friend-code {
+                font-size: 12px;
             }
             .bank-card-detail-value {
                 font-size: 18px;
@@ -721,7 +727,86 @@
             }
         }
 
-        /* ============ 回血列表（Tab3） ============ */
+        /* ============ 总览列表 ============ */
+        .overview-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .overview-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 12px 16px;
+            border: 1px solid #2a2a36;
+            transition: all 0.25s;
+            cursor: pointer;
+            flex-wrap: wrap;
+        }
+        .overview-item:hover {
+            border-color: #444458;
+            background: var(--surface-light);
+        }
+        .overview-item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: var(--surface-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .overview-item-info {
+            flex: 1;
+            min-width: 100px;
+        }
+        .overview-item-title {
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.03em;
+            font-size: 14px;
+        }
+        .overview-item-date {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+        .overview-item-price {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 0.03em;
+            flex-shrink: 0;
+        }
+        .overview-item-type {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+            padding: 3px 8px;
+            background: var(--surface-lighter);
+            border-radius: 3px;
+        }
+        @media (max-width: 640px) {
+            .overview-item {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+            .overview-item-title {
+                font-size: 13px;
+            }
+            .overview-item-price {
+                font-size: 14px;
+            }
+        }
+
+        /* ============ 回血列表（Tab4） ============ */
         .recoup-summary {
             background: var(--surface);
             border-radius: 10px;
@@ -1323,59 +1408,47 @@
 
     <!-- 顶部个人主页 -->
     <header class="profile-header">
-        <div class="profile-avatar" id="avatarContainer" title="点击编辑昵称">
+        <div class="profile-avatar" id="avatarContainer" title="点击更换头像">
             <span class="avatar-placeholder">🎮</span>
+            <span class="avatar-edit-hint">更换头像</span>
         </div>
         <div class="profile-info">
             <div class="profile-id" id="profileId" title="点击编辑昵称">收藏家</div>
             <div class="profile-subtitle">GAME CARD COLLECTION</div>
-        </div>
-        <div class="mini-bank-card" id="miniBankCard" title="查看资产总览">
-            <div class="mini-bank-chip"></div>
-            <div class="mini-bank-info">
-                <span class="mini-bank-label">总资产价值</span>
-                <span class="mini-bank-value" id="miniBankValue">¥0</span>
+            <div class="profile-friend-code" id="profileFriendCode" title="点击复制好友编号">
+                <span>SW-0000-0000-0000</span>
+                <span class="copy-icon">📋</span>
             </div>
         </div>
     </header>
 
     <!-- Tab导航 -->
     <nav class="tab-nav">
-        <button class="tab-btn active" data-tab="tab-shelf">📚 书架<span class="tab-badge" id="badgeShelf">0</span></button>
+        <button class="tab-btn active" data-tab="tab-overview">📊 总览</button>
+        <button class="tab-btn" data-tab="tab-games">📚 游戏<span class="tab-badge" id="badgeGames">0</span></button>
         <button class="tab-btn" data-tab="tab-devices">🎮 设备<span class="tab-badge" id="badgeDevices">0</span></button>
         <button class="tab-btn" data-tab="tab-recoup">💰 回血<span class="tab-badge" id="badgeRecoup">0</span></button>
     </nav>
 
-    <!-- Tab1: 书架 -->
-    <div class="tab-content active" id="tab-shelf">
-        <div class="shelf-section" id="shelfPhysical">
-            <div class="shelf-section-label"><span class="type-dot physical"></span>实体版卡带</div>
-            <div class="shelf-row" id="shelfRowPhysical"></div>
-            <div class="shelf-board"></div>
-        </div>
-        <div class="shelf-section" id="shelfDigital">
-            <div class="shelf-section-label"><span class="type-dot digital"></span>数字版游戏</div>
-            <div class="shelf-row" id="shelfRowDigital"></div>
-            <div class="shelf-board"></div>
-        </div>
-        <div class="empty-hint" id="shelfEmpty" style="display:none;">书架空空如也<br>点击右下角 + 添加你的第一张游戏卡带</div>
-    </div>
-
-    <!-- Tab2: 设备 -->
-    <div class="tab-content" id="tab-devices">
+    <!-- Tab0: 总览 -->
+    <div class="tab-content active" id="tab-overview">
         <div class="bank-card-full" id="bankCardFull">
             <div class="bank-card-header">
                 <span class="bank-card-logo">Collection Vault</span>
                 <div class="bank-card-chip"></div>
             </div>
-            <div class="bank-card-number">••••  TOTAL  ASSETS</div>
+            <div class="bank-card-friend-code" id="bankFriendCode" title="点击复制好友编号">
+                <span class="friend-label">好友编号</span>
+                <span id="friendCodeDisplay">SW-0000-0000-0000</span>
+                <span class="copy-hint">点击复制</span>
+            </div>
             <div class="bank-card-details">
                 <div class="bank-card-detail-item">
-                    <span class="bank-card-detail-label">总价值</span>
+                    <span class="bank-card-detail-label">总资产价值</span>
                     <span class="bank-card-detail-value large" id="bankTotalValue">¥0</span>
                 </div>
                 <div class="bank-card-detail-item">
-                    <span class="bank-card-detail-label">卡带数量</span>
+                    <span class="bank-card-detail-label">游戏数量</span>
                     <span class="bank-card-detail-value" id="bankGameCount">0</span>
                 </div>
                 <div class="bank-card-detail-item">
@@ -1388,6 +1461,32 @@
                 </div>
             </div>
         </div>
+        <div class="overview-list" id="overviewList"></div>
+        <div class="empty-hint" id="overviewEmpty" style="display:none;">暂无任何收藏<br>去游戏或设备页面添加吧</div>
+    </div>
+
+    <!-- Tab1: 游戏 -->
+    <div class="tab-content" id="tab-games">
+        <div class="shelf-section" id="shelfPhysical">
+            <div class="shelf-section-label"><span class="type-dot physical"></span>实体版卡带</div>
+            <div class="shelf-row" id="shelfRowPhysical"></div>
+            <div class="shelf-board"></div>
+        </div>
+        <div class="shelf-section" id="shelfDigital">
+            <div class="shelf-section-label"><span class="type-dot digital"></span>数字版游戏</div>
+            <div class="shelf-row" id="shelfRowDigital"></div>
+            <div class="shelf-board"></div>
+        </div>
+        <div class="shelf-section" id="shelfSteam">
+            <div class="shelf-section-label"><span class="type-dot steam"></span>Steam 游戏</div>
+            <div class="shelf-row" id="shelfRowSteam"></div>
+            <div class="shelf-board"></div>
+        </div>
+        <div class="empty-hint" id="gamesEmpty" style="display:none;">游戏库空空如也<br>点击右下角 + 添加你的第一张游戏</div>
+    </div>
+
+    <!-- Tab2: 设备 -->
+    <div class="tab-content" id="tab-devices">
         <div class="device-grid" id="deviceGrid"></div>
         <div class="empty-hint" id="deviceEmpty" style="display:none;">暂无设备记录<br>点击右下角 + 添加主机或配件</div>
     </div>
@@ -1468,6 +1567,7 @@
                 <select id="inputType">
                     <option value="physical">📦 实体版</option>
                     <option value="digital">☁️ 数字版</option>
+                    <option value="steam">💻 Steam</option>
                 </select>
             </div>
             <div class="form-group" id="formGroupDeviceType" style="display:none;">
@@ -1510,12 +1610,16 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
+    <!-- 隐藏的文件上传input用于头像 -->
+    <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
+
     <script>
         (function() {
             // ============ DOM引用 ============
             const shelfRowPhysical = document.getElementById('shelfRowPhysical');
             const shelfRowDigital = document.getElementById('shelfRowDigital');
-            const shelfEmpty = document.getElementById('shelfEmpty');
+            const shelfRowSteam = document.getElementById('shelfRowSteam');
+            const gamesEmpty = document.getElementById('gamesEmpty');
             const deviceGrid = document.getElementById('deviceGrid');
             const deviceEmpty = document.getElementById('deviceEmpty');
             const recoupList = document.getElementById('recoupList');
@@ -1525,6 +1629,8 @@
             const recoupTotalCost = document.getElementById('recoupTotalCost');
             const recoupTotalPnL = document.getElementById('recoupTotalPnL');
             const recoupCount = document.getElementById('recoupCount');
+            const overviewList = document.getElementById('overviewList');
+            const overviewEmpty = document.getElementById('overviewEmpty');
 
             const modalOverlay = document.getElementById('modalOverlay');
             const modalCoverImg = document.getElementById('modalCoverImg');
@@ -1566,29 +1672,34 @@
             const toast = document.getElementById('toast');
             const profileId = document.getElementById('profileId');
             const avatarContainer = document.getElementById('avatarContainer');
-            const miniBankValue = document.getElementById('miniBankValue');
+            const avatarFileInput = document.getElementById('avatarFileInput');
+            const profileFriendCode = document.getElementById('profileFriendCode');
+            const bankFriendCode = document.getElementById('bankFriendCode');
+            const friendCodeDisplay = document.getElementById('friendCodeDisplay');
             const bankTotalValue = document.getElementById('bankTotalValue');
             const bankGameCount = document.getElementById('bankGameCount');
             const bankDeviceCount = document.getElementById('bankDeviceCount');
             const bankAvgDaily = document.getElementById('bankAvgDaily');
-            const badgeShelf = document.getElementById('badgeShelf');
+            const badgeGames = document.getElementById('badgeGames');
             const badgeDevices = document.getElementById('badgeDevices');
             const badgeRecoup = document.getElementById('badgeRecoup');
 
             // ============ 数据 ============
-            const STORAGE_GAMES = 'game_collection_data_v2';
-            const STORAGE_DEVICES = 'device_collection_data';
-            const STORAGE_RECOUP = 'recoup_collection_data';
-            const STORAGE_PROFILE = 'game_collection_profile';
+            const STORAGE_GAMES = 'game_collection_data_v3';
+            const STORAGE_DEVICES = 'device_collection_data_v3';
+            const STORAGE_RECOUP = 'recoup_collection_data_v3';
+            const STORAGE_PROFILE = 'game_collection_profile_v2';
+            const STORAGE_FRIEND_CODE = 'friend_code_data';
 
             let gamesData = [];
             let devicesData = [];
             let recoupData = [];
             let editingId = null;
-            let editingMode = 'game'; // 'game' | 'device'
+            let editingMode = 'game';
             let currentDetailMode = 'game';
             let currentDetailId = null;
-            let currentTab = 'tab-shelf';
+            let currentTab = 'tab-overview';
+            let friendCode = 'SW-0000-0000-0000';
 
             const defaultGames = [
                 { id: 'g01', title: '塞尔达传说 王国之泪', purchasePrice: 380, purchaseDate: '2023-05-12',
@@ -1607,27 +1718,46 @@
                     type: 'digital', image: null },
                 { id: 'g08', title: '异度神剑3', purchasePrice: 360, purchaseDate: '2024-06-01', version: 'red',
                     type: 'physical', image: null },
+                { id: 'g09', title: 'Hades', purchasePrice: 78, purchaseDate: '2024-03-15', version: 'blue',
+                    type: 'steam', image: null },
+                { id: 'g10', title: 'Stardew Valley', purchasePrice: 48, purchaseDate: '2023-11-10', version: 'green',
+                    type: 'steam', image: null },
             ];
             const defaultDevices = [
                 { id: 'd01', title: 'Switch OLED 白色', purchasePrice: 2100, purchaseDate: '2023-01-15',
                     deviceType: 'switch-oled', image: null },
-                { id: 'd02', title: 'Pro 手柄 黑色', purchasePrice: 429, purchaseDate: '2023-03-10', deviceType: 'pro-controller',
-                    image: null },
+                { id: 'd02', title: 'Pro 手柄 黑色', purchasePrice: 429, purchaseDate: '2023-03-10',
+                deviceType: 'pro-controller', image: null },
             ];
             const defaultRecoup = [
                 { id: 'r01', title: '宝可梦 盾', buyPrice: 300, sellPrice: 260, sellDate: '2024-02-20', image: null },
                 { id: 'r02', title: '马力欧网球', buyPrice: 280, sellPrice: 310, sellDate: '2024-05-10', image: null },
             ];
 
+            // ============ 数据加载（修复Bug2：只在无数据时使用默认值，不强制覆盖） ============
             function loadData(key, fallback) {
                 try {
                     const raw = localStorage.getItem(key);
-                    if (raw) {
+                    if (raw !== null && raw !== undefined) {
                         const data = JSON.parse(raw);
                         if (Array.isArray(data) && data.length > 0) return data;
+                        // 如果解析出来是空数组，也返回空数组（用户可能手动清空了）
+                        if (Array.isArray(data) && data.length === 0) return [];
                     }
-                } catch (e) {}
-                return JSON.parse(JSON.stringify(fallback));
+                    // 只有当本地存储完全不存在该key时，才返回fallback
+                    if (raw === null || raw === undefined) {
+                        const fb = JSON.parse(JSON.stringify(fallback));
+                        // 首次使用时保存默认数据
+                        if (fb.length > 0) {
+                            try { localStorage.setItem(key, JSON.stringify(fb)); } catch (e) {}
+                        }
+                        return fb;
+                    }
+                    return [];
+                } catch (e) {
+                    const fb = JSON.parse(JSON.stringify(fallback));
+                    return fb;
+                }
             }
 
             function saveData(key, data) {
@@ -1638,6 +1768,7 @@
                 gamesData = loadData(STORAGE_GAMES, defaultGames);
                 devicesData = loadData(STORAGE_DEVICES, defaultDevices);
                 recoupData = loadData(STORAGE_RECOUP, defaultRecoup);
+                // 规范化数据
                 gamesData.forEach((g, i) => { if (!g.id) g.id = 'g' + Date.now() + i; if (!g.type) g.type =
                         'physical'; if (!g.version) g.version = 'blue';
                     g.purchasePrice = parseFloat(g.purchasePrice) || 0; });
@@ -1647,6 +1778,13 @@
                 recoupData.forEach((r, i) => { if (!r.id) r.id = 'r' + Date.now() + i;
                     r.buyPrice = parseFloat(r.buyPrice) || 0;
                     r.sellPrice = parseFloat(r.sellPrice) || 0; });
+                // 加载好友编号
+                try {
+                    const fc = localStorage.getItem(STORAGE_FRIEND_CODE);
+                    if (fc) friendCode = fc;
+                } catch (e) {}
+                friendCodeDisplay.textContent = friendCode;
+                profileFriendCode.querySelector('span').textContent = friendCode;
             }
 
             function saveAll() {
@@ -1680,6 +1818,24 @@
                     return 'badge-green';
                 default:
                     return 'badge-blue'; } }
+
+            function getTypeLabel(t) { switch (t) { case 'physical':
+                    return '实体版';
+                case 'digital':
+                    return '数字版';
+                case 'steam':
+                    return 'Steam';
+                default:
+                    return '实体版'; } }
+
+            function getTypeBadgeClass(t) { switch (t) { case 'physical':
+                    return 'type-badge-physical';
+                case 'digital':
+                    return 'type-badge-digital';
+                case 'steam':
+                    return 'type-badge-steam';
+                default:
+                    return 'type-badge-physical'; } }
 
             function getDeviceTypeLabel(t) { switch (t) { case 'switch':
                     return 'Switch 主机';
@@ -1772,7 +1928,6 @@
                 const totalGameValue = gamesData.reduce((s, g) => s + (parseFloat(g.purchasePrice) || 0), 0);
                 const totalDeviceValue = devicesData.reduce((s, d) => s + (parseFloat(d.purchasePrice) || 0), 0);
                 const totalValue = totalGameValue + totalDeviceValue;
-                miniBankValue.textContent = formatCurrency(totalValue);
                 bankTotalValue.textContent = formatCurrency(totalValue);
                 bankGameCount.textContent = gamesData.length;
                 bankDeviceCount.textContent = devicesData.length;
@@ -1781,10 +1936,9 @@
                 allItems.forEach(item => { totalWeightedDays += getDaysHeld(item.purchaseDate); });
                 const avgD = totalWeightedDays > 0 ? totalValue / totalWeightedDays : 0;
                 bankAvgDaily.textContent = formatCurrency(avgD);
-                badgeShelf.textContent = gamesData.length;
+                badgeGames.textContent = gamesData.length;
                 badgeDevices.textContent = devicesData.length;
                 badgeRecoup.textContent = recoupData.length;
-                // 回血统计
                 const totalSold = recoupData.reduce((s, r) => s + (parseFloat(r.sellPrice) || 0), 0);
                 const totalCost = recoupData.reduce((s, r) => s + (parseFloat(r.buyPrice) || 0), 0);
                 const totalPnL = totalSold - totalCost;
@@ -1796,10 +1950,52 @@
                 recoupCount.textContent = recoupData.length;
             }
 
-            // ============ 渲染书架 ============
-            function renderShelf() {
+            // ============ 渲染总览 ============
+            function renderOverview() {
+                overviewList.innerHTML = '';
+                const allItems = [
+                    ...gamesData.map(g => ({ ...g, itemType: 'game' })),
+                    ...devicesData.map(d => ({ ...d, itemType: 'device' })),
+                ];
+                // 按购买日期倒序
+                allItems.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+                if (allItems.length === 0) {
+                    overviewEmpty.style.display = 'block';
+                } else {
+                    overviewEmpty.style.display = 'none';
+                    allItems.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'overview-item';
+                        const typeLabel = item.itemType === 'game' ? getTypeLabel(item.type || 'physical') :
+                            getDeviceTypeLabel(item.deviceType || 'switch');
+                        const icon = item.itemType === 'game' ? (item.type === 'steam' ? '💻' : item
+                            .type === 'digital' ? '☁️' : '📦') : '🎮';
+                        div.innerHTML = `
+                            <div class="overview-item-icon">${icon}</div>
+                            <div class="overview-item-info">
+                                <div class="overview-item-title">${item.title}</div>
+                                <div class="overview-item-date">${item.purchaseDate}</div>
+                            </div>
+                            <span class="overview-item-type">${typeLabel}</span>
+                            <span class="overview-item-price">${formatCurrency(item.purchasePrice)}</span>
+                        `;
+                        div.addEventListener('click', () => {
+                            if (item.itemType === 'game') {
+                                openDetailGame(item.id);
+                            } else {
+                                openDetailDevice(item.id);
+                            }
+                        });
+                        overviewList.appendChild(div);
+                    });
+                }
+            }
+
+            // ============ 渲染游戏书架 ============
+            function renderGames() {
                 const physical = gamesData.filter(g => g.type === 'physical');
                 const digital = gamesData.filter(g => g.type === 'digital');
+                const steam = gamesData.filter(g => g.type === 'steam');
 
                 function renderRow(container, games) {
                     container.innerHTML = '';
@@ -1815,9 +2011,8 @@
                         const inner = document.createElement('div');
                         inner.className = 'game-card-inner tag-' + (game.version || 'blue');
                         const typeBadge = document.createElement('span');
-                        typeBadge.className = 'game-card-type-badge ' + (game.type === 'physical' ?
-                            'type-badge-physical' : 'type-badge-digital');
-                        typeBadge.textContent = game.type === 'physical' ? '实体' : '数字';
+                        typeBadge.className = 'game-card-type-badge ' + getTypeBadgeClass(game.type);
+                        typeBadge.textContent = getTypeLabel(game.type);
                         inner.appendChild(typeBadge);
                         const img = document.createElement('img');
                         img.className = 'game-card-cover';
@@ -1840,18 +2035,24 @@
                         titleTag.className = 'game-card-title-tag';
                         titleTag.textContent = game.title;
                         card.appendChild(titleTag);
-                        card.addEventListener('click', () => openDetailGame(game.id));
+                        card.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            openDetailGame(game.id);
+                        });
                         container.appendChild(card);
                     });
                 }
                 renderRow(shelfRowPhysical, physical);
                 renderRow(shelfRowDigital, digital);
+                renderRow(shelfRowSteam, steam);
                 const total = gamesData.length;
-                shelfEmpty.style.display = total === 0 ? 'block' : 'none';
+                gamesEmpty.style.display = total === 0 ? 'block' : 'none';
                 document.getElementById('shelfPhysical').style.display = physical.length === 0 && digital.length >
-                    0 ? 'none' : '';
+                    0 && steam.length > 0 ? 'none' : '';
                 document.getElementById('shelfDigital').style.display = digital.length === 0 && physical.length >
-                    0 ? 'none' : '';
+                    0 && steam.length > 0 ? 'none' : '';
+                document.getElementById('shelfSteam').style.display = steam.length === 0 && physical.length > 0 &&
+                    digital.length > 0 ? 'none' : '';
             }
 
             // ============ 渲染设备 ============
@@ -1883,7 +2084,10 @@
                         tt.className = 'device-card-title-tag';
                         tt.textContent = dev.title;
                         card.appendChild(tt);
-                        card.addEventListener('click', () => openDetailDevice(dev.id));
+                        card.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            openDetailDevice(dev.id);
+                        });
                         deviceGrid.appendChild(card);
                     });
                 }
@@ -1914,17 +2118,25 @@
                                 <span class="recoup-pnl ${pnl > 0 ? 'profit' : pnl < 0 ? 'loss' : 'zero'}">${pnl >= 0 ? '+' : ''}${formatCurrency(pnl)}</span>
                             </div>
                         `;
-                        item.addEventListener('click', () => {
-                            if (confirm(`删除此回血记录：${r.title}？`)) {
-                                recoupData = recoupData.filter(x => x.id !== r.id);
-                                saveAll();
-                                renderRecoup();
-                                updateAllStats();
-                                showToast('记录已删除');
-                            }
+                        item.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            // 修复Bug1：使用独立的删除确认，不触发其他弹窗
+                            deleteRecoupItem(r.id);
                         });
                         recoupList.appendChild(item);
                     });
+                }
+            }
+
+            // 独立的回血删除函数
+            function deleteRecoupItem(id) {
+                if (confirm('确定要删除此回血记录吗？')) {
+                    recoupData = recoupData.filter(x => x.id !== id);
+                    saveAll();
+                    renderRecoup();
+                    updateAllStats();
+                    renderOverview();
+                    showToast('记录已删除');
                 }
             }
 
@@ -1939,8 +2151,7 @@
                 modalDate.textContent = game.purchaseDate;
                 const days = getDaysHeld(game.purchaseDate);
                 modalDays.textContent = days + ' 天';
-                modalVersion.textContent = getVersionLabel(game.version) + ' · ' + (game.type === 'physical' ? '实体版' :
-                    '数字版');
+                modalVersion.textContent = getVersionLabel(game.version) + ' · ' + getTypeLabel(game.type);
                 modalVersionBadge.textContent = getVersionLabel(game.version);
                 modalVersionBadge.className = 'modal-version-badge ' + getVersionBadgeClass(game.version);
                 modalCoverImg.style.display = 'none';
@@ -2002,25 +2213,34 @@
                 document.body.style.overflow = '';
                 currentDetailId = null;
             }
-            modalClose.addEventListener('click', closeDetail);
+            modalClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeDetail();
+            });
             modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeDetail(); });
             document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (modalOverlay.classList
                         .contains('active')) closeDetail(); if (formOverlay.classList.contains('active'))
                         closeForm(); } });
 
-            btnEditGame.addEventListener('click', () => {
+            // 修复Bug1：所有删除/编辑按钮使用stopPropagation防止事件冒泡
+            btnEditGame.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const game = gamesData.find(g => g.id === currentDetailId);
                 if (game) { closeDetail();
                     openFormForEditGame(game); }
             });
-            btnDeleteGame.addEventListener('click', () => {
-                if (confirm('确定删除此游戏？')) { gamesData = gamesData.filter(g => g.id !== currentDetailId);
+            btnDeleteGame.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (currentDetailId && confirm('确定删除此游戏？此操作不可撤销。')) {
+                    gamesData = gamesData.filter(g => g.id !== currentDetailId);
                     saveAll();
                     closeDetail();
                     refreshAll();
-                    showToast('已删除'); }
+                    showToast('已删除');
+                }
             });
-            btnSellGame.addEventListener('click', () => {
+            btnSellGame.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const game = gamesData.find(g => g.id === currentDetailId);
                 if (!game) return;
                 const sellPrice = prompt(`卖出"${game.title}"\n原购买价格：${formatCurrency(game.purchasePrice)}\n请输入卖出价格：`,
@@ -2042,17 +2262,21 @@
                     showToast('已记录回血！');
                 }
             });
-            btnEditDevice.addEventListener('click', () => {
+            btnEditDevice.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const dev = devicesData.find(d => d.id === currentDetailId);
                 if (dev) { closeDetail();
                     openFormForEditDevice(dev); }
             });
-            btnDeleteDevice.addEventListener('click', () => {
-                if (confirm('确定删除此设备？')) { devicesData = devicesData.filter(d => d.id !== currentDetailId);
+            btnDeleteDevice.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (currentDetailId && confirm('确定删除此设备？此操作不可撤销。')) {
+                    devicesData = devicesData.filter(d => d.id !== currentDetailId);
                     saveAll();
                     closeDetail();
                     refreshAll();
-                    showToast('已删除'); }
+                    showToast('已删除');
+                }
             });
 
             // ============ 表单 ============
@@ -2073,9 +2297,6 @@
                     formGroupDeviceType.style.display = 'none';
                     formGroupVersion.style.display = 'none';
                     inputTitle.placeholder = '输入游戏/物品名称';
-                    document.querySelector('#formGroupVersion').previousElementSibling &&
-                        (document.querySelector('#formGroupVersion').previousElementSibling.textContent =
-                            '');
                 } else {
                     editingMode = 'game';
                     formTitle.textContent = '添加新游戏';
@@ -2149,8 +2370,14 @@
                 document.body.style.overflow = '';
                 editingId = null;
             }
-            fabAdd.addEventListener('click', openFormForAdd);
-            btnCancel.addEventListener('click', closeForm);
+            fabAdd.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openFormForAdd();
+            });
+            btnCancel.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeForm();
+            });
             formOverlay.addEventListener('click', e => { if (e.target === formOverlay) closeForm(); });
 
             inputImage.addEventListener('change', function() {
@@ -2187,7 +2414,8 @@
                 });
             }
 
-            btnSubmit.addEventListener('click', async function() {
+            btnSubmit.addEventListener('click', async function(e) {
+                e.stopPropagation();
                 const title = inputTitle.value.trim();
                 const priceStr = inputPrice.value.trim();
                 const date = inputDate.value;
@@ -2251,7 +2479,10 @@
                 updateFabVisibility();
             }
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => switchTab(btn.getAttribute('data-tab')));
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    switchTab(btn.getAttribute('data-tab'));
+                });
             });
 
             function updateFabVisibility() {
@@ -2262,6 +2493,8 @@
                 } else if (currentTab === 'tab-devices') {
                     fabAdd.textContent = '🔧';
                     fabAdd.title = '添加设备';
+                } else if (currentTab === 'tab-overview') {
+                    fabAdd.style.display = 'none';
                 } else {
                     fabAdd.textContent = '+';
                     fabAdd.title = '添加游戏';
@@ -2278,14 +2511,36 @@
                 toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
             }
 
-            // ============ 头像/昵称 ============
-            avatarContainer.addEventListener('click', () => {
-                const nn = prompt('设置收藏家昵称：', profileId.textContent);
-                if (nn !== null && nn.trim()) { profileId.textContent = nn.trim();
-                    saveProfile();
-                    showToast('昵称已更新'); }
+            // ============ 头像/昵称/好友编号 ============
+            avatarContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                avatarFileInput.click();
             });
-            profileId.addEventListener('click', e => {
+            avatarFileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    const img = document.createElement('img');
+                    img.src = dataUrl;
+                    img.style.cssText =
+                        'width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s;';
+                    img.onmouseenter = () => img.style.filter = 'grayscale(0%)';
+                    img.onmouseleave = () => img.style.filter = 'grayscale(100%)';
+                    avatarContainer.innerHTML = '';
+                    avatarContainer.appendChild(img);
+                    const hint = document.createElement('span');
+                    hint.className = 'avatar-edit-hint';
+                    hint.textContent = '更换头像';
+                    avatarContainer.appendChild(hint);
+                    saveProfile();
+                    showToast('头像已更新');
+                };
+                reader.readAsDataURL(file);
+                this.value = '';
+            });
+            profileId.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const nn = prompt('设置收藏家昵称：', profileId.textContent);
                 if (nn !== null && nn.trim()) { profileId.textContent = nn.trim();
@@ -2294,11 +2549,55 @@
             });
             profileId.style.cursor = 'pointer';
 
+            // 好友编号：点击复制
+            function copyFriendCode() {
+                const code = friendCodeDisplay.textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(code).then(() => showToast('好友编号已复制：' + code));
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = code;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    showToast('好友编号已复制：' + code);
+                }
+            }
+            profileFriendCode.addEventListener('click', (e) => {
+                e.stopPropagation();
+                copyFriendCode();
+            });
+            bankFriendCode.addEventListener('click', (e) => {
+                e.stopPropagation();
+                copyFriendCode();
+            });
+
+            // 双击好友编号可编辑
+            [profileFriendCode, bankFriendCode].forEach(el => {
+                el.addEventListener('dblclick', (e) => {
+                    e.stopPropagation();
+                    const newCode = prompt('编辑好友编号（Switch好友编号格式）：', friendCode);
+                    if (newCode !== null && newCode.trim()) {
+                        friendCode = newCode.trim();
+                        friendCodeDisplay.textContent = friendCode;
+                        profileFriendCode.querySelector('span').textContent = friendCode;
+                        try { localStorage.setItem(STORAGE_FRIEND_CODE, friendCode); } catch (
+                        e) {}
+                        showToast('好友编号已更新');
+                    }
+                });
+            });
+
             function loadProfile() {
                 try {
                     const raw = localStorage.getItem(STORAGE_PROFILE);
-                    if (raw) { const p = JSON.parse(raw); if (p.nickname) profileId.textContent = p.nickname; if (p
-                            .avatar) {
+                    if (raw) {
+                        const p = JSON.parse(raw);
+                        if (p.nickname) profileId.textContent = p.nickname;
+                        if (p.avatar) {
                             const img = document.createElement('img');
                             img.src = p.avatar;
                             img.style.cssText =
@@ -2307,7 +2606,12 @@
                             img.onmouseleave = () => img.style.filter = 'grayscale(100%)';
                             avatarContainer.innerHTML = '';
                             avatarContainer.appendChild(img);
-                        } }
+                            const hint = document.createElement('span');
+                            hint.className = 'avatar-edit-hint';
+                            hint.textContent = '更换头像';
+                            avatarContainer.appendChild(hint);
+                        }
+                    }
                 } catch (e) {}
             }
 
@@ -2321,7 +2625,8 @@
 
             // ============ 刷新全部 ============
             function refreshAll() {
-                renderShelf();
+                renderOverview();
+                renderGames();
                 renderDevices();
                 renderRecoup();
                 updateAllStats();
@@ -2333,12 +2638,14 @@
                 loadAll();
                 loadProfile();
                 refreshAll();
+                // 默认显示总览tab
+                switchTab('tab-overview');
             }
             init();
 
             // 跨标签页同步
             window.addEventListener('storage', function(e) {
-                if ([STORAGE_GAMES, STORAGE_DEVICES, STORAGE_RECOUP].includes(e.key)) {
+                if ([STORAGE_GAMES, STORAGE_DEVICES, STORAGE_RECOUP, STORAGE_FRIEND_CODE].includes(e.key)) {
                     loadAll();
                     refreshAll();
                 }
@@ -2350,15 +2657,22 @@
                     localStorage.removeItem(STORAGE_GAMES);
                     localStorage.removeItem(STORAGE_DEVICES);
                     localStorage.removeItem(STORAGE_RECOUP);
+                    localStorage.removeItem(STORAGE_PROFILE);
+                    localStorage.removeItem(STORAGE_FRIEND_CODE);
                     location.reload();
                 }
             };
 
-            console.log('🎮 游戏卡带收藏馆 v2 已就绪');
-            console.log('  📚 Tab1: 书架 - 实体版/数字版分区，每行3个');
-            console.log('  🎮 Tab2: 设备 - 银行卡总览 + 主机配件管理');
+            console.log('🎮 游戏卡带收藏馆 v3 已就绪');
+            console.log('  📊 Tab0: 总览 - 银行卡 + 全部物品列表');
+            console.log('  📚 Tab1: 游戏 - 实体版/数字版/Steam分区');
+            console.log('  🎮 Tab2: 设备 - 主机配件管理');
             console.log('  💰 Tab3: 回血 - 卖出记录 + 盈亏计算');
+            console.log('  👤 点击头像更换头像，点击昵称编辑昵称');
+            console.log('  📋 点击好友编号复制，双击编辑');
             console.log('  💡 控制台执行 resetCollection() 可重置数据');
+            console.log('  🐛 已修复: 删除按钮事件冒泡问题');
+            console.log('  🐛 已修复: 数据持久化问题（仅在首次使用时写入默认数据）');
         })();
     </script>
 </body>
