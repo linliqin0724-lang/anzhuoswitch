@@ -1695,5 +1695,33 @@
             console.log('  - 数据存储在浏览器本地存储中');
         })();
     </script>
+
+    <!-- 补丁脚本：解决修改默认数据后统计不更新的问题 -->
+    <script>
+        (function() {
+            // 提供全局重置功能，当您修改了示例数据后，在控制台执行 resetCollection() 即可强制刷新
+            window.resetCollection = function() {
+                if (confirm('确定要重置所有收藏数据为当前代码中的默认示例吗？当前数据将丢失。')) {
+                    localStorage.removeItem('game_collection_data');
+                    location.reload();
+                }
+            };
+
+            // 监听其他标签页对数据的修改，自动同步
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'game_collection_data') {
+                    // 若存在 loadData/renderLibrary 则调用，否则刷新页面
+                    if (typeof loadData === 'function' && typeof renderLibrary === 'function') {
+                        loadData();
+                        renderLibrary();
+                    } else {
+                        location.reload();
+                    }
+                }
+            });
+
+            console.log('💡 如需重置收藏数据为默认示例，请在控制台执行: resetCollection()');
+        })();
+    </script>
 </body>
 </html>
