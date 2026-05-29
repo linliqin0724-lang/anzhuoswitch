@@ -12,6 +12,7 @@
             --border-subtle: #2a2a34; --border-hover: #444458;
             --metal-shelf: #3a3a42; --metal-shelf-light: #4a4a54; --metal-shelf-dark: #2a2a32; --metal-top: #525260;
             --red-tag: #d94a4a; --blue-tag: #4a80c8; --green-tag: #3da86a;
+            --gold-light: #d4b86a; --gold-dark: #a07c2a;
             --card-width: 130px; --tab-font-size: 16px; --base-font-size: 15px;
             --font-display: 'Georgia', 'Times New Roman', 'Songti SC', 'Noto Serif SC', serif;
             --font-body: 'Inter', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
@@ -115,21 +116,35 @@
             background:var(--surface-light); box-shadow:2px 2px 0 rgba(0,0,0,0.4), 4px 4px 8px rgba(0,0,0,0.5);
             transition:all var(--transition-float);
         }
-        .game-card-inner::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; z-index:5; }
+        .game-card-inner::before {
+            content:''; position:absolute; left:0; top:0; bottom:0; width:4px; z-index:5;
+            box-shadow: none; transition: width 0.3s ease;
+        }
         .game-card-inner.tag-red::before { background:var(--red-tag); }
         .game-card-inner.tag-blue::before { background:var(--blue-tag); }
         .game-card-inner.tag-green::before { background:var(--green-tag); }
-        .game-card-type-badge { position:absolute; top:6px; right:6px; font-size:10px; padding:2px 8px; border-radius:2px; z-index:6; font-weight:500; pointer-events:none; }
+        .game-card-type-badge {
+            position:absolute; top:6px; right:6px; font-size:10px; padding:2px 8px; border-radius:2px;
+            z-index:6; font-weight:500; pointer-events:none; transition: opacity 0.3s;
+        }
         .type-badge-physical { background:rgba(30,30,38,0.85); color:#c8c8d0; }
         .type-badge-digital { background:rgba(40,40,50,0.85); color:#a0a0b0; }
         .type-badge-steam { background:rgba(30,50,70,0.85); color:#8ab8e0; }
-        .game-card-cover { width:100%; height:100%; object-fit:cover; filter:grayscale(100%) contrast(0.9) brightness(0.8); transition:filter 0.5s, transform 0.4s; background:var(--surface-light); }
+        .game-card-cover {
+            width:100%; height:100%; object-fit:cover; filter:grayscale(100%) contrast(0.9) brightness(0.8);
+            transition:filter 0.5s, transform 0.4s; background:var(--surface-light);
+        }
         .game-card:hover { transform:translateY(-16px) rotateX(-2deg); z-index:20; }
         .game-card:hover .game-card-inner { box-shadow:2px 8px 16px rgba(0,0,0,0.6); }
         .game-card:hover .game-card-cover { filter:grayscale(0%) contrast(1) brightness(1); transform:scale(1.03); }
-        .game-card-title-tag { text-align:center; font-size:12px; color:var(--text-muted); margin-top:7px; }
+        .game-card:hover .game-card-type-badge { opacity: 0.5; }
+        .game-card-title-tag {
+            text-align:center; font-size:14px; font-weight:600; color:var(--text-primary);
+            margin-top:7px; letter-spacing:0.03em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+            max-width:var(--card-width); transition:color 0.3s;
+        }
         .game-card:hover .game-card-title-tag { color:var(--text-secondary); }
-        @media (max-width:640px) { :root { --card-width:100px; } .game-card-title-tag { font-size:10px; } }
+        @media (max-width:640px) { :root { --card-width:100px; } .game-card-title-tag { font-size:12px; } }
         .device-section { margin-bottom:28px; }
         .device-section-label { font-size:13px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:8px; font-weight:500; }
         .device-list { display:flex; flex-direction:column; gap:8px; }
@@ -143,18 +158,28 @@
         .device-item-title { font-weight:600; color:var(--white); font-size:16px; }
         .device-item-date { font-size:12px; color:var(--text-muted); }
         .device-item-price { font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--white); flex-shrink:0; }
+        /* 修正瑕疵1：银行卡改为高级金色，统一字体 */
         .bank-card-full {
-            background:linear-gradient(145deg, #d8d8e0, #c0c0ca, #e0e0e6, #b8b8c4, #d0d0d8, #c8c8d2);
-            border-radius:14px; padding:24px 28px; margin-bottom:28px; box-shadow:0 8px 30px rgba(0,0,0,0.5);
-            border:1px solid rgba(255,255,255,0.2); color:#1a1a22;
+            background: linear-gradient(145deg, #e0c87c 0%, #c8a840 20%, #f0d890 40%, #b89030 60%, #d8b860 80%, #c8a840 100%);
+            border-radius:14px; padding:24px 28px; margin-bottom:28px;
+            box-shadow:0 8px 30px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
+            border:1px solid rgba(255,255,255,0.3); color:#1a1a22;
+            position: relative; overflow: hidden;
         }
-        .bank-card-header { display:flex; justify-content:space-between; margin-bottom:8px; }
-        .bank-card-logo { font-family:var(--font-display); font-size:15px; font-weight:700; color:#3a3a44; }
-        .bank-card-friend-code { font-family:'Courier New',monospace; font-size:16px; color:#3a3a44; margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:8px; }
-        .bank-card-friend-code:hover { color:#1a1a28; }
-        .bank-card-details { display:flex; gap:30px; flex-wrap:wrap; }
-        .bank-card-detail-label { font-size:11px; color:#5a5a66; text-transform:uppercase; }
-        .bank-card-detail-value { font-family:var(--font-display); font-size:25px; font-weight:700; color:#1a1a24; }
+        .bank-card-full::before {
+            content: ''; position: absolute; top: -20%; right: -15%; width: 180px; height: 180px;
+            background: rgba(255,255,255,0.1); border-radius: 50%; pointer-events: none;
+        }
+        .bank-card-header { display:flex; justify-content:space-between; margin-bottom:8px; position: relative; z-index: 1; }
+        .bank-card-logo { font-family:var(--font-display); font-size:15px; font-weight:700; color:#2a1f08; }
+        .bank-card-friend-code {
+            font-family: var(--font-body); font-size:16px; color:#2a1f08; margin-bottom:12px;
+            cursor:pointer; display:flex; align-items:center; gap:8px; position: relative; z-index: 1;
+        }
+        .bank-card-friend-code:hover { color:#000; }
+        .bank-card-details { display:flex; gap:30px; flex-wrap:wrap; position: relative; z-index: 1; }
+        .bank-card-detail-label { font-size:11px; color:#3a2a10; text-transform:uppercase; }
+        .bank-card-detail-value { font-family:var(--font-display); font-size:25px; font-weight:700; color:#1a1008; }
         .bank-card-detail-value.large { font-size:32px; }
         .overview-list { display:flex; flex-direction:column; gap:7px; }
         .overview-item {
@@ -208,8 +233,20 @@
         .modal-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 16px; margin:12px 0 18px; }
         .modal-info-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; }
         .modal-info-value { font-size:18px; font-weight:600; color:var(--white); font-family:var(--font-display); }
-        .daily-value-card { background:var(--white); color:#000; border-radius:6px; padding:18px 20px; margin-top:6px; text-align:center; }
-        .daily-value-card .daily-number { font-size:42px; font-weight:700; }
+
+        /* 修正瑕疵2：日均价值卡片在浅色模式下的可读性 */
+        .daily-value-card {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            border-radius:6px; padding:18px 20px; margin-top:6px; text-align:center;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+        }
+        .daily-value-card .daily-label { color: var(--text-muted); font-size: 11px; text-transform: uppercase; }
+        .daily-value-card .daily-number { font-size:42px; font-weight:700; color: var(--text-primary); }
+        .daily-value-card .daily-unit { font-size: 14px; color: var(--text-secondary); }
+        .daily-value-card .daily-verdict { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
         .modal-actions { display:flex; gap:8px; margin-top:14px; }
         .btn-edit, .btn-delete, .btn-sell { flex:1; padding:11px 0; border-radius:5px; border:1px solid #444; cursor:pointer; font-size:13px; font-weight:500; text-align:center; background:transparent; color:#ccc; font-family:var(--font-body); }
         .btn-delete { border-color:#4a2020; color:#d47373; }
@@ -248,7 +285,7 @@
     <div class="tab-content active" id="tab-overview">
         <div class="bank-card-full">
             <div class="bank-card-header"><span class="bank-card-logo">Collection Vault</span></div>
-            <div class="bank-card-friend-code" id="bankFriendCode"><span>好友编号</span> <span id="friendCodeDisplay">SW-0000-0000-0000</span> <span style="font-size:10px;color:#6a6a78;">点击复制</span></div>
+            <div class="bank-card-friend-code" id="bankFriendCode"><span>好友编号</span> <span id="friendCodeDisplay">SW-0000-0000-0000</span> <span style="font-size:10px;color:#3a2a10;">点击复制</span></div>
             <div class="bank-card-details">
                 <div><span class="bank-card-detail-label">总资产价值</span><span class="bank-card-detail-value large" id="bankTotalValue">¥0</span></div>
                 <div><span class="bank-card-detail-label">游戏数量</span><span class="bank-card-detail-value" id="bankGameCount">0</span></div>
@@ -296,7 +333,12 @@
                     <div><span class="modal-info-label">持有天数</span><span class="modal-info-value" id="modalDays"></span></div>
                     <div><span class="modal-info-label">版本/类型</span><span class="modal-info-value" id="modalVersion"></span></div>
                 </div>
-                <div class="daily-value-card"><div class="daily-number" id="modalDailyValue">¥0</div><div style="font-size:12px;color:#555;">日均持有价值</div><div id="modalVerdict" style="font-size:12px;color:#666;"></div></div>
+                <div class="daily-value-card">
+                    <div class="daily-label">日均持有价值</div>
+                    <div class="daily-number" id="modalDailyValue">¥0</div>
+                    <div class="daily-unit">/ 天</div>
+                    <div class="daily-verdict" id="modalVerdict"></div>
+                </div>
                 <div class="modal-actions" id="modalActionsGame">
                     <button class="btn-edit" id="btnEditGame">编辑</button><button class="btn-sell" id="btnSellGame">卖出回血</button><button class="btn-delete" id="btnDeleteGame">删除</button>
                 </div>
@@ -324,9 +366,7 @@
 
     <script>
         (function() {
-            // 安全获取元素
             const g = id => document.getElementById(id);
-            // 所有DOM引用
             const els = {
                 shelfRowPhysical: g('shelfRowPhysical'), shelfRowDigital: g('shelfRowDigital'), shelfRowSteam: g('shelfRowSteam'),
                 gamesEmpty: g('gamesEmpty'), deviceListConsole: g('deviceListConsole'), deviceListAccessory: g('deviceListAccessory'),
@@ -352,7 +392,6 @@
                 recoupCount: g('recoupCount')
             };
 
-            // 数据存储
             const KEYS = { games: 'gcv4_g', devices: 'gcv4_d', recoup: 'gcv4_r', profile: 'gcv4_p', friendCode: 'gcv4_fc', theme: 'gcv4_theme' };
             let games = [], devices = [], recoup = [], editId = null, editMode = 'game', detailMode = 'game', detailId = null,
                 currentTab = 'tab-overview', friendCode = 'SW-0000-0000-0000', confirmCb = null;
@@ -374,10 +413,7 @@
             ];
 
             function loadData(key, fb) {
-                try {
-                    const r = localStorage.getItem(key);
-                    if (r !== null && r !== undefined) { const d = JSON.parse(r); if (Array.isArray(d)) return d; }
-                } catch(e) {}
+                try { const r = localStorage.getItem(key); if (r !== null && r !== undefined) { const d = JSON.parse(r); if (Array.isArray(d)) return d; } } catch(e) {}
                 const copy = JSON.parse(JSON.stringify(fb));
                 if (copy.length > 0) try { localStorage.setItem(key, JSON.stringify(copy)); } catch(e) {}
                 return copy;
@@ -611,7 +647,7 @@
             init();
             window.addEventListener('storage', e=>{ if([KEYS.games,KEYS.devices,KEYS.recoup,KEYS.friendCode].includes(e.key)){ loadAll(); refreshAll(); } });
             window.resetCollection = function(){ if(confirm('确定重置所有数据？')){ Object.values(KEYS).forEach(k=>localStorage.removeItem(k)); location.reload(); } };
-            console.log('✅ 收藏馆 v4.1 已启动 - 所有功能正常');
+            console.log('✅ 收藏馆 v4.2 已启动 - 金色银行卡 & 浅色模式优化');
         })();
     </script>
 </body>
